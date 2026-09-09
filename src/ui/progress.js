@@ -1,6 +1,6 @@
 // The bottom-right progress toast used while a background generation runs.
 //
-// Lived among the image-gen helpers, which meant the Memory Core and the NPC
+// Lived among the image-gen helpers, which meant the 记忆核心 and the NPC
 // portrait generator both had to depend on image gen to show progress. It is a
 // generic piece of chrome, so it lives with the UI.
 //

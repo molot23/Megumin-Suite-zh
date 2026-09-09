@@ -43,7 +43,7 @@ function buildConfigSyncRow() {
                     ? (on
                         ? "These fields are copied to every character along with the rest of this tab."
                         : "The engine and CoT choice still go everywhere. These fields stay with this character.")
-                    : "Only applies once this tab's <strong>Global</strong> switch is on. It is off, so nothing is being copied anywhere."}</span>
+                    : "Only applies once this tab's <strong>全局</strong> switch is on. It is off, so nothing is being copied anywhere."}</span>
             </div>
             <button class="ws-btn-small cfg-sync-btn" id="cfg_sync_toggle"
                     style="${hostOn
@@ -79,20 +79,20 @@ function buildConfigSyncRow() {
 export function buildStoryConfigSection() {
     const cfg = localProfile.storyConfig;
     // The standing fields can never be drawn blank: their dropdown has no
-    // "Preset default" row to select, so an empty value would show the wrong option.
+    // "预设默认" row to select, so an empty value would show the wrong option.
     applyStoryConfigDefaults(cfg);
     const sec = $(`<div class="ws-section" id="sec-config"></div>`);
 
     sec.append(`<h3 style="margin-top: 0; color: var(--gold); font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-sliders"></i> Story Config</h3>`);
 
-    // No master toggle: the block is always injected. Anything left on Preset default
+    // No master toggle: the block is always injected. Anything left on 预设默认
     // still emits no line, so "off" is expressed per field rather than for the whole
     // block -- which is what people were reaching for the toggle to do anyway.
     sec.append(`<div class="cfg-master-desc" style="margin-bottom: 10px;">Standing settings for the whole story. Anything left on preset default is left to your preset.</div>`);
 
     // ── GLOBAL SYNC OPT-OUT ──
     //
-    // These fields sit on the PRESETS & COT tab, so the tab's Global switch
+    // These fields sit on the 预设与思维链 tab, so the tab's Global switch
     // carries them along with the engine and CoT choice. That bundles the setup
     // (which people do want everywhere) with the story itself (which they often
     // do not — a horror chat and a slice-of-life chat want different genres).
@@ -117,15 +117,15 @@ export function buildStoryConfigSection() {
         <div class="cfg-preset-bar">
             <select id="cfg_preset_select" class="ps-modern-input" style="flex: 1; min-width: 160px; cursor: pointer;">${presetOpts}</select>
             <button class="ws-btn-small" id="cfg_preset_load"><i class="fa-solid fa-download"></i> Load</button>
-            <button class="ws-btn-small" id="cfg_preset_save" style="color:#10b981; border-color: rgba(16,185,129,0.35);"><i class="fa-solid fa-floppy-disk"></i> Save Current</button>
+            <button class="ws-btn-small" id="cfg_preset_save" style="color:#10b981; border-color: rgba(16,185,129,0.35);"><i class="fa-solid fa-floppy-disk"></i> 保存当前</button>
             <button class="ws-btn-small" id="cfg_preset_delete" style="color:#ef4444; border-color: rgba(239,68,68,0.3);"><i class="fa-solid fa-trash"></i></button>
-            <button class="ws-btn-small" id="cfg_reset_all" style="margin-left:auto;"><i class="fa-solid fa-rotate-left"></i> Reset All</button>
+            <button class="ws-btn-small" id="cfg_reset_all" style="margin-left:auto;"><i class="fa-solid fa-rotate-left"></i> 全部重置</button>
         </div>
     `);
 
     presetBar.find("#cfg_preset_load").on("click", () => {
         const pid = presetBar.find("#cfg_preset_select").val();
-        if (!pid) { toastr.info("Pick a preset first."); return; }
+        if (!pid) { toastr.info("请先选择预设。"); return; }
         const p = getAllConfigPresets().find(x => x.id === pid);
         if (!p) return;
         storyConfigFields.forEach(f => { cfg[f.key] = p.values[f.key] || ""; });
@@ -136,7 +136,7 @@ export function buildStoryConfigSection() {
     });
 
     presetBar.find("#cfg_preset_save").on("click", () => {
-        const name = prompt("Name this config preset:");
+        const name = prompt("为此配置预设命名：");
         if (!name || !name.trim()) return;
         const values = {};
         storyConfigFields.forEach(f => { values[f.key] = cfg[f.key] || ""; });
@@ -148,20 +148,20 @@ export function buildStoryConfigSection() {
         });
         saveSettingsDebounced();
         fireRefreshHook(REFRESH.SWITCH_TAB);
-        toastr.success(`Saved "${name.trim()}".`);
+        toastr.success(`已保存「${name.trim()}".`);
     });
 
     presetBar.find("#cfg_preset_delete").on("click", () => {
         const pid = presetBar.find("#cfg_preset_select").val();
-        if (!pid) { toastr.info("Pick a preset first."); return; }
+        if (!pid) { toastr.info("请先选择预设。"); return; }
         const p = getAllConfigPresets().find(x => x.id === pid);
         if (!p) return;
         if (p.builtin) { toastr.warning("内置预设不能删除。"); return; }
-        if (!confirm(`Delete the preset "${p.name}"?`)) return;
+        if (!confirm(`删除预设「${p.name}」？`)) return;
         extension_settings[extensionName].configPresets = extension_settings[extensionName].configPresets.filter(x => x.id !== pid);
         saveSettingsDebounced();
         fireRefreshHook(REFRESH.SWITCH_TAB);
-        toastr.success("Preset deleted.");
+        toastr.success("预设已删除。");
     });
 
     presetBar.find("#cfg_reset_all").on("click", () => {
@@ -184,7 +184,7 @@ export function buildStoryConfigSection() {
         const isOpen = openConfigRow === f.key;
         const summaryFor = v => {
             const t = String(v || "").trim();
-            if (t === "") return f.defaultLabel ? `Preset default — ${f.defaultLabel}` : "Preset default";
+            if (t === "") return f.defaultLabel ? `预设默认 — ${f.defaultLabel}` : "预设默认";
             // Show the option's short label rather than the long text the model reads.
             const match = (f.options || []).find(o => typeof o !== "string" && o.value === t);
             return match ? match.label : t;
@@ -227,7 +227,7 @@ export function buildStoryConfigSection() {
             // Fields with a named default (friction: normal, npc_disposition: ordinary,
             // narrator_presence: light) name it here — picking it still drops the line,
             // because the preset already behaves that way.
-            const defLabel = f.defaultLabel ? `Preset default — ${f.defaultLabel}` : `Preset default`;
+            const defLabel = f.defaultLabel ? `预设默认 — ${f.defaultLabel}` : `预设默认`;
             // A standing field always reaches the model, so it has no "leave it to the
             // preset" state and its dropdown does not offer one.
             let opts = isStandingConfigField(f.key)
@@ -236,10 +236,10 @@ export function buildStoryConfigSection() {
             opList.forEach(o => {
                 opts += `<option value="${escapeHtmlAttr(o.value)}" ${val === o.value ? 'selected' : ''}>${o.label}</option>`;
             });
-            opts += `<option value="__custom" ${isCustom ? 'selected' : ''}>Write my own…</option>`;
+            opts += `<option value="__custom" ${isCustom ? 'selected' : ''}>自己写…</option>`;
 
             const sel = $(`<select class="ps-modern-input cfg-select" style="width:100%; cursor:pointer;">${opts}</select>`);
-            const customBox = $(`<input type="text" class="ps-modern-input cfg-custom" style="width:100%; margin-top:8px; display:${isCustom ? 'block' : 'none'};" placeholder="${escapeHtmlAttr(f.customPlaceholder || `Write it your own way`)}" value="${isCustom ? escapeHtmlAttr(val) : ''}" />`);
+            const customBox = $(`<input type="text" class="ps-modern-input cfg-custom" style="width:100%; margin-top:8px; display:${isCustom ? 'block' : 'none'};" placeholder="${escapeHtmlAttr(f.customPlaceholder || `按你自己的方式写`)}" value="${isCustom ? escapeHtmlAttr(val) : ''}" />`);
 
             sel.on("change", function () {
                 const v = $(this).val();
@@ -372,7 +372,7 @@ export function renderStoryConfig(c) {
                 <div class="wstyle-header-icon"><i class="fa-solid fa-sliders"></i></div>
                 <div>
                     <h2>文风</h2>
-                    <p>Pick the prose voice the story is told in.</p>
+                    <p>选择故事叙述的文风。</p>
                 </div>
             </div>
             <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
@@ -442,7 +442,7 @@ export function renderStoryConfig(c) {
     sidebar.append(dnPanel);
     sidebar.append(`<div style="height: 1px; background: var(--border-color); margin: 0 0 8px 0;"></div>`);
 
-    sidebar.append(`<div class="ws-sidebar-title">Writing Style</div>`);
+    sidebar.append(`<div class="ws-sidebar-title">文风</div>`);
 
     // Off Button
     const btnOff = $(`<button class="ws-nav-btn ${isOff ? 'active-green' : ''}"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-power-off" style="color:${isLockedStyleEngine ? '#ef4444' : ''}"></i> No Style (Off)</span> ${isLockedStyleEngine ? '<i class="fa-solid fa-lock" style="color:#ef4444; font-size:0.7rem;"></i>' : ''}</button>`);
@@ -455,8 +455,8 @@ export function renderStoryConfig(c) {
     sidebar.append(`<div style="height: 1px; background: var(--border-color); margin: 8px 0;"></div>`);
 
     // Nav Buttons
-    const btnPrecooked = $(`<button class="ws-nav-btn active"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-fire-burner"></i> Precooked</span> <span class="ws-badge">${precookedCount}</span></button>`);
-    const btnCustom = $(`<button class="ws-nav-btn"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-book"></i> My Library</span> <span class="ws-badge">${customCount}</span></button>`);
+    const btnPrecooked = $(`<button class="ws-nav-btn active"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-fire-burner"></i> 现成文风</span> <span class="ws-badge">${precookedCount}</span></button>`);
+    const btnCustom = $(`<button class="ws-nav-btn"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-book"></i> 我的文库</span> <span class="ws-badge">${customCount}</span></button>`);
     const btnGenerators = $(`<button class="ws-nav-btn"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Generators</span> <span class="ws-badge">${genCount}</span></button>`);
 
     sidebar.append(btnPrecooked).append(btnCustom).append(btnGenerators);
@@ -482,7 +482,7 @@ export function renderStoryConfig(c) {
                 <div class="ws-card-desc">${ds.desc}</div>
                 <div class="ws-card-rule">${ds.rule}</div>
                 <div class="ws-card-actions">
-                    <button class="ws-btn-small ps-btn-edit-precooked"><i class="fa-solid fa-copy"></i> Edit as Custom</button>
+                    <button class="ws-btn-small ps-btn-edit-precooked"><i class="fa-solid fa-copy"></i> 编辑为自定义</button>
                 </div>
             </div>
         `);
@@ -497,11 +497,11 @@ export function renderStoryConfig(c) {
             renderStyleLibrary(c); 
         });
         
-        // The new Edit as Custom button logic
+        // The new 编辑为自定义 button logic
         card.find(".ps-btn-edit-precooked").on("click", () => {
             const presetData = {
                 id: "style_" + Date.now(),
-                name: ds.name + " (Custom)",
+                name: ds.name + "（自定义）",
                 tags: [],
                 generatedOptions: [],
                 notes: ds.desc,
@@ -515,7 +515,7 @@ export function renderStoryConfig(c) {
     secPrecooked.append(gridPre);
 
     // B. CUSTOM
-    secCustom.append(`<h3 style="margin-top: 0; color: #10b981; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-book"></i> My Library</h3>`);
+    secCustom.append(`<h3 style="margin-top: 0; color: #10b981; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-book"></i> 我的文库</h3>`);
     const gridCust = $(`<div class="ws-grid"></div>`);
     
     const createCard = $(`
@@ -535,9 +535,9 @@ export function renderStoryConfig(c) {
                         <span style="color:${isSel ? '#10b981' : 'var(--text-main)'};">${style.name}</span>
                         ${isSel ? '<i class="fa-solid fa-check" style="color:#10b981;"></i>' : ''}
                     </div>
-                    <div class="ws-card-desc" style="max-height: 40px; overflow: hidden;">${style.notes || "Custom AI generated style."}</div>
+                    <div class="ws-card-desc" style="max-height: 40px; overflow: hidden;">${style.notes || "自定义 AI 生成的文风。"}</div>
                     <div class="ws-card-actions">
-                        <button class="ws-btn-small ps-btn-edit"><i class="fa-solid fa-pen"></i> Edit</button>
+                        <button class="ws-btn-small ps-btn-edit"><i class="fa-solid fa-pen"></i> 编辑</button>
                         <button class="ws-btn-small ps-btn-regen" style="color: var(--gold); border-color: rgba(245,158,11,0.3);"><i class="fa-solid fa-rotate-right"></i></button>
                         <button class="ws-btn-small ps-btn-delete" style="color: #ef4444; border-color: rgba(239,68,68,0.3);"><i class="fa-solid fa-trash"></i></button>
                     </div>
@@ -549,7 +549,7 @@ export function renderStoryConfig(c) {
             });
             card.find(".ps-btn-edit").on("click", () => renderStyleEditor(c, style.id));
             card.find(".ps-btn-delete").on("click", () => {
-                if (confirm(`Delete "${style.name}"?`)) {
+                if (confirm(`删除「${style.name}」？`)) {
                     localProfile.customStyles = localProfile.customStyles.filter(s => s.id !== style.id);
                     if (localProfile.activeStyleId === style.id) { localProfile.activeStyleId = null; localProfile.aiRule = ""; }
                     saveProfileToMemory(); renderStyleLibrary(c);
@@ -562,7 +562,7 @@ export function renderStoryConfig(c) {
                     let rule = await runMeguminTask(orderText);
                     style.rule = cleanAIOutput(rule).trim();
                     if (localProfile.activeStyleId === style.id) localProfile.aiRule = style.rule;
-                    saveProfileToMemory(); renderStyleLibrary(c); toastr.success("Rule Regenerated!");
+                    saveProfileToMemory(); renderStyleLibrary(c); toastr.success("规则已重新生成！");
                 });
             });
             gridCust.append(card);
@@ -632,7 +632,7 @@ export function renderStoryConfig(c) {
     switchSection(lastStorySection);
 }
 
-// Remembers which pane of the Writing Style tab was open across re-renders.
+// Remembers which pane of the 文风 tab was open across re-renders.
 export let lastStorySection = null;
 // Remembers which config row is expanded, so a re-render doesn't collapse what you were editing.
 export let openConfigRow = null;
@@ -665,7 +665,7 @@ export function renderStyleEditor(c, editId, presetData = null) {
     c.append(`
         <div class="wstyle-editor-bar">
             <i class="fa-solid fa-pen-nib" style="color: #a855f7; font-size: 1.1rem;"></i>
-            <input type="text" id="ps_style_name" value="${currentStyle.name}" placeholder="Name your style…" />
+            <input type="text" id="ps_style_name" value="${currentStyle.name}" placeholder="为你的文风命名…" />
             <button id="ps_btn_save_style" class="ps-modern-btn primary" style="background: #10b981; color: #fff; padding: 8px 18px; white-space: nowrap;">
                 <i class="fa-solid fa-floppy-disk"></i> Save
             </button>
@@ -733,7 +733,7 @@ export function renderStyleEditor(c, editId, presetData = null) {
             <textarea id="ps_style_rule_text" placeholder="在上方选择标签并点击生成…">${currentStyle.rule || ''}</textarea>
             <div class="wstyle-info-callout">
                 <i class="fa-solid fa-circle-info"></i>
-                <span>After generating or editing your rule, hit <strong>Save</strong> in the toolbar above to apply it to your library.</span>
+                <span>生成或编辑规则后，点击 <strong>保存</strong> in the toolbar above to apply it to your library.</span>
             </div>
         </div>
     `);
@@ -763,7 +763,7 @@ export function renderStyleEditor(c, editId, presetData = null) {
         if (!editId) { localProfile.customStyles.push(currentStyle); }
         else { const idx = localProfile.customStyles.findIndex(s => s.id === editId); if (idx > -1) localProfile.customStyles[idx] = currentStyle; }
         if (localProfile.activeStyleId === currentStyle.id) { localProfile.aiRule = currentStyle.rule; }
-        saveProfileToMemory(); renderStyleLibrary(c); toastr.success(`Saved "${currentStyle.name}"`);
+        saveProfileToMemory(); renderStyleLibrary(c); toastr.success(`已保存「${currentStyle.name}"`);
     });
 
     $("#ps_btn_get_authors_style").on("click", async function () {
@@ -776,19 +776,19 @@ export function renderStyleEditor(c, editId, presetData = null) {
             if (aiTagsTemp.length > 0) {
                 currentStyle.tags = currentStyle.tags.filter(tag => !tag.endsWith("✨"));
                 currentStyle.generatedOptions = aiTagsTemp.map(tag => `${tag} ✨`);
-                renderInsights(); toastr.success(`Generated ${aiTagsTemp.length} insights!`);
+                renderInsights(); toastr.success(`已生成 ${aiTagsTemp.length} 条洞察！`);
             }
         }); $(this).prop("disabled", false).html(`<i class="fa-solid fa-lightbulb"></i> Generate Insights`);
     });
 
     $("#ps_btn_generate_style").on("click", async function () {
-        if (currentStyle.tags.length === 0) return toastr.warning("Select tags first!");
+        if (currentStyle.tags.length === 0) return toastr.warning("请先选择标签！");
         $(this).prop("disabled", true).html(`<i class="fa-solid fa-spinner fa-spin"></i> Finalizing...`);
         await useMeguminEngine(async () => {
             const orderText = `Create a writing style prompt based on these traits:\n\nSelected style tags: ${currentStyle.tags.join(", ")}\n\nAdditional user instructions: ${currentStyle.notes}\n\nWrite a concise, well-structured writing style rule (100 words max) that the AI must follow. Combine all tags into a cohesive directive. Write it as a direct instruction. Do not use bullet points or introductory text.`;
             let rule = await runMeguminTask(orderText);
             currentStyle.rule = cleanAIOutput(rule).trim();
-            $("#ps_style_rule_text").val(currentStyle.rule); toastr.success("Live AI Rule Generated!");
+            $("#ps_style_rule_text").val(currentStyle.rule); toastr.success("已生成实时 AI 规则！");
         }); $(this).prop("disabled", false).html(`<i class="fa-solid fa-bolt"></i> Generate Writing Rule`);
     });
 }

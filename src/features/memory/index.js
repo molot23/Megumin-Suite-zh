@@ -1,5 +1,5 @@
 // ────────────────────────────────────────────────────────────────────────────
-// Memory Core — tiering, the vault, the archived-message visuals, and the tab.
+// 记忆核心 — tiering, the vault, the archived-message visuals, and the tab.
 //
 // WHY THIS IS ONE FILE AND NOT FIVE
 //
@@ -61,18 +61,15 @@ export function renderMemoryCore(c) {
         <div class="mtab-callout gold" style="margin-bottom: 16px;">
             <i class="fa-solid fa-triangle-exclamation"></i>
             <span><strong>开启之前，先注意两点。</strong>
-            <br>&bull; <strong>It is not cache friendly.</strong> Retrieved memories sit ahead of the
-            chat history in the prompt, so when what it retrieves changes, your provider re-reads the
-            whole history instead of serving it from cache.
-            <br>&bull; <strong>Use Semantic Embeddings, not TF-IDF.</strong> Keyword matching is the
-            fallback and it shows &mdash; semantic search finds the right archive far more often.</span>
+            <br>&bull; <strong>对缓存不友好。</strong>检索到的记忆会插在提示词中聊天记录之前，因此检索结果一变，服务商就会重读整段历史，而不是走缓存。
+            <br>&bull; <strong>使用语义嵌入，而非 TF-IDF。</strong>关键词匹配只是后备，而且效果明显更差——语义搜索更容易找到正确的归档。</span>
         </div>
 
         <!-- MASTER TOGGLE -->
         <div class="mtab-toggle-row ${mem.enabled ? 'active' : ''}" id="mem_enable_card" style="margin-bottom: 20px;">
             <div class="toggle-info">
-                <div class="toggle-label"><i class="fa-solid fa-microchip" style="color:#10b981;"></i> Enable Memory Core</div>
-                <div class="toggle-desc">Archiving happens silently in the background. Old messages fade in the UI and are replaced in the prompt with injected summaries.</div>
+                <div class="toggle-label"><i class="fa-solid fa-microchip" style="color:#10b981;"></i> 启用记忆核心</div>
+                <div class="toggle-desc">归档在后台静默进行。旧消息在界面中淡出，并在提示词中替换为注入的摘要。</div>
             </div>
             <div class="ps-switch"></div>
         </div>
@@ -83,13 +80,13 @@ export function renderMemoryCore(c) {
             <div class="mtab-panel" style="margin-bottom:16px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
                     <div class="mtab-panel-title green" style="margin:0; display: flex; align-items: center; gap: 8px;">
-                        <i class="fa-solid fa-chart-gantt"></i> Context Allocation Dashboard
+                        <i class="fa-solid fa-chart-gantt"></i> 上下文分配看板
                         <input type="file" id="mem_file_import" accept=".json" style="display: none;">
-                        <button id="mem_btn_import" class="ps-modern-btn secondary" style="padding: 2px 6px; font-size: 0.65rem; color: #10b981; border-color: rgba(16, 185, 129, 0.3);" title="Import Memory Core"><i class="fa-solid fa-file-import"></i></button>
+                        <button id="mem_btn_import" class="ps-modern-btn secondary" style="padding: 2px 6px; font-size: 0.65rem; color: #10b981; border-color: rgba(16, 185, 129, 0.3);" title="导入记忆核心"><i class="fa-solid fa-file-import"></i></button>
                         <button id="mem_btn_export" class="ps-modern-btn secondary" style="padding: 2px 6px; font-size: 0.65rem; color: #3b82f6; border-color: rgba(59, 130, 246, 0.3);" title="导出记忆核心"><i class="fa-solid fa-download"></i></button>
                     </div>
                     <div style="font-size: 0.75rem; font-weight: 800; color: #10b981; background: rgba(16,185,129,0.1); padding: 4px 12px; border-radius: 12px; border: 1px solid rgba(16,185,129,0.3); box-shadow: 0 0 10px rgba(16,185,129,0.2);">
-                        <i class="fa-solid fa-floppy-disk"></i> <span id="mem_live_tokens_saved">~0</span> Tokens Saved
+                        <i class="fa-solid fa-floppy-disk"></i> <span id="mem_live_tokens_saved">~0</span> 已节省 Token
                     </div>
                 </div>
                 <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; justify-content: space-between; margin-bottom: 5px;">
@@ -102,10 +99,10 @@ export function renderMemoryCore(c) {
                 </div>
                 <div class="mem-progress-container" style="background: rgba(0,0,0,0.6); display: flex;">
                     <!-- Oldest on Left -->
-                    <div id="mem_bar_long" style="background: #3b82f6; transition: width 0.2s ease;" title="Vaulted (Archived)"></div>
-                    <div id="mem_bar_short" style="background: #f59e0b; transition: width 0.2s ease;" title="Short-Term (Summaries)"></div>
-                    <div id="mem_bar_pend" style="background: repeating-linear-gradient(45deg, #047857, #047857 10px, #10b981 10px, #10b981 20px); transition: width 0.2s ease;" title="Pending (Active Raw)"></div>
-                    <div id="mem_bar_work" style="background: #10b981; transition: width 0.2s ease;" title="Working (Active Raw)"></div>
+                    <div id="mem_bar_long" style="background: #3b82f6; transition: width 0.2s ease;" title="已入库（已归档）"></div>
+                    <div id="mem_bar_short" style="background: #f59e0b; transition: width 0.2s ease;" title="短期（摘要）"></div>
+                    <div id="mem_bar_pend" style="background: repeating-linear-gradient(45deg, #047857, #047857 10px, #10b981 10px, #10b981 20px); transition: width 0.2s ease;" title="待处理（活跃原文）"></div>
+                    <div id="mem_bar_work" style="background: #10b981; transition: width 0.2s ease;" title="工作区（活跃原文）"></div>
                     <!-- Newest on Right -->
                 </div>
                 <div style="display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--text-muted); margin-top: 4px; opacity: 0.7; font-weight: bold;">
@@ -117,29 +114,29 @@ export function renderMemoryCore(c) {
                 </div>
             </div>
 
-            <!-- Engine Settings -->
+            <!-- 引擎设置 -->
             <div class="mtab-panel" style="margin-bottom:16px;">
-                <div class="mtab-panel-title gold"><i class="fa-solid fa-gears"></i> Extraction Engine Settings</div>
+                <div class="mtab-panel-title gold"><i class="fa-solid fa-gears"></i> 提取引擎设置</div>
                 
                 <!-- Quick Help / Hint -->
                 <div style="background: rgba(245,158,11,0.1); border-left: 3px solid #f59e0b; padding: 12px; border-radius: 6px; margin-bottom: 16px; font-size: 0.8rem; color: var(--text-main);">
-                    <div style="color: #f59e0b; font-weight: bold; margin-bottom: 6px;"><i class="fa-solid fa-circle-info"></i> How to Use</div>
+                    <div style="color: #f59e0b; font-weight: bold; margin-bottom: 6px;"><i class="fa-solid fa-circle-info"></i> 使用方法</div>
                     <div style="color: var(--text-muted); line-height: 1.4;">
-                        1- Choose your Memory Architecture and how much of each type you want (default is 30 raw, 70 summary).<br>
-                        2- Hit <b>应用并提取待处理</b> to save and start it.<br>
-                        3- You can choose between manual and auto. For manual, you have to hit <b>应用并提取待处理</b> to trigger it.
+                        1- 选择记忆架构以及每种类型的用量（默认 30 原文、70 摘要）。<br>
+                        2- 点击 <b>应用并提取待处理</b> 以保存并开始。<br>
+                        3- 可在手动与自动之间选择。手动模式下须点击 <b>应用并提取待处理</b> 才会触发。
                     </div>
                 </div>
 
                 <!-- Architecture Preset Dropdown -->
                 <div class="mtab-setting-row" style="padding-top: 0;">
                     <div class="set-info">
-                        <div class="set-label">Memory Architecture</div>
-                        <div class="set-desc">Configure how memory tiers are structured: Raw text, short-term summaries, and long-term vector database, or bypass summaries to save API usage.</div>
+                        <div class="set-label">记忆架构</div>
+                        <div class="set-desc">配置记忆层级结构：原文、短期摘要与长期向量数据库，或绕过摘要以节省 API 用量。</div>
                     </div>
                     <select id="mem_architecture" class="ps-modern-input" style="width: 280px; cursor: pointer; color: var(--gold); border-color: rgba(245,158,11,0.3);">
-                        <option value="raw_short_long" ${mem.architecture === 'raw_short_long' ? 'selected' : ''}>Raw Text + Short-Term Summaries + Vault</option>
-                        <option value="raw_long" ${mem.architecture === 'raw_long' ? 'selected' : ''}>Raw Text + Vault Directly (Skip Summaries)</option>
+                        <option value="raw_short_long" ${mem.architecture === 'raw_short_long' ? 'selected' : ''}>原文 + 短期摘要 + 保险库</option>
+                        <option value="raw_long" ${mem.architecture === 'raw_long' ? 'selected' : ''}>原文 + 直接保险库（跳过摘要）</option>
                     </select>
                 </div>
 
@@ -184,7 +181,7 @@ export function renderMemoryCore(c) {
                 <div class="mtab-setting-row" style="border-top: 1px solid rgba(255,255,255,0.04); padding-top: 14px;">
                     <div class="set-info">
                         <div class="set-label">生成后端</div>
-                        <div class="set-desc">Bypass standard preset configs for fast direct API calls, or use defined Megumin engine settings for character-style summaries.</div>
+                        <div class="set-desc">绕过标准预设配置以快速直连 API，或使用已定义的 Megumin 引擎设置做角色风摘要。</div>
                     </div>
                     <select id="mem_backend" class="ps-modern-input" style="width: 220px; cursor: pointer;">
                         <option value="direct" ${mem.backend === 'direct' ? 'selected' : ''}>直接 API 调用（快速）</option>
@@ -193,18 +190,18 @@ export function renderMemoryCore(c) {
                 </div>
                 <div class="mtab-setting-row" style="border-top: 1px solid rgba(255,255,255,0.04); padding-top: 14px;">
                     <div class="set-info">
-                        <div class="set-label">Vault Scanner Engine</div>
-                        <div class="set-desc">Select the retrieval engine for matching long-term memories. TF-IDF runs locally, while Semantic Embeddings use Vector Storage.</div>
+                        <div class="set-label">保险库扫描引擎</div>
+                        <div class="set-desc">选择用于匹配长期记忆的检索引擎。TF-IDF 在本地运行，语义嵌入使用向量存储。</div>
                     </div>
                     <select id="mem_scanner_engine" class="ps-modern-input" style="width: 280px; cursor: pointer;">
                         <option value="tfidf" ${mem.scannerEngine === 'tfidf' ? 'selected' : ''}>TF-IDF Keyword Matcher</option>
-                        <option value="semantic" ${mem.scannerEngine === 'semantic' ? 'selected' : ''}>Semantic Embeddings (ST Native API)</option>
+                        <option value="semantic" ${mem.scannerEngine === 'semantic' ? 'selected' : ''}>语义嵌入（ST 原生 API）</option>
                     </select>
                 </div>
                 <div class="mtab-setting-row">
                     <div class="set-info">
                         <div class="set-label">自动触发模式</div>
-                        <div class="set-desc">Trigger background memory sweeps. '每条回复' checks after every message, wait-pooling messages until a full chunk accumulates.</div>
+                        <div class="set-desc">触发后台记忆扫描。「每条回复」会在每条消息后检查，并等待凑满一个完整块。</div>
                     </div>
                     <div style="display:flex; gap:8px; align-items:center;">
                         <select id="mem_trigger" class="ps-modern-input" style="width: 150px; cursor: pointer;">
@@ -319,7 +316,7 @@ export function renderMemoryCore(c) {
 
     $("#mem_btn_clear_vault").off("click").on("click", async function () {
         const mem = localProfile.memoryCore;
-        if (!mem.longTermVault || mem.longTermVault.length === 0) return toastr.info("Vault is already empty.");
+        if (!mem.longTermVault || mem.longTermVault.length === 0) return toastr.info("保险库已为空。");
         
         if (confirm("警告：确定要永久删除全部长期保险库归档吗？此操作无法撤销。")) {
             
@@ -335,7 +332,7 @@ export function renderMemoryCore(c) {
             memRenderVault($("#mem_vault_search").val() || "");
             memRenderDashboard();
             updateMemoryVisuals();
-            toastr.success("Long-Term Vault cleared.");
+            toastr.success("长期保险库已清空。");
         }
     });
 
@@ -561,11 +558,11 @@ export function renderMemoryCore(c) {
                 if (vaultCount === 0) {
                     toastr.info("保险库为空，语义模式暂无可匹配内容。");
                 } else {
-                    toastr.warning(`Vector index returned nothing for ${vaultCount} vault archives. Either the inserts never landed or the query failed, and both print to the console. Re-pick Semantic in the engine dropdown to re-run the inserts.`);
+                    toastr.warning(`向量索引对 ${vaultCount} 个保险库归档返回空结果。可能是插入未成功或查询失败，两者都会打到控制台。可在记忆核心 → 扫描引擎中重新索引。`);
                 }
             } else {
                 html += `<div style="background: rgba(168,85,247,0.1); border-left: 3px solid #a855f7; padding: 10px; border-radius: 4px; margin-bottom: 5px;">
-                <div style="color: #a855f7; font-weight: bold; margin-bottom: 4px;">Semantic Embeddings Engine Active</div>
+                <div style="color: #a855f7; font-weight: bold; margin-bottom: 4px;">语义嵌入引擎已激活</div>
                 <div style="color: var(--text-muted); font-size: 0.75rem;">Using SillyTavern's Vector Storage API (LanceDB) to find the deep contextual meaning of the last 2 messages.</div>
             </div>`;
             }
@@ -575,7 +572,7 @@ export function renderMemoryCore(c) {
         if (engine === 'tfidf' || currentSemanticMatches.length === 0) {
             const { keywords: uniqueKeywords } = memGetCachedKeywords(context.chat, 4);
             html += `<div style="background: rgba(16,185,129,0.1); border-left: 3px solid #10b981; padding: 10px; border-radius: 4px; margin-bottom: 5px;">
-            <div style="color: #10b981; font-weight: bold; margin-bottom: 4px;">TF-IDF Smart Keywords (Last 2 Messages):</div>
+            <div style="color: #10b981; font-weight: bold; margin-bottom: 4px;">TF-IDF 智能关键词（最近 2 条消息）：</div>
             <div style="color: var(--text-muted); font-size: 0.75rem;">${uniqueKeywords.join(", ") || "None"}</div>
         </div>`;
         }
@@ -583,9 +580,9 @@ export function renderMemoryCore(c) {
         const matches = memGetRelevantVaultEntries();
 
         if (matches.length === 0) {
-            html += `<div style="padding: 10px;">No highly relevant memories found for the current context.</div>`;
+            html += `<div style="padding: 10px;">当前上下文未找到高度相关的记忆。</div>`;
         } else {
-            html += `<div style="color: var(--text-muted); margin-bottom: 5px;">The following archives will be injected into the prompt:</div>`;
+            html += `<div style="color: var(--text-muted); margin-bottom: 5px;">以下归档将注入提示词：</div>`;
             matches.forEach(m => {
                 const content = m.text || m.summary;
                 const scoreColor = engine === 'semantic' ? '#a855f7' : '#3b82f6';
@@ -680,7 +677,7 @@ export const MEM_ACCORDION_PAGE_SIZE = 20;
 export function memRenderAccordion() {
     const mem = localProfile.memoryCore;
     const list = $("#mem_short_term_list");
-    // The Memory Core tab may not be on screen: these run from the profile loader
+    // The 记忆核心 tab may not be on screen: these run from the profile loader
     // and the prune, not only from the tab itself. jQuery no-ops .empty()/.append()
     // on an empty set, so the function looked safe — but the batch renderer reaches
     // for list[0].appendChild(), and undefined has no appendChild. It only threw
@@ -739,7 +736,7 @@ export function memRenderAccordion() {
 
             // Delete button logic
             acc.find(".mem_short_del").on("click", function () {
-                if (confirm(`Delete short-term memory chunk [Messages: ${chunk.id}]? It will be permanently removed.`)) {
+                if (confirm(`删除短期记忆块 [消息：${chunk.id}]？将被永久移除。`)) {
                     const id = $(this).attr("data-id");
                     localProfile.memoryCore.shortTermChunks = localProfile.memoryCore.shortTermChunks.filter(c => c.id !== id);
                     mem._tokensDirty = true; delete mem._archivedSet;
@@ -791,7 +788,7 @@ function memNormalizeForSearch(s) {
 export function memRenderVault(searchFilter = "") {
     const mem = localProfile.memoryCore;
     const list = $("#mem_vault_list");
-    // The Memory Core tab may not be on screen: these run from the profile loader
+    // The 记忆核心 tab may not be on screen: these run from the profile loader
     // and the prune, not only from the tab itself. jQuery no-ops .empty()/.append()
     // on an empty set, so the function looked safe — but the batch renderer reaches
     // for list[0].appendChild(), and undefined has no appendChild. It only threw
@@ -1009,7 +1006,7 @@ export async function memProcessPendingChunks(isAuto = false) {
             }
 
             // --- NORMAL SHORT-TERM AI SUMMARIZATION ---
-            toastr.info(`Extracting State: Messages ${chunkData.id} (${idx + 1}/${totalChunks})...`);
+            toastr.info(`正在提取状态：消息 ${chunkData.id} (${idx + 1}/${totalChunks})...`);
 
             let summaryResult = "";
             setActiveMemorySummarizationRequest(chunkData.text);
@@ -1041,7 +1038,7 @@ export async function memProcessPendingChunks(isAuto = false) {
 
         // Show single summary toast for vault bypass instead of per-chunk spam
         if (bypassedCount > 0) {
-            toastr.info(`Archived ${bypassedCount} chunk(s) directly to Vault (bypassed AI).`);
+            toastr.info(`已归档 ${bypassedCount} 个块直接归档到保险库（绕过 AI）。`);
         }
 
         if (changesMade) {
@@ -1343,7 +1340,7 @@ export function memSyncLimits() {
 
     if (changesMade) {
         saveProfileToMemory();
-        toastr.success("Limits Applied! Overlapping archives returned to chat.");
+        toastr.success("限制已应用！重叠归档已退回聊天。");
     } else {
         toastr.info("限制已应用。未发现重叠。");
     }
@@ -1419,7 +1416,7 @@ export function memGetRelevantVaultEntries() {
             : "the vector store returned no matches (it may be empty, still indexing, or unreachable)";
         if (_lastSemanticFallbackReason !== why) {
             _lastSemanticFallbackReason = why;
-            console.warn(`[Megumin Suite] Semantic search is selected but ${why}. Falling back to keyword (TF-IDF) matching. Re-index from Memory Core → Scanner Engine if this is unexpected.`);
+            console.warn(`[Megumin Suite] Semantic search is selected but ${why}. Falling back to keyword (TF-IDF) matching. Re-index from 记忆核心 → Scanner Engine if this is unexpected.`);
         }
     } else {
         _lastSemanticFallbackReason = null;
@@ -1597,7 +1594,7 @@ registerRefreshHook(REFRESH.MEMORY_ACCORDION, () => memRenderAccordion());
 registerRefreshHook(REFRESH.MEMORY_VAULT, (filter) => memRenderVault(filter || ""));
 registerRefreshHook(REFRESH.MEMORY_CACHE_INVALIDATE, () => { _vaultRetrievalCache.key = ""; });
 registerRefreshHook(REFRESH.MEMORY_SCRUB_OVERLAPS, () => {
-    // Only when the Memory Core is on: with it off its archives are inert, and
+    // Only when the 记忆核心 is on: with it off its archives are inert, and
     // deleting them would throw away work the user may still switch back on.
     const m = localProfile?.memoryCore;
     if (!m?.enabled) return false;

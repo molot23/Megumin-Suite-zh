@@ -41,10 +41,10 @@ export async function useMeguminEngine(task, targetPreset = TARGET_PRESET_NAME) 
     if (option.length) {
         originalValue = selector.val();
         selector.val(option.val()).trigger("change");
-        toastr.info(`Switched to ${targetPreset} preset... Please wait.`);
+        toastr.info(`已切换到 ${targetPreset} 预设…请稍候。`);
         await new Promise(r => setTimeout(r, 3000));
     } else {
-        toastr.error(`"${targetPreset}" not found in OpenAI presets.`);
+        toastr.error(`"${targetPreset}" 未在 OpenAI 预设中找到。`);
         return;
     }
 

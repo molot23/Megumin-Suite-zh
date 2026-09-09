@@ -1,5 +1,5 @@
 // ────────────────────────────────────────────────────────────────────────────
-// The NPC Update tab inside the chat card.
+// The NPC 更新 tab inside the chat card.
 //
 // The block registry gets the tab drawn for free — that is what the registry is
 // for. What it draws by default is the model's raw text, which is the wrong
@@ -27,7 +27,7 @@ function esc(s) {
         .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-// Redraw one message's NPC Update pane from what was actually applied.
+// Redraw one message's NPC 更新 pane from what was actually applied.
 //
 // Called with the pane element the card renderer produced. Leaves it exactly as
 // it was if there is no changelog for this message — which covers a card drawn
@@ -106,7 +106,7 @@ export function npcDecorateUpdatePane(paneEl, msgIndex) {
             // Newest first, so undoing one never has to drop another in this set.
             [...entries].reverse().forEach(h => npcUndoHistoryEntry(h.id));
             if (typeof toastr !== "undefined") {
-                toastr.info(`${entries.length} changes from this reply were undone.`, "Megumin Suite");
+                toastr.info(`${entries.length} 项更改已撤销。`, "Megumin Suite");
             }
             refresh();
         });

@@ -196,7 +196,7 @@ import { renderDevMode } from "./src/ui/devmode.js";
 
 // -------------------------------------------------------------
 // SIDE PANEL — Tab renderer
-// Pulls the in-chat tracker blocks (World State, NPC Inner Chatter,
+// Pulls the in-chat tracker blocks (世界状态, NPC 内心独白,
 // Summary, NPC dossiers) out into a fixed side panel.
 // -------------------------------------------------------------
 
@@ -460,7 +460,7 @@ jQuery(async () => {
                                 sp.lastTrackerState = match[1].trim();
                                 saveProfileToMemory();
                                 
-                                console.log(`[${extensionName}] 🎬 Story Tracker captured (kept visible).`);
+                                console.log(`[${extensionName}] 🎬 剧情追踪 captured (kept visible).`);
 
                                 // Check if we need to auto-evolve based on status (ONLY if not set to manual)
                                 if (sp.triggerMode !== 'manual') {
@@ -501,7 +501,7 @@ jQuery(async () => {
                                     // new chat's story into the old chat's plan. Checked here
                                     // as well so a switch during the 2s wait costs no call.
                                     if (meguminActiveDataIdentity() !== spIdentity) {
-                                        console.debug(`[Megumin-Suite] Story Director auto-evolve skipped: it was queued for "${spIdentity}" but "${meguminActiveDataIdentity()}" is active now.`);
+                                        console.debug(`[Megumin-Suite] 剧情导演 auto-evolve skipped: it was queued for "${spIdentity}" but "${meguminActiveDataIdentity()}" is active now.`);
                                         return;
                                     }
                                     const chatText = getChatForStoryDirector();
@@ -509,7 +509,7 @@ jQuery(async () => {
                                     try {
                                         let output = sp.backend === "direct" ? await generateStoryPlanLogic(chatText) : await new Promise(r => useMeguminEngine(async () => r(await generateStoryPlanLogic(chatText))));
                                         if (meguminActiveDataIdentity() !== spIdentity) {
-                                            console.debug(`[Megumin-Suite] Story Director auto-evolve declined: the chat changed while the directive was generating ("${spIdentity}" to "${meguminActiveDataIdentity()}"). The new directive was discarded, not applied.`);
+                                            console.debug(`[Megumin-Suite] 剧情导演 auto-evolve declined: the chat changed while the directive was generating ("${spIdentity}" to "${meguminActiveDataIdentity()}"). The new directive was discarded, not applied.`);
                                             return;
                                         }
                                         const directiveMatch = output?.match(/<directive>([\s\S]*?)<\/directive>/i) || output?.match(/<plot>([\s\S]*?)<\/plot>/i);
@@ -523,7 +523,7 @@ jQuery(async () => {
                                             }
                                             toastr.success("叙事指令已静默演化！", "剧情导演");
                                         }
-                                    } catch (e) { console.error("[Megumin Suite] Story Director auto-evolve failed", e); }
+                                    } catch (e) { console.error("[Megumin Suite] 剧情导演 auto-evolve failed", e); }
                                 }, 2000); // Delay to let UI settle
                             }
                         }
@@ -631,7 +631,7 @@ jQuery(async () => {
                                 // line shows the dossier that failed to parse rather than prose.
                                 const npcMes = lastMsg.mes || "";
                                 const npcAt = Math.max(0, npcMes.search(/New[ _]NPC/i));
-                                console.debug(`[Megumin-Suite] New NPC block present but unparseable in message ${chat.length - 1}`, npcMes.slice(npcAt, npcAt + 200));
+                                console.debug(`[Megumin-Suite] 新 NPC block present but unparseable in message ${chat.length - 1}`, npcMes.slice(npcAt, npcAt + 200));
                             }
                         }
                     }

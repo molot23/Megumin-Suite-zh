@@ -100,7 +100,7 @@ export async function memInsertToVectorDB(chunks, expectIdentity) {
 
             if (showProgress) {
                 if (typeof showKazumaProgress === 'function') {
-                    showKazumaProgress(`Syncing Vector DB... (${i + 1}/${totalBatches})`);
+                    showKazumaProgress(`正在同步向量数据库... (${i + 1}/${totalBatches})`);
                 }
             }
 

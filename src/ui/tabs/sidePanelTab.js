@@ -1,5 +1,5 @@
 // ────────────────────────────────────────────────────────────────────────────
-// Side Panel — popping tracker blocks out of the chat.
+// 侧边栏 — popping tracker blocks out of the chat.
 // ────────────────────────────────────────────────────────────────────────────
 
 import { localProfile } from "../../core/state.js";
@@ -120,7 +120,7 @@ export function renderSidePanelTab(c) {
             <div class="meg-sp-settings-row">
                 <div>
                     <div class="label">重置浮动位置</div>
-                    <div class="desc">Brings a lost floating panel back on screen at the default spot and size.</div>
+                    <div class="desc">将丢失的浮动面板拉回屏幕默认位置与大小。</div>
                 </div>
                 <div class="control"><button id="megsp_float_reset" class="ps-modern-btn secondary"><i class="fa-solid fa-crosshairs"></i> 重置</button></div>
             </div>
@@ -139,8 +139,8 @@ export function renderSidePanelTab(c) {
 
             <div class="mtab-toggle-row ${cfg.autoHideEmpty ? 'active' : ''}" id="megsp_autohide_row">
                 <div class="toggle-info">
-                    <div class="toggle-label">Hide sections with no data</div>
-                    <div class="toggle-desc">Sections with nothing to show disappear instead of rendering an empty shell.</div>
+                    <div class="toggle-label">隐藏无数据的分区</div>
+                    <div class="toggle-desc">没有内容可显示的分区会直接消失，而不是渲染空壳。</div>
                 </div>
                 <div class="ps-switch"></div>
             </div>
@@ -148,7 +148,7 @@ export function renderSidePanelTab(c) {
             <div class="meg-sp-settings-row">
                 <div>
                     <div class="label">重置分区布局</div>
-                    <div class="desc">Restores default order, visibility, and open/closed states.</div>
+                    <div class="desc">恢复默认顺序、可见性与展开/折叠状态。</div>
                 </div>
                 <div class="control"><button id="megsp_sections_reset" class="ps-modern-btn secondary"><i class="fa-solid fa-rotate-left"></i> 重置</button></div>
             </div>
@@ -158,7 +158,7 @@ export function renderSidePanelTab(c) {
             <div class="mtab-toggle-row ${pb.enabled ? 'active' : ''}" id="megpb_enabled_row">
                 <div class="toggle-info">
                     <div class="toggle-label">启用在场角色条</div>
-                    <div class="toggle-desc">A Doom-style horizontal portrait strip next to the chat input. Pulls the cast from the AI's World State NPCs Present, portraits from the NPC Bank.</div>
+                    <div class="toggle-desc">Doom 风格的横向肖像条，位于聊天输入框旁。从 AI 世界状态的「在场 NPC」拉取阵容，有则使用 NPC 库中的肖像。</div>
                 </div>
                 <div class="ps-switch"></div>
             </div>
@@ -166,7 +166,7 @@ export function renderSidePanelTab(c) {
             <div class="meg-sp-settings-row">
                 <div>
                     <div class="label">条带位置</div>
-                    <div class="desc">Where the strip mounts relative to SillyTavern's message input.</div>
+                    <div class="desc">条带相对于 SillyTavern 消息输入框的挂载位置。</div>
                 </div>
                 <div class="control">
                     <select id="megpb_position" class="ps-modern-input" style="min-width: 160px;">
@@ -180,7 +180,7 @@ export function renderSidePanelTab(c) {
             <div class="meg-sp-settings-row">
                 <div>
                     <div class="label">卡片尺寸</div>
-                    <div class="desc">Width × height of each portrait card in the strip.</div>
+                    <div class="desc">条带中每张肖像卡片的宽 × 高。</div>
                 </div>
                 <div class="control">
                     <input id="megpb_card_w" type="number" min="80" max="240" step="5" value="${pb.cardWidth || 120}" class="ps-modern-input" style="width: 80px;" />
@@ -194,8 +194,8 @@ export function renderSidePanelTab(c) {
 
             <div class="mtab-toggle-row ${cfg.hideInline ? 'active' : ''}" id="megsp_hideinline_row">
                 <div class="toggle-info">
-                    <div class="toggle-label">Hide inline tracker blocks in chat</div>
-                    <div class="toggle-desc">Removes the <code>&lt;details&gt;</code> tracker blocks from the rendered chat DOM (they stay in the saved message so re-parsing keeps working).</div>
+                    <div class="toggle-label">在聊天中隐藏内联追踪块</div>
+                    <div class="toggle-desc">从渲染后的聊天 DOM 中移除 <code>&lt;details&gt;</code> 追踪块（仍保存在已保存消息中，以便重新解析）。</div>
                 </div>
                 <div class="ps-switch"></div>
             </div>
@@ -203,17 +203,17 @@ export function renderSidePanelTab(c) {
             <div class="meg-sp-settings-row">
                 <div>
                     <div class="label">强制刷新</div>
-                    <div class="desc">Re-parse the latest assistant message and rebuild the panel right now.</div>
+                    <div class="desc">立即重新解析最新助手消息并重建面板。</div>
                 </div>
-                <div class="control"><button id="megsp_refresh" class="ps-modern-btn primary"><i class="fa-solid fa-rotate"></i> Refresh</button></div>
+                <div class="control"><button id="megsp_refresh" class="ps-modern-btn primary"><i class="fa-solid fa-rotate"></i> 刷新</button></div>
             </div>
 
             <div class="meg-sp-settings-row">
                 <div>
-                    <div class="label">Reset all side-panel settings</div>
-                    <div class="desc">Wipes every setting on this tab back to defaults. Debug console handle: <code>window.LukaSuite</code></div>
+                    <div class="label">重置全部侧边栏设置</div>
+                    <div class="desc">将此选项卡的所有设置清回默认值。调试控制台句柄： <code>window.LukaSuite</code></div>
                 </div>
-                <div class="control"><button id="megsp_reset_all" class="ps-modern-btn secondary" style="color: #ef4444; border-color: rgba(239,68,68,0.3);"><i class="fa-solid fa-trash"></i> Reset all</button></div>
+                <div class="control"><button id="megsp_reset_all" class="ps-modern-btn secondary" style="color: #ef4444; border-color: rgba(239,68,68,0.3);"><i class="fa-solid fa-trash"></i> 全部重置</button></div>
             </div>
         </div>
     `);

@@ -1,5 +1,5 @@
 // ──────────────────────────────────────────────────────────────────────────────
-// Story Director — the tab, the genre/flavour vocabulary, and the generation call.
+// 剧情导演 — the tab, the genre/flavour vocabulary, and the generation call.
 // ──────────────────────────────────────────────────────────────────────────────
 
 import { generateQuietPrompt, getContext } from "../../st.js";
@@ -128,7 +128,7 @@ export function renderStoryPlanner(c) {
 
         <div class="mtab-callout gold" style="margin-bottom: 16px;">
             <i class="fa-solid fa-circle-info"></i>
-            <span><strong>V10 does not really need this.</strong> Its engine already drives the plot
+            <span><strong>V10 其实不太需要这个。</strong> Its engine already drives the plot
             forward on its own, so the Director is optional rather than recommended there. Switch it
             on if you want a hand on the wheel &mdash; a specific arc, a pace change, a beat you want
             reached &mdash; and leave it off otherwise.</span>
@@ -137,7 +137,7 @@ export function renderStoryPlanner(c) {
         <!-- MASTER TOGGLE -->
         <div class="mtab-toggle-row ${sp.enabled ? 'active' : ''}" id="sd_enable_card" style="margin-bottom: 20px;">
             <div class="toggle-info">
-                <div class="toggle-label"><i class="fa-solid fa-clapperboard" style="color:var(--gold);"></i> Enable Story Director</div>
+                <div class="toggle-label"><i class="fa-solid fa-clapperboard" style="color:var(--gold);"></i> 启用剧情导演</div>
                 <div class="toggle-desc">分析你的角色扮演并生成推动剧情的叙事指令。</div>
             </div>
             <div class="ps-switch"></div>
@@ -147,7 +147,7 @@ export function renderStoryPlanner(c) {
 
             <!-- DIRECTOR'S CONSOLE -->
             <div class="mtab-panel">
-                <div class="mtab-panel-title gold"><i class="fa-solid fa-sliders"></i> Director's Console</div>
+                <div class="mtab-panel-title gold"><i class="fa-solid fa-sliders"></i> 导演控制台</div>
 
                 <!-- Content Rating -->
                 <div class="sd-setting-group">
@@ -214,41 +214,41 @@ export function renderStoryPlanner(c) {
             <!-- UNRESTRICTED CONTENT TOGGLE -->
             <div class="mtab-toggle-row ${sp.unrestrictedContent ? 'active' : ''}" id="sd_unrestricted_card">
                 <div class="toggle-info">
-                    <div class="toggle-label"><i class="fa-solid fa-lock-open" style="color:#ef4444;"></i> Unrestricted Content</div>
-                    <div class="toggle-desc">Inject a content policy override into the story context. Enables darker, more explicit narrative directions without AI refusals.</div>
+                    <div class="toggle-label"><i class="fa-solid fa-lock-open" style="color:#ef4444;"></i> 无限制内容</div>
+                    <div class="toggle-desc">向故事上下文注入内容策略覆盖。允许更黑暗、更露骨的叙事方向，减少 AI 拒绝。</div>
                 </div>
                 <div class="ps-switch"></div>
             </div>
 
             <!-- DIRECTOR'S NOTE -->
             <div class="mtab-panel">
-                <div class="mtab-panel-title gold"><i class="fa-solid fa-pen-fancy"></i> Director's Note</div>
+                <div class="mtab-panel-title gold"><i class="fa-solid fa-pen-fancy"></i> 导演备注</div>
                 <div class="sd-directors-note-hint">
                     <i class="fa-solid fa-lightbulb"></i>
                     Tell the AI what you want to happen. It will weave your instruction into a long-term plot — not a hard cut. Leave empty to let the AI decide freely.
                 </div>
-                <textarea id="sd_directors_note" class="ps-modern-input sd-directors-note-input" placeholder="e.g. &quot;I want the maid from my past to show up again&quot; or &quot;make the rival discover the secret&quot; or &quot;I want this NPC to betray me&quot;">${sp.directorsNote || ""}</textarea>
+                <textarea id="sd_directors_note" class="ps-modern-input sd-directors-note-input" placeholder="e.g. &quot;I want the maid from my past to show up again&quot; or &quot;make the rival discover the secret&quot; or &quot;I want 此 NPC to betray me&quot;">${sp.directorsNote || ""}</textarea>
             </div>
 
             <!-- CURRENT DIRECTIVE -->
             <div class="mtab-panel">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
-                    <div class="mtab-panel-title gold" style="margin-bottom:0;"><i class="fa-solid fa-scroll"></i> Current Directive</div>
+                    <div class="mtab-panel-title gold" style="margin-bottom:0;"><i class="fa-solid fa-scroll"></i> 当前指令</div>
                     <div style="display: flex; gap: 8px;">
-                        <button id="sd_btn_generate" class="wstyle-gen-btn" style="padding: 8px 18px; font-size: 0.78rem;"><i class="fa-solid fa-bolt"></i> Generate Directive</button>
+                        <button id="sd_btn_generate" class="wstyle-gen-btn" style="padding: 8px 18px; font-size: 0.78rem;"><i class="fa-solid fa-bolt"></i> 生成指令</button>
                         <button id="sd_btn_evolve" class="wstyle-gen-btn" style="padding: 8px 18px; font-size: 0.78rem; background: rgba(139, 92, 246, 0.15); border-color: rgba(139, 92, 246, 0.3);" ${sp.currentPlan ? '' : 'disabled'}><i class="fa-solid fa-arrows-rotate"></i> Evolve</button>
                     </div>
                 </div>
                 <textarea id="sd_current_plan" class="ps-modern-input sd-directive-output" placeholder="生成后，叙事指令将显示在这里。">${sp.currentPlan || ""}</textarea>
                 <div class="mtab-callout">
                     <i class="fa-solid fa-circle-info"></i>
-                    <span>This directive is injected via <code>[[storyplan]]</code>. A feedback tracker is appended via <code>[[storytracker]]</code>.</span>
+                    <span>此指令通过以下方式注入 <code>[[storyplan]]</code>. A feedback tracker is appended via <code>[[storytracker]]</code>.</span>
                 </div>
             </div>
 
             <!-- ENGINE SETTINGS -->
             <div class="mtab-panel">
-                <div class="mtab-panel-title gold"><i class="fa-solid fa-gears"></i> Engine Settings</div>
+                <div class="mtab-panel-title gold"><i class="fa-solid fa-gears"></i> 引擎设置</div>
                 <div class="mtab-setting-row">
                     <div class="set-info"><div class="set-label">生成后端</div></div>
                     <select id="sd_backend" class="ps-modern-input" style="width: 220px; cursor: pointer;">
@@ -259,7 +259,7 @@ export function renderStoryPlanner(c) {
                 <div class="mtab-setting-row">
                     <div class="set-info">
                         <div class="set-label">上下文限制</div>
-                        <div class="set-desc">How much chat history the Director reads to analyze the plot.</div>
+                        <div class="set-desc">导演分析剧情时读取多少聊天记录。</div>
                     </div>
                     <select id="sd_context_limit" class="ps-modern-input" style="width: 220px; cursor: pointer;">
                         <option value="100" ${sp.contextLimit === 100 ? 'selected' : ''}>Last 100 Messages</option>
@@ -269,7 +269,7 @@ export function renderStoryPlanner(c) {
                 <div class="mtab-setting-row">
                     <div class="set-info">
                         <div class="set-label">自动触发模式</div>
-                        <div class="set-desc">When should the Director evolve the story?</div>
+                        <div class="set-desc">导演应何时演化故事？</div>
                     </div>
                     <div style="display:flex; gap:8px; align-items:center;">
                         <select id="sd_trigger" class="ps-modern-input" style="width: 170px; cursor: pointer;">
@@ -301,7 +301,7 @@ export function renderStoryPlanner(c) {
             { key: "userPrompt", label: "User Task Prompt", hint: "Tokens: <code>{{user}}</code>, <code>{{directorSettings}}</code>" },
             { key: "thinkingPrompt", label: "Thinking Instructions", hint: "Must include output ordering instructions with <code>&lt;directive&gt;</code> tags." },
             { key: "injectionTemplate", label: "指令注入模板", hint: "Tokens: <code>{{planText}}</code>" },
-            { key: "trackerTemplate", label: "Story Tracker Template", hint: "Tokens: <code>{{user}}</code>" }
+            { key: "trackerTemplate", label: "剧情追踪 Template", hint: "Tokens: <code>{{user}}</code>" }
         ],
         onSave: (val, key) => {
             if (!sp.customPrompts) sp.customPrompts = JSON.parse(JSON.stringify(DEFAULT_PROMPTS.storyPlan));
@@ -390,7 +390,7 @@ export function renderStoryPlanner(c) {
         saveProfileToMemory();
     });
 
-    // Unrestricted Content toggle
+    // 无限制内容 toggle
     $("#sd_unrestricted_card").on("click", function () {
         sp.unrestrictedContent = !sp.unrestrictedContent;
         saveProfileToMemory();
@@ -401,10 +401,10 @@ export function renderStoryPlanner(c) {
         }
     });
 
-    // Director's Note
+    // 导演备注
     $("#sd_directors_note").on("input", e => { sp.directorsNote = $(e.target).val(); saveProfileDebounced(); });
 
-    // Current Plan textarea
+    // 当前 Plan textarea
     $("#sd_current_plan").on("input", e => { sp.currentPlan = $(e.target).val(); sp.planMessageIndex = (getContext().chat?.length || 1) - 1; saveProfileDebounced(); });
 
     // Backend
@@ -435,7 +435,7 @@ export async function handleDirectiveGeneration(sp, btn, isEvolve) {
     const chatText = getChatForStoryDirector();
     if (chatText.length < 100) return toastr.warning("聊天记录不足，无法生成指令。");
 
-    // `sp` was captured when the Story Director tab was rendered, so it can already be a
+    // `sp` was captured when the 剧情导演 tab was rendered, so it can already be a
     // couple of chats old, and the generation below takes seconds on top of that. Stamp
     // the chat the directive is being written FOR and re-check it before storing.
     const sdIdentity = meguminActiveDataIdentity();
@@ -455,7 +455,7 @@ export async function handleDirectiveGeneration(sp, btn, isEvolve) {
             // Writing now would put this chat's directive into the old one, and
             // planMessageIndex would be counted against the wrong chat's length.
             if (meguminActiveDataIdentity() !== sdIdentity) {
-                console.debug(`[Megumin-Suite] Story Director ${isEvolve ? 'evolve' : 'generate'} declined: it started on "${sdIdentity}" but "${meguminActiveDataIdentity()}" is active now. The new directive was discarded, not applied.`);
+                console.debug(`[Megumin-Suite] 剧情导演 ${isEvolve ? 'evolve' : 'generate'} declined: it started on "${sdIdentity}" but "${meguminActiveDataIdentity()}" is active now. The new directive was discarded, not applied.`);
                 toastr.info("生成指令时聊天已切换，指令已丢弃。", "剧情导演");
                 return;
             }
@@ -474,7 +474,7 @@ export async function handleDirectiveGeneration(sp, btn, isEvolve) {
         }
     } catch (e) {
         toastr.error("生成指令失败。");
-        console.error("[Megumin Suite] Story Director error:", e);
+        console.error("[Megumin Suite] 剧情导演 error:", e);
     } finally {
         btn.prop("disabled", false).html(originalHtml);
     }

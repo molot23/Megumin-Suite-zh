@@ -40,7 +40,7 @@ export function renderPersonality(c) {
     // would have done it again. The engine already knows what it is called.
     const lockedEngineName = (activeEngineForPersona && activeEngineForPersona.label)
         ? activeEngineForPersona.label
-        : "This engine";
+        : "此引擎";
 
     if (isModern) {
         c.append(`
@@ -88,7 +88,7 @@ export function renderPersonality(c) {
                     <div class="ecard-body">
                         <div class="ecard-title">
                             <span>${p.label}</span>
-                            ${isSel ? `<span class="ecard-badge" style="background:rgba(16,185,129,0.15);color:#10b981;"><i class="fa-solid fa-check"></i> Active</span>` : ''}
+                            ${isSel ? `<span class="ecard-badge" style="background:rgba(16,185,129,0.15);color:#10b981;"><i class="fa-solid fa-check"></i> 已激活</span>` : ''}
                         </div>
                         <p class="ecard-desc">${descriptions[p.id] || ""}</p>
                         ${badges ? `<div style="margin-top:4px;">${badges}</div>` : ''}
@@ -110,7 +110,7 @@ export function renderPersonality(c) {
             <div class="mtab-toggle-row ${isOn ? 'active' : ''}">
                 <div class="toggle-info">
                     <div class="toggle-label">${tog.label}</div>
-                    ${tog.recommendedOff ? `<div class="toggle-desc"><i class="fa-solid fa-star" style="color:var(--gold);font-size:0.6rem;margin-right:4px;"></i> Off by default — most engines handle this natively</div>` : ''}
+                    ${tog.recommendedOff ? `<div class="toggle-desc"><i class="fa-solid fa-star" style="color:var(--gold);font-size:0.6rem;margin-right:4px;"></i> 默认关闭——多数引擎原生已处理</div>` : ''}
                 </div>
                 <div class="ps-switch"></div>
             </div>

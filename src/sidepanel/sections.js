@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 /*
- * Megumin Suite — Side Panel section registry
+ * Megumin Suite — 侧边栏 section registry
  *
  * Every tracker section is declared once here as { id, icon, title,
  * defaultOpen, order, render(ctx), badge(ctx) }. panel.js iterates this
@@ -17,8 +17,8 @@ import { el, escapeHtml, isMaleSex, avatarNode } from "./dom.js";
 
 // The panel mirrors one chat. Three of the sections below draw from the saved
 // profile rather than from a message, and the profile is still there when no chat
-// is open - so closing a chat left Story Planner and NPC Bank drawn over nothing,
-// while World State and NPC Inner Chatter, which read the message, went correctly
+// is open - so closing a chat left 剧情规划 and NPC 库 drawn over nothing,
+// while 世界状态 and NPC 内心独白, which read the message, went correctly
 // empty. panel.js works out whether a chat is open and puts the answer in the
 // section context; these three draw nothing when it says no, and the panel's
 // hide-empty setting then drops them.
@@ -29,7 +29,7 @@ import { el, escapeHtml, isMaleSex, avatarNode } from "./dom.js";
 const noChat = (ctx) => ctx.hasChat === false;
 
 // -----------------------------------------------------------------------------
-// World State
+// 世界状态
 // -----------------------------------------------------------------------------
 function renderWorldState(ctx) {
     const ws = ctx.parsed?.worldState;
@@ -70,7 +70,7 @@ function renderWorldState(ctx) {
         ));
     }
 
-    // NPCs Present renders in the Present Characters bar (bottom of chat);
+    // 在场 NPC renders in the Present Characters bar (bottom of chat);
     // click a portrait there for the full sheet.
 
     if (ws.offScreen && ws.offScreen.length) {
@@ -82,21 +82,21 @@ function renderWorldState(ctx) {
 
     if (ws.threads && ws.threads.length) {
         container.appendChild(el("div", { class: "meg-sp-card-head meg-sp-card-head-sep" },
-            el("i", { class: "fa-solid fa-fire" }), " Unresolved Threads"));
+            el("i", { class: "fa-solid fa-fire" }), " 未决线索"));
         container.appendChild(el("ul", { class: "meg-sp-bullets" },
             ws.threads.map(x => el("li", {}, x))));
     }
 
     if (ws.plantedSeeds && ws.plantedSeeds.length) {
         container.appendChild(el("div", { class: "meg-sp-card-head meg-sp-card-head-sep" },
-            el("i", { class: "fa-solid fa-seedling" }), " Planted Seeds"));
+            el("i", { class: "fa-solid fa-seedling" }), " 埋下的伏笔"));
         container.appendChild(el("ul", { class: "meg-sp-bullets" },
             ws.plantedSeeds.map(x => el("li", {}, x))));
     }
 
     if (ws.consequenceTimers && ws.consequenceTimers.length) {
         container.appendChild(el("div", { class: "meg-sp-card-head meg-sp-card-head-sep" },
-            el("i", { class: "fa-solid fa-hourglass-half" }), " Consequence Timers"));
+            el("i", { class: "fa-solid fa-hourglass-half" }), " 后果计时器"));
         container.appendChild(el("ul", { class: "meg-sp-bullets" },
             ws.consequenceTimers.map(x => el("li", {}, x))));
     }
@@ -111,7 +111,7 @@ function renderWorldState(ctx) {
 }
 
 // -----------------------------------------------------------------------------
-// NPC Inner Chatter
+// NPC 内心独白
 // -----------------------------------------------------------------------------
 function renderInnerChatter(ctx) {
     const entries = ctx.parsed?.innerChatter;
@@ -156,7 +156,7 @@ function renderInnerChatter(ctx) {
 }
 
 // -----------------------------------------------------------------------------
-// New NPC Dossiers
+// 新 NPC 档案
 // -----------------------------------------------------------------------------
 // The one line that sits beside a closed dossier's name. Their role says who
 // the person is in the fewest words; age and sex are the next best; failing
@@ -167,7 +167,7 @@ function renderInnerChatter(ctx) {
 const DOSSIER_PREVIEW_KEYS = ["角色", "职业", "年龄", "性别", "可寻之处"];
 const DOSSIER_PREVIEW_MAX = 64;
 
-export function dossier预览(fields) {
+export function dossierPreview(fields) {
     const f = fields || {};
     const pick = k => (typeof f[k] === "string" && f[k].trim()) ? f[k].trim() : "";
     let s = "";
@@ -198,7 +198,7 @@ function renderNewNpcs(ctx) {
         d.open = !many;
         // Only worth the room when the body is hidden; with the body open the
         // same fact is already the first row under the header.
-        const preview = many ? dossier预览(n.fields) : "";
+        const preview = many ? dossierPreview(n.fields) : "";
         d.appendChild(el("summary", { class: "meg-sp-newnpc-head" },
             el("i", { class: "fa-solid fa-user-plus" }), " ",
             el("span", { class: "meg-sp-newnpc-name" }, n.name || "未命名 NPC"),
@@ -225,7 +225,7 @@ function renderNewNpcs(ctx) {
                         // with a line break between entries, and the browser
                         // was folding those breaks into spaces so three people
                         // read as one line. Such a value now draws as the same
-                        // bullet list the Planted Seeds rows use: the label on
+                        // bullet list the 埋下的伏笔 rows use: the label on
                         // its own line, then one bulleted line per entry. The
                         // usual one-line value keeps the span it always had.
                         v.includes("\n")
@@ -239,12 +239,12 @@ function renderNewNpcs(ctx) {
 }
 
 // -----------------------------------------------------------------------------
-// Story Planner
+// 剧情规划
 // -----------------------------------------------------------------------------
 // The story tracker the model appends to a reply is drawn here rather than in a
 // section of its own. That is the decision, in the author's words: handled the
 // same way as the other blocks, hidden in the chat by the side panel hider, and
-// shown in the Story Planner section separated by a horizontal bar from the
+// shown in the 剧情规划 section separated by a horizontal bar from the
 // information below it.
 //
 // Field lines draw as the label-and-value rows the dossier cards already use, so
@@ -264,7 +264,7 @@ function renderStoryTracker(ctx) {
 
 // The bar between the tracker and the plan. Written on the element rather than as
 // a rule so the stylesheet gains nothing for it: the three properties are the
-// panel's own separator, the dashed line the World State headings already draw
+// panel's own separator, the dashed line the 世界状态 headings already draw
 // between their groups, in the panel's own soft border colour.
 const trackerRule = () => el("hr", {
     style: { border: "0", borderTop: "1px dashed var(--meg-sp-border-soft)", margin: "10px 0" },
@@ -304,7 +304,7 @@ function renderStoryPlan(ctx) {
 }
 
 // -----------------------------------------------------------------------------
-// NPC Bank
+// NPC 库
 // -----------------------------------------------------------------------------
 function renderNpcBank(ctx) {
     if (noChat(ctx)) return null;
@@ -319,7 +319,7 @@ function renderNpcBank(ctx) {
         onclick: () => ctx.openNpcBook(),
     },
         el("i", { class: "fa-solid fa-book-open" }),
-        " Open NPC Book",
+        " 打开 NPC 手册",
         npcs.length ? el("span", { class: "meg-sp-book-count" }, String(npcs.length)) : null,
     );
     wrap.appendChild(openBookBtn);
@@ -331,7 +331,7 @@ function renderNpcBank(ctx) {
     }
 
     const grid = el("div", { class: "meg-sp-bank-grid" });
-    // Newest first (matches the NPC Book's reverse-iteration pattern)
+    // Newest first (matches the NPC 手册's reverse-iteration pattern)
     [...npcs].reverse().forEach((n, revIdx) => {
         const idx = npcs.length - 1 - revIdx;
         const male = isMaleSex(n.sex);
@@ -364,7 +364,7 @@ function renderNpcBank(ctx) {
 }
 
 // -----------------------------------------------------------------------------
-// Ban List
+// 禁用列表
 // -----------------------------------------------------------------------------
 function renderBanList(ctx) {
     if (noChat(ctx)) return null;

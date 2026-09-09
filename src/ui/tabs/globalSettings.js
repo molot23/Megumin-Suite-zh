@@ -1,5 +1,5 @@
 // ────────────────────────────────────────────────────────────────────────────
-// Global Settings — extension preferences, community links and about.
+// 全局设置 — extension preferences, community links and about.
 // ────────────────────────────────────────────────────────────────────────────
 
 import { extension_settings, saveSettingsDebounced } from "../../st.js";
@@ -59,7 +59,7 @@ export function renderGlobalSettings(c) {
                 </div>
             </div>
             <div class="mtab-header-badge" style="background: rgba(168,85,247,0.12); color: #a855f7; border: 1px solid rgba(168,85,247,0.25);">
-                <i class="fa-solid fa-earth-americas" style="font-size:0.6rem;"></i> Saved globally
+                <i class="fa-solid fa-earth-americas" style="font-size:0.6rem;"></i> 已全局保存
             </div>
         </div>
     `);
@@ -69,19 +69,19 @@ export function renderGlobalSettings(c) {
     // ── BEHAVIOUR ───────────────────────────────────────────────────────────
     $content.append(`<div class="wstyle-section-head blue"><i class="fa-solid fa-sliders"></i> 行为</div>`);
     $content.append(`
-        <div class="mtab-toggle-row ${gs.prompt预览 ? 'active' : ''}" id="gs_toggle_prompt_preview" style="cursor: pointer;">
+        <div class="mtab-toggle-row ${gs.promptPreview ? 'active' : ''}" id="gs_toggle_prompt_preview" style="cursor: pointer;">
             <div class="toggle-info">
                 <div class="toggle-label"><i class="fa-solid fa-magnifying-glass" style="color: var(--gold);"></i> 提示词载荷预览</div>
-                <div class="toggle-desc">Shows the finished prompt in a popup before it is sent, so you can read exactly what the AI receives. Cancelling the popup stops the generation.</div>
+                <div class="toggle-desc">发送前以弹窗显示完整提示词，便于查看 AI 实际收到的内容。取消弹窗即停止生成。</div>
             </div>
-            <div class="ps-switch" style="${gs.prompt预览 ? 'background: var(--gold);' : ''}"></div>
+            <div class="ps-switch" style="${gs.promptPreview ? 'background: var(--gold);' : ''}"></div>
         </div>
     `);
     $content.append(`
         <div class="mtab-toggle-row ${gs.enableUtilityPrefill ? 'active' : ''}" id="gs_toggle_utility_prefill" style="cursor: pointer;">
             <div class="toggle-info">
                 <div class="toggle-label"><i class="fa-solid fa-wand-sparkles" style="color: #10b981;"></i> 工具预填充</div>
-                <div class="toggle-desc">Puts an opening &lt;think&gt; into the AI's mouth for background jobs — Image Gen, the Ban List, the Story Director, NPC scans. <b>Off by default:</b> Claude and several other APIs reject a prefill outright. Turn it on only if yours accepts one.</div>
+                <div class="toggle-desc">为后台任务（图像生成、禁用列表、剧情导演、NPC 扫描）在 AI 回复前预填 &lt;think&gt;。<b>默认关闭：</b>Claude 等部分 API 会直接拒绝预填充。仅当你的接口接受时再开启。</div>
             </div>
             <div class="ps-switch" style="${gs.enableUtilityPrefill ? 'background: #10b981;' : ''}"></div>
         </div>
@@ -94,7 +94,7 @@ export function renderGlobalSettings(c) {
             <div class="mtab-setting-row" style="padding: 0; border: none;">
                 <div class="set-info">
                     <div class="set-label"><i class="fa-solid fa-floppy-disk" style="color: var(--gold);"></i> 配置保存模式</div>
-                    <div class="set-desc"><b>Per Character</b> shares your settings across every chat with that character. <b>按聊天</b> keeps each chat and each branch on its own settings.</div>
+                    <div class="set-desc"><b>按角色</b>在该角色的每次聊天间共享设置。<b>按聊天</b>让每次聊天与每个分支各自独立。</div>
                 </div>
                 <select id="gs_save_mode" class="ps-modern-input" style="width: 180px; cursor: pointer;">
                     <option value="character" ${gs.saveMode === 'character' ? 'selected' : ''}>按角色（默认）</option>
@@ -114,14 +114,14 @@ export function renderGlobalSettings(c) {
                 <div class="gs-submit-body">
                     <div class="gs-submit-icon"><i class="fa-solid fa-inbox"></i></div>
                     <div>
-                        <div class="gs-submit-title">Got a card or a scenario worth playing?</div>
-                        <div class="gs-submit-text">I have been running out of things to roleplay, so I am collecting recommendations. Attach a character card, describe a scenario, or just drop a link to something you enjoyed. <b>完全匿名</b> — no sign-in, no name, nothing tying it back to you. I cannot reply, so say everything you want to say in the form.</div>
+                        <div class="gs-submit-title">有值得一玩的卡片或剧本吗？</div>
+                        <div class="gs-submit-text">我有点缺可玩的内容，所以在收集推荐。可附上角色卡、描述剧本，或丢一个你喜欢的链接。<b>完全匿名</b>——无需登录、不用留名、不会追溯到你。我无法回复，请在表单里把想说的都写完。</div>
                     </div>
                 </div>
                 <a class="gs-submit-btn" href="${SUBMIT_FORM_URL}" target="_blank" rel="noopener noreferrer">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Open the form
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> 打开表单
                 </a>
-                <div class="gs-submit-note">Opens tally.so in your browser, outside SillyTavern.</div>
+                <div class="gs-submit-note">在浏览器中打开 tally.so（SillyTavern 外部）。</div>
             </div>
         `);
     }
@@ -131,12 +131,12 @@ export function renderGlobalSettings(c) {
     $content.append(`
         <div class="mtab-panel gs-about" style="margin: 0;">
             <div class="gs-about-title">Megumin Suite ${SUITE_VERSION}</div>
-            <div class="gs-about-by">Made by KazumaONIISAN</div>
+            <div class="gs-about-by">作者：KazumaONIISAN</div>
 
             <div class="gs-link-grid">
                 <a class="gs-link" href="https://github.com/Arif-salah/Megumin-Suite" target="_blank" rel="noopener noreferrer">
                     <i class="fa-brands fa-github"></i>
-                    <span><b>GitHub</b><small>Source, issues and releases</small></span>
+                    <span><b>GitHub</b><small>源码、议题与发布</small></span>
                 </a>
                 <div class="gs-link gs-link-static">
                     <i class="fa-brands fa-paypal" style="color:#3b82f6;"></i>
@@ -164,7 +164,7 @@ export function renderGlobalSettings(c) {
             $(this).find(".ps-switch").css("background", gs[key] ? colour : "");
         });
     };
-    wireToggle("#gs_toggle_prompt_preview", "prompt预览", "var(--gold)");
+    wireToggle("#gs_toggle_prompt_preview", "promptPreview", "var(--gold)");
     wireToggle("#gs_toggle_utility_prefill", "enableUtilityPrefill", "#10b981");
 
     $content.find("#gs_save_mode").on("change", function () {
@@ -177,7 +177,7 @@ export function renderGlobalSettings(c) {
         gs.saveMode = $(this).val();
         saveSettingsDebounced();
         initProfile(); // Immediately reloads the correct profile
-        toastr.success(`Save mode changed to Per ${gs.saveMode === 'chat' ? '聊天' : '角色'}.`);
+        toastr.success(`保存模式已改为按${gs.saveMode === 'chat' ? '聊天' : '角色'}.`);
     });
 
     c.append($content);

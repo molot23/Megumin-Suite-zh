@@ -37,7 +37,7 @@ function enhancedDialogueMarkup(m, isLocked) {
     if (!isV10Engine(m) || isLocked) return "";
     const on = enhancedDialogueOn(m);
     return `
-        <div class="ecard-opt ${on ? "on" : ""}" title="Swap this engine's dialogue rules for the stricter, prescriptive set: named categories, orthographic cues for emotion, and an explicit ban list. For models that read the shipped section as a suggestion.">
+        <div class="ecard-opt ${on ? "on" : ""}" title="将此引擎的对话规则换成更严格、更规定性的一套：命名类别、情绪正字法提示，以及更强硬的发言人标签。">
             <div class="ecard-opt-text">
                 <span class="ecard-opt-label"><i class="fa-solid fa-comment-dots"></i> Enhanced 对话</span>
                 <span class="ecard-opt-state">${on ? "开" : "关"}</span>
@@ -141,8 +141,8 @@ export function renderCoreAndCot(c) {
     // --- BUILD SIDEBAR ---
     sidebar.append(`<div class="ws-sidebar-title">配置</div>`);
     
-    const btnOfficial = $(`<button class="ws-nav-btn active" data-target="sec-official"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-server"></i> Official 引擎</span> <span class="ws-badge">${totalCount}</span></button>`);
-    const btnCustom = $(`<button class="ws-nav-btn" data-target="sec-custom"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-microchip"></i> Custom 引擎</span> <span class="ws-badge">${customCount}</span></button>`);
+    const btnOfficial = $(`<button class="ws-nav-btn active" data-target="sec-official"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-server"></i> 官方引擎</span> <span class="ws-badge">${totalCount}</span></button>`);
+    const btnCustom = $(`<button class="ws-nav-btn" data-target="sec-custom"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-microchip"></i> 自定义引擎</span> <span class="ws-badge">${customCount}</span></button>`);
     
     sidebar.append(btnOfficial).append(btnCustom);
     sidebar.append(`<div style="height: 1px; background: var(--border-color); margin: 8px 0;"></div>`);
@@ -165,7 +165,7 @@ export function renderCoreAndCot(c) {
     // ==========================================
     // ── A. OFFICIAL ENGINES ──
     // ==========================================
-    secOfficial.append(`<h3 style="margin-top: 0; color: var(--gold); font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-server"></i> Official Megumin 引擎</h3>`);
+    secOfficial.append(`<h3 style="margin-top: 0; color: var(--gold); font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-server"></i> 官方 Megumin 引擎</h3>`);
     secOfficial.append(`
         <div class="mtab-callout gold" style="margin-bottom: 20px;">
             <i class="fa-solid fa-lightbulb"></i>
@@ -175,7 +175,7 @@ export function renderCoreAndCot(c) {
 
     const filterBar = $(`
         <div class="wstyle-filters" style="margin-bottom: 20px;">
-            <button class="wstyle-filter-pill ${activeFilter === 'all' ? 'active' : ''}" data-filter="all">All <span class="pill-count">${totalCount}</span></button>
+            <button class="wstyle-filter-pill ${activeFilter === 'all' ? 'active' : ''}" data-filter="all">全部 <span class="pill-count">${totalCount}</span></button>
             <button class="wstyle-filter-pill ${activeFilter === 'V4' ? 'active' : ''}" data-filter="V4">V4 <span class="pill-count">${v4Count}</span></button>
             <button class="wstyle-filter-pill ${activeFilter === 'V5' ? 'active' : ''}" data-filter="V5">V5 <span class="pill-count">${v5Count}</span></button>
             <button class="wstyle-filter-pill ${activeFilter === 'V6' ? 'active' : ''}" data-filter="V6"><i class="fa-solid fa-lock" style="font-size:0.6rem;"></i> V6 <span class="pill-count">${v6Count}</span></button>
@@ -188,7 +188,7 @@ export function renderCoreAndCot(c) {
     secOfficial.append(filterBar);
 
     const coreGrid = $(`<div class="mtab-card-grid" style="margin-bottom: 20px;"></div>`);
-    const v6Empty = $(`<div id="v6-empty-msg" style="display:none;"><div class="mtab-locked-state"><i class="fa-solid fa-hammer" style="color: var(--border-color);"></i><h3>V6 Engines are in the forge.</h3><p>Stay tuned for the next update! Later this week.</p></div></div>`);
+    const v6Empty = $(`<div id="v6-empty-msg" style="display:none;"><div class="mtab-locked-state"><i class="fa-solid fa-hammer" style="color: var(--border-color);"></i><h3>V6 引擎正在锻造中。</h3><p>敬请期待下次更新！本周晚些时候。</p></div></div>`);
 
     hardcodedLogic.modes.forEach(m => {
         let version = "all";
@@ -230,7 +230,7 @@ export function renderCoreAndCot(c) {
             card.on("click", () => {
                 localProfile.mode = m.id;
 
-                // Same mapping the Writing Style tab uses when it finds a locked
+                // Same mapping the 文风 tab uses when it finds a locked
                 // engine with no style set. One list, so the two cannot disagree.
                 const lockedStyle = lockedStyleIdFor(m);
                 if (lockedStyle) {
@@ -304,11 +304,11 @@ export function renderCoreAndCot(c) {
     // ==========================================
     // ── B. CUSTOM ENGINES ──
     // ==========================================
-    secCustom.append(`<h3 style="margin-top: 0; color: #10b981; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-microchip"></i> Your Custom 引擎</h3>`);
+    secCustom.append(`<h3 style="margin-top: 0; color: #10b981; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-microchip"></i> 你的自定义引擎</h3>`);
     const customModes = extension_settings[extensionName].customModes || [];
 
     if (customModes.length === 0) {
-        secCustom.append(`<div style="padding: 30px; text-align: center; color: var(--text-muted); border: 1px dashed var(--border-color); border-radius: 14px;">No custom engines yet. Go to Dev Mode to create or import one!</div>`);
+        secCustom.append(`<div style="padding: 30px; text-align: center; color: var(--text-muted); border: 1px dashed var(--border-color); border-radius: 14px;">尚无自定义引擎。请前往开发模式创建或导入！</div>`);
     } else {
         const customGrid = $(`<div class="mtab-card-grid"></div>`);
         customModes.forEach(m => {
@@ -343,15 +343,15 @@ export function renderCoreAndCot(c) {
     // ==========================================
     // ── C. CHAIN OF THOUGHT (REASONING) ──
     // ==========================================
-    secCot.append(`<h3 style="margin-top: 0; color: #a855f7; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-brain"></i> Chain of Thought (Reasoning)</h3>`);
+    secCot.append(`<h3 style="margin-top: 0; color: #a855f7; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-brain"></i> 思维链 (Reasoning)</h3>`);
 
     if (localProfile.cotEnabled === undefined) localProfile.cotEnabled = true;
 
     const cotToggle = $(`
         <div class="mtab-toggle-row ${localProfile.cotEnabled ? 'active' : ''}" style="margin-bottom: 20px; border-color: ${localProfile.cotEnabled ? '#a855f7' : 'var(--border-color)'}; cursor: pointer;">
             <div class="toggle-info">
-                <div class="toggle-label" style="color: ${localProfile.cotEnabled ? '#a855f7' : 'var(--text-main)'};"><i class="fa-solid fa-power-off"></i> Enable Chain of Thought</div>
-                <div class="toggle-desc">Toggle the entire AI reasoning system. When off, the AI generates responses directly.</div>
+                <div class="toggle-label" style="color: ${localProfile.cotEnabled ? '#a855f7' : 'var(--text-main)'};"><i class="fa-solid fa-power-off"></i> 启用思维链</div>
+                <div class="toggle-desc">开关整套 AI 推理系统。关闭后，AI 直接生成回复。</div>
             </div>
             <div class="ps-switch" style="${localProfile.cotEnabled ? 'background:#a855f7;' : ''}"></div>
         </div>

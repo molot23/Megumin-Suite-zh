@@ -5,8 +5,8 @@
  * Horizontal portrait strip mounted above/below SillyTavern's chat input
  * (#send_form). Mirrors Doom's Enhancement Suite "Present Characters Panel"
  * shape: full-bleed portrait card + gradient name overlay. Pulls the cast
- * from the AI-emitted World State NPCs Present block and resolves portraits
- * from the existing NPC Bank.
+ * from the AI-emitted 世界状态 在场 NPC block and resolves portraits
+ * from the existing NPC 库.
  *
  * Stays decoupled from panel.js render loop — exports its own update hook
  * that the panel call sites already invoke on every message event.
@@ -146,7 +146,7 @@ function wireEvents() {
     if (left && scroll) left.addEventListener("click", () => scroll.scrollBy({ left: -240, behavior: "smooth" }));
     if (right && scroll) right.addEventListener("click", () => scroll.scrollBy({ left:  240, behavior: "smooth" }));
 
-    // Click a portrait card → open Character Sheet
+    // Click a portrait card → open 角色表
     if (scroll) {
         scroll.addEventListener("click", (e) => {
             const card = e.target.closest(".meg-pb-card");
@@ -271,7 +271,7 @@ export function applyPresentBarChange() {
 }
 
 // =============================================================================
-// Character Sheet — full-info popup opened by clicking a card
+// 角色表 — full-info popup opened by clicking a card
 // =============================================================================
 const SHEET_ID = "meg-pb-sheet";
 
@@ -348,11 +348,11 @@ export function openCharacterSheet(name) {
 
     const bookBtn = banked
         ? `<button class="meg-pb-sheet-book-btn" id="meg-pb-sheet-book-btn">
-              <i class="fa-solid fa-book-open"></i> Open in NPC Book
+              <i class="fa-solid fa-book-open"></i> Open in NPC 手册
            </button>`
         : `<div class="meg-pb-sheet-unbanked">
               <i class="fa-solid fa-circle-info"></i>
-              Not in NPC Bank yet — banks fill automatically when the AI emits a "🆕 New NPC" dossier.
+              Not in NPC 库 yet — banks fill automatically when the AI emits a "🆕 新 NPC" dossier.
            </div>`;
 
     const html = `
@@ -371,7 +371,7 @@ export function openCharacterSheet(name) {
                     </div>
                 </div>
                 <div class="meg-pb-sheet-body">
-                    ${sceneSection || `<div class="meg-pb-sheet-empty">No scene-specific info parsed for this character in the last reply.</div>`}
+                    ${sceneSection || `<div class="meg-pb-sheet-empty">上一回复中未解析到此角色的场景信息。</div>`}
                     ${bankSection}
                 </div>
                 <div class="meg-pb-sheet-footer">

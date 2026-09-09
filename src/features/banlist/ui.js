@@ -1,5 +1,5 @@
 // ──────────────────────────────────────────────────────────────────────────────
-// Dynamic Ban List — the tab that scans the chat for repeated phrasing and bans it.
+// 动态禁用词 — the tab that scans the chat for repeated phrasing and bans it.
 // ──────────────────────────────────────────────────────────────────────────────
 
 import { localProfile } from "../../core/state.js";
@@ -19,7 +19,7 @@ export function renderBanList(c) {
         <div class="mtab-panel" style="margin-bottom:16px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                 <div class="mtab-panel-title purple" style="margin-bottom:0;"><i class="fa-solid fa-radar"></i> AI Slop Detector</div>
-                <button id="ps_btn_scan_slop" class="wstyle-gen-btn" style="padding: 8px 18px; font-size: 0.78rem; background: linear-gradient(135deg, #a855f7, #7c3aed);"><i class="fa-solid fa-radar"></i> Analyze Chat</button>
+                <button id="ps_btn_scan_slop" class="wstyle-gen-btn" style="padding: 8px 18px; font-size: 0.78rem; background: linear-gradient(135deg, #a855f7, #7c3aed);"><i class="fa-solid fa-radar"></i> Analyze 聊天</button>
             </div>
             <div class="mtab-setting-row">
                 <div class="set-info">
@@ -33,19 +33,19 @@ export function renderBanList(c) {
         </div>
 
         <div class="mtab-panel" style="margin-bottom:16px;">
-            <div class="mtab-panel-title red"><i class="fa-solid fa-plus-circle"></i> Add Phrase</div>
+            <div class="mtab-panel-title red"><i class="fa-solid fa-plus-circle"></i> 添加短语</div>
             <div style="display: flex; gap: 10px;">
                 <input type="text" id="ps_manual_ban_input" class="ps-modern-input" placeholder="手动添加要禁用的短语…" style="flex: 1;" />
-                <button id="ps_btn_add_ban" class="ps-modern-btn secondary" style="padding: 0 15px;">Add</button>
+                <button id="ps_btn_add_ban" class="ps-modern-btn secondary" style="padding: 0 15px;">添加</button>
             </div>
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <div class="wstyle-section-head red" style="margin-bottom:0;"><i class="fa-solid fa-list"></i> Active Banned Phrases</div>
+            <div class="wstyle-section-head red" style="margin-bottom:0;"><i class="fa-solid fa-list"></i> 已启用的禁用短语</div>
             <div class="mtab-btn-row">
                 <input type="file" id="ps_import_bans_file" accept=".json" style="display: none;">
-                <button id="ps_btn_import_bans" class="ps-modern-btn secondary" style="padding: 4px 10px; font-size: 0.72rem; color: #3b82f6; border-color: rgba(59, 130, 246, 0.3);"><i class="fa-solid fa-file-import"></i> Import</button>
-                <button id="ps_btn_export_bans" class="ps-modern-btn secondary" style="padding: 4px 10px; font-size: 0.72rem; color: #10b981; border-color: rgba(16, 185, 129, 0.3);"><i class="fa-solid fa-file-export"></i> Export</button>
+                <button id="ps_btn_import_bans" class="ps-modern-btn secondary" style="padding: 4px 10px; font-size: 0.72rem; color: #3b82f6; border-color: rgba(59, 130, 246, 0.3);"><i class="fa-solid fa-file-import"></i> 导入</button>
+                <button id="ps_btn_export_bans" class="ps-modern-btn secondary" style="padding: 4px 10px; font-size: 0.72rem; color: #10b981; border-color: rgba(16, 185, 129, 0.3);"><i class="fa-solid fa-file-export"></i> 导出</button>
                 <button id="ps_btn_clear_bans" class="ps-modern-btn secondary" style="padding: 4px 10px; font-size: 0.72rem; color: #ef4444; border-color: rgba(239, 68, 68, 0.3);"><i class="fa-solid fa-trash-can"></i> Clear All</button>
             </div>
         </div>
@@ -56,7 +56,7 @@ export function renderBanList(c) {
 
         <div class="mtab-callout purple" style="margin-top: 16px;">
             <i class="fa-solid fa-circle-info"></i>
-            <span>This is a beta feature. Don't complain if you have to generate more than once.</span>
+            <span>这是测试功能。如果需要多次生成请别抱怨。</span>
         </div>
     `);
 
@@ -115,10 +115,10 @@ export function renderBanList(c) {
     });
     $("#ps_btn_clear_bans").on("click", () => {
         if (localProfile.banList.length === 0) return;
-        if (confirm("确定要删除全部禁用短语吗？")) { localProfile.banList = []; saveProfileToMemory(); renderTags(); toastr.info("Ban list cleared."); }
+        if (confirm("确定要删除全部禁用短语吗？")) { localProfile.banList = []; saveProfileToMemory(); renderTags(); toastr.info("禁用列表已清空。"); }
     });
     $("#ps_btn_export_bans").on("click", () => {
-        if (!localProfile.banList || localProfile.banList.length === 0) return toastr.warning("Ban list is empty!");
+        if (!localProfile.banList || localProfile.banList.length === 0) return toastr.warning("禁用列表为空！");
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(localProfile.banList, null, 2));
         const dlAnchorElem = document.createElement('a');
         dlAnchorElem.setAttribute("href", dataStr);
@@ -147,13 +147,13 @@ export function renderBanList(c) {
                     });
                     saveProfileToMemory();
                     renderTags();
-                    if (added > 0) toastr.success(`Imported ${added} phrases!`);
-                    else toastr.info("No new phrases imported.");
+                    if (added > 0) toastr.success(`已导入 ${added} 条短语！`);
+                    else toastr.info("没有导入新短语。");
                 } else {
                     toastr.error("JSON 格式无效。期望字符串数组。");
                 }
             } catch (err) {
-                toastr.error("Error parsing JSON file.");
+                toastr.error("解析 JSON 文件出错。");
             }
         };
         reader.readAsText(file);
@@ -177,7 +177,7 @@ export function renderBanList(c) {
             const newPhrases = rawResponse.split(/[,*\n-]/).map(t => t.trim().replace(/['"\[\]\.]/g, '')).filter(t => t.length > 3);
             let addedCount = 0;
             newPhrases.forEach(p => { if (!localProfile.banList.includes(p)) { localProfile.banList.push(p); addedCount++; } });
-            if (addedCount > 0) { saveProfileToMemory(); renderTags(); toastr.success(`Caught and banned ${addedCount} repetitive phrases!`); } else { toastr.info("未发现新的重复短语。"); }
+            if (addedCount > 0) { saveProfileToMemory(); renderTags(); toastr.success(`已捕获并禁用 ${addedCount} 条重复短语！`); } else { toastr.info("未发现新的重复短语。"); }
         }
         $(this).prop("disabled", false).html(`<i class="fa-solid fa-radar"></i> Analyze Chat History`);
     });

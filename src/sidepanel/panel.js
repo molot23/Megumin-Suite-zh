@@ -1,10 +1,10 @@
 /* eslint-disable no-undef */
 /*
- * Megumin Suite — Side Panel (orchestrator)
+ * Megumin Suite — 侧边栏 (orchestrator)
  *
  * Mounts a dockable/floatable panel that mirrors the trackers Megumin emits
- * inline in chat (World State, NPC Inner Chatter, Summary, New NPC dossiers)
- * plus profile-stored data (Story Planner, NPC Bank, Ban List).
+ * inline in chat (世界状态, NPC 内心独白, Summary, 新 NPC dossiers)
+ * plus profile-stored data (剧情规划, NPC 库, 禁用列表).
  *
  * Section content lives in sections.js (SECTION_REGISTRY); window management
  * (drag/resize/dock-float/scale) lives in chrome.js; shared DOM helpers in
@@ -51,7 +51,7 @@ const SETTINGS_KEY = "sidePanel";
 // deploy; if the console shows an older tag than the deploy notes, the
 // browser needs a cache-clearing reload before anything else is worth doing.
 const BUILD_TAG = "2026-08-02g";
-try { console.debug(`[Megumin Side Panel] sidepanel build ${BUILD_TAG}`); } catch (e) { /* */ }
+try { console.debug(`[Megumin 侧边栏] sidepanel build ${BUILD_TAG}`); } catch (e) { /* */ }
 
 const DEFAULTS = Object.freeze({
     schemaVersion: 2,
@@ -178,7 +178,7 @@ function buildPanelSkeleton() {
     const body = el("div", { class: "meg-sp-body" });
     body.appendChild(el("div", { class: "meg-sp-empty", id: "meg-sp-empty" },
         el("i", { class: "fa-solid fa-hat-wizard" }),
-        el("p", {}, "尚无追踪数据。当 AI 输出 World State 或 NPC Inner Chatter 块时，面板会自动更新。"),
+        el("p", {}, "尚无追踪数据。当 AI 输出 世界状态 或 NPC 内心独白 块时，面板会自动更新。"),
     ));
     body.appendChild(el("div", { class: "meg-sp-sections", id: "meg-sp-sections" }));
 
@@ -195,7 +195,7 @@ function buildPanelSkeleton() {
 }
 
 // -----------------------------------------------------------------------------
-// NPC Book bridge — opens the existing Megumin Suite modal on the NPCs Bank tab
+// NPC 手册 bridge — opens the existing Megumin Suite modal on the NPC 库 tab
 // -----------------------------------------------------------------------------
 function clickNpcBankDot() {
     // Title-based lookup so upstream tab reorders don't break us
@@ -299,7 +299,7 @@ function buildSectionCtx() {
         const found = findLastAssistantMessage(ctx?.chat);
         if (found) parsed = parseMessage(found.msg.mes);
     } catch (e) {
-        console.warn("[Megumin Side Panel] parse failure", e);
+        console.warn("[Megumin 侧边栏] parse failure", e);
     }
     return {
         parsed,
@@ -448,7 +448,7 @@ function render() {
     // same message would otherwise print the same line over and over.
     const unreadable = findUnreadableBlockTypes(ctx.parsed?.rawText);
     if (unreadableNoticeChanged(unreadable)) {
-        console.debug("[Megumin Side Panel] block found in the last message but could not be read:", unreadable.join(", "));
+        console.debug("[Megumin 侧边栏] block found in the last message but could not be read:", unreadable.join(", "));
     }
 
     host.innerHTML = "";
@@ -461,7 +461,7 @@ function render() {
         try {
             content = def.render(ctx);
         } catch (e) {
-            console.warn(`[Megumin Side Panel] section ${def.id} render failed`, e);
+            console.warn(`[Megumin 侧边栏] section ${def.id} render failed`, e);
         }
 
         if (!content) {
@@ -498,7 +498,7 @@ function render() {
                 const notice = unreadableBlockNotice(unreadable);
                 p.textContent = hasData
                     ? "所有分区均已隐藏。请在「侧边栏」设置选项卡中重新启用。"
-                    : (notice || "尚无追踪数据。当 AI 输出 World State 或 NPC Inner Chatter 块时，面板会自动更新。");
+                    : (notice || "尚无追踪数据。当 AI 输出 世界状态 或 NPC 内心独白 块时，面板会自动更新。");
             }
             empty.style.display = "";
         }
@@ -578,19 +578,19 @@ function buildPresentCast() {
 //   - a renamed or half-written (truncated) block now STAYS in the chat by
 //     design, and the panel shows nothing for it. Visible-but-not-in-the-panel
 //     is fine. The old behaviour's gone-from-both is what this replaces.
-//   - for New NPC dossiers the check is per block, not per block type. A
+//   - for 新 NPC dossiers the check is per block, not per block type. A
 //     message can carry several, so the number the patterns found and the
 //     number on screen have to be the same number, and at least one. Two
 //     dossiers where only one parses: BOTH stay in the chat.
 // -----------------------------------------------------------------------------
 
 // The label is the anchor, not the emoji — an AI that dropped the 📌 still
-// wrote a World State block. Case-insensitive, since the summary is free text.
+// wrote a 世界状态 block. Case-insensitive, since the summary is free text.
 // `name` is the same label in the words the panel puts in front of the reader.
 const INLINE_BLOCK_LABELS = [
-    { type: "worldState", re: /World State/i, name: "世界状态" },
-    { type: "innerChatter", re: /NPC Inner Chatter/i, name: "NPC 内心独白" },
-    { type: "newNpc", re: /New NPC:/i, name: "新 NPC" },
+    { type: "worldState", re: /世界状态/i, name: "世界状态" },
+    { type: "innerChatter", re: /NPC 内心独白/i, name: "NPC 内心独白" },
+    { type: "newNpc", re: /新 NPC:/i, name: "新 NPC" },
 ];
 
 // Summary text -> block type. Pure. "unknown" covers everything we can't name,
@@ -605,7 +605,7 @@ export function classifyInlineBlock(summaryText) {
 
 // The NOTICE asks a stricter question than the hider does. To the readers, a
 // summary whose run in front of the label carries a WORD is prose ABOUT the
-// block rather than the block itself: `Author's note on the World State
+// block rather than the block itself: `Author's note on the 世界状态
 // system` is somebody writing about it, and the readers refuse to parse it.
 // The classifier above finds the label ANYWHERE in the summary, so left to it
 // this notice would report every such fold as a block that arrived and could not
@@ -614,7 +614,7 @@ export function classifyInlineBlock(summaryText) {
 // Same letter rule as the readers, and only here: whatever sits in front of the
 // label may not contain a letter, so a leading emoji, `**`, `*`, `_`, digits,
 // spaces and bars all still pass and an ordinary word does not. Letters AFTER
-// the label are fine, so a model writing `World State Tracker` is still
+// the label are fine, so a model writing `世界状态 Tracker` is still
 // reported, and so are the cases this notice exists for: a block whose tag came
 // out wrong under a clean heading, and a block cut off before it finished.
 //
@@ -665,7 +665,7 @@ export function unreadableBlockNotice(types) {
     if (!Array.isArray(types) || !types.length) return "";
     const names = types.map(t => (INLINE_BLOCK_LABELS.find(l => l.type === t) || {}).name || t);
     // One shape for one block and for several, so no label ever lands behind the
-    // wrong article — "a NPC Inner Chatter block" is not a sentence.
+    // wrong article — "a NPC 内心独白 block" is not a sentence.
     return `${names.length === 1 ? "A block was" : "Blocks were"} found in the last reply but could not be read: ${names.join(", ")}.`;
 }
 
@@ -688,13 +688,13 @@ export function unreadableNoticeChanged(types) {
 // A parsedTypes of null means the raw text couldn't be reached at all, and the
 // answer is no: fail visible, never fail hidden.
 //
-// New NPC dossiers get one extra question. A message can carry several of them,
+// 新 NPC dossiers get one extra question. A message can carry several of them,
 // and a type-level yes would hide all of them the moment ONE parsed, taking the
 // unparsed ones with it. So for newNpc the number the patterns found and the
 // number on screen have to match, and be at least one; anything else and every
 // dossier in that message stays visible.
 //
-// World State and NPC Inner Chatter keep the plain type-level rule. They are
+// 世界状态 and NPC 内心独白 keep the plain type-level rule. They are
 // one per message, so their counts only ever run 0 or 1 and the two rules give
 // the same answer — running the count rule on them would change nothing.
 //
@@ -750,7 +750,7 @@ function rawMesTextFor(node) {
     }
 }
 
-// The span that hides a Story Tracker remnant, and the marker for the empty
+// The span that hides a 剧情追踪 remnant, and the marker for the empty
 // formatting hidden alongside a block. Both hide with an inline style rather
 // than a stylesheet rule: nothing in any stylesheet competes for a plain
 // span's display, so the style alone is enough, and clearing it is the whole
@@ -976,7 +976,7 @@ function reportTrackerDecline(root, detail) {
     const line = `message ${mesIndexOf(root)}: ${detail}`;
     if (line === lastTrackerDecline) return;
     lastTrackerDecline = line;
-    console.debug("[Megumin Side Panel] tracker left visible - " + line);
+    console.debug("[Megumin 侧边栏] tracker left visible - " + line);
 }
 
 // Which body line could not be found on screen, and what the screen had in
@@ -1006,10 +1006,10 @@ function explainMissingRun(domLines, tracker, fromIdx) {
     return `tracker line ${k + 1} of ${bodyLines.length} is not what the screen shows - expected "${clip(bodyLines[k])}", found ${got}`;
 }
 
-// Hide every Story Tracker remnant in one message, or none of them. The
+// Hide every 剧情追踪 remnant in one message, or none of them. The
 // handshake is the reader's `found` — a tracker the reader could not read
 // stays visible, and one unreadable tracker leaves every tracker in the
-// message visible, the same all-or-nothing the New NPC dossiers follow. The
+// message visible, the same all-or-nothing the 新 NPC dossiers follow. The
 // same answer covers a body that cannot be located on screen: the pipeline
 // can transform a line past recognising (an emoji shortcode expanded, a value
 // rewritten by another extension), and a body that cannot be found whole is
@@ -1243,14 +1243,14 @@ function hideAdjacentGaps(root) {
 // Walk one message's blocks and hide or un-hide them. `hide` false is the
 // plain undo — no parsing, nothing classified, everything this file hid put
 // back. `hide` true is parse first, hide second, exactly as before, now over
-// three kinds of thing: the <details> folds, the Story Tracker remnant, and
+// three kinds of thing: the <details> folds, the 剧情追踪 remnant, and
 // the empty formatting either one leaves behind.
 function applyInlineHiding(root, hide) {
     if (!hide) { unhideInline(root); return null; }
     const raw = rawMesTextFor(root);
     const parsedTypes = raw === null ? null : getParsedBlockTypes(raw);
     const parsedCounts = raw === null ? null : getParsedBlockCounts(raw);
-    // Two passes, because the New NPC rule needs the whole message's tally
+    // Two passes, because the 新 NPC rule needs the whole message's tally
     // before it can answer for any single dossier. First pass classifies and
     // counts, second pass decides.
     const blocks = [];
@@ -1297,7 +1297,7 @@ let hidingSuspended = false;
 function suspendInlineHiding() {
     if (hidingSuspended) return;
     hidingSuspended = true;
-    console.debug("[Megumin Side Panel] hiding suspended (generation started)");
+    console.debug("[Megumin 侧边栏] hiding suspended (generation started)");
 }
 
 // Drop the flag and run the one settled pass. Called from both end events and
@@ -1306,7 +1306,7 @@ function suspendInlineHiding() {
 function resumeInlineHiding(why) {
     if (!hidingSuspended) return false;
     hidingSuspended = false;
-    console.debug(`[Megumin Side Panel] hiding resumed (${why})`);
+    console.debug(`[Megumin 侧边栏] hiding resumed (${why})`);
     setTimeout(() => applyInlineHidingPass("post-generation"), 0);
     return true;
 }
@@ -1346,14 +1346,14 @@ function applyInlineHidingPass(marker) {
     // engages is otherwise exactly as silent as no pass at all, and that
     // silence has already cost an investigation.
     if (!hide) {
-        console.debug("[Megumin Side Panel] hiding pass: hiding is off, everything left on show");
+        console.debug("[Megumin 侧边栏] hiding pass: hiding is off, everything left on show");
     } else if (latest < 0) {
-        console.debug(`[Megumin Side Panel] hiding pass: no AI reply found (chat has ${chatLen} messages)`);
+        console.debug(`[Megumin 侧边栏] hiding pass: no AI reply found (chat has ${chatLen} messages)`);
     } else if (!latestSeen) {
-        console.debug(`[Megumin Side Panel] hiding pass: latest AI reply is message ${latest} of ${chatLen}, but its body is not on screen`);
+        console.debug(`[Megumin 侧边栏] hiding pass: latest AI reply is message ${latest} of ${chatLen}, but its body is not on screen`);
     } else {
         const s = summary || { folds: 0, foldsHidden: 0, frames: 0, tracker: "nothing to do" };
-        console.debug(`[Megumin Side Panel] hiding pass${marker ? ` (${marker})` : ""}: latest AI reply is message ${latest} of ${chatLen}; folds found ${s.folds}, hidden ${s.foldsHidden}; frames ${s.frames}; tracker: ${s.tracker}`);
+        console.debug(`[Megumin 侧边栏] hiding pass${marker ? ` (${marker})` : ""}: latest AI reply is message ${latest} of ${chatLen}; folds found ${s.folds}, hidden ${s.foldsHidden}; frames ${s.frames}; tracker: ${s.tracker}`);
     }
     // A frame can finish loading after the pass that looked into it, and its
     // loading changes nothing this document's watcher can see - so a pass
@@ -1403,7 +1403,7 @@ function reapplyInlineHiding(root, label, noRetry) {
     const res = applyInlineHiding(root, isLatest);
     if (isLatest) {
         const s = res || { folds: 0, foldsHidden: 0, frames: 0, tracker: "nothing to do" };
-        console.debug(`[Megumin Side Panel] hiding pass (${label}): message ${latest}; folds found ${s.folds}, hidden ${s.foldsHidden}; frames ${s.frames}; tracker: ${s.tracker}`);
+        console.debug(`[Megumin 侧边栏] hiding pass (${label}): message ${latest}; folds found ${s.folds}, hidden ${s.foldsHidden}; frames ${s.frames}; tracker: ${s.tracker}`);
         if (!noRetry && s.frames > 0 && /^left visible/.test(s.tracker || "") && !pendingRehide.has(root)) {
             pendingRehide.add(root);
             setTimeout(() => {
@@ -1412,7 +1412,7 @@ function reapplyInlineHiding(root, label, noRetry) {
             }, 600);
         }
     } else if (hide) {
-        console.debug(`[Megumin Side Panel] hiding pass (${label}): message ${mesIndexOf(root)} is not the latest AI reply, left on show`);
+        console.debug(`[Megumin 侧边栏] hiding pass (${label}): message ${mesIndexOf(root)} is not the latest AI reply, left on show`);
     }
 }
 

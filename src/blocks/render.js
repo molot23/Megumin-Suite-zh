@@ -81,7 +81,7 @@ export function extractBlocks(mes, registry) {
         }
 
         // Cut off mid-block: opening tag, no closing one. Take what arrived —
-        // half a World State on screen beats none of it, and the message is
+        // half a 世界状态 on screen beats none of it, and the message is
         // already visibly broken to the reader.
         if (!out.some(b => b.def === def)) {
             const cut = mes.match(new RegExp(`<${def.tag}\\b([^>]*)>([\\s\\S]*)$`, "i"));
@@ -245,7 +245,7 @@ function renderChoicesInto(pane, parsed, doc, opts) {
     if (onChoice) {
         const hint = doc.createElement("div");
         hint.className = "meg-choices-hint";
-        hint.textContent = "Click to fill the input · Shift-click to send straight away";
+        hint.textContent = "点击填入输入框 · Shift+点击直接发送";
         pane.appendChild(hint);
     }
 }
@@ -315,7 +315,7 @@ export function buildBlocksCard(blocks, opts = {}) {
     }
 
     // A repeating block appears once per dossier, so tab keys have to separate
-    // them or two New NPCs would fight over one tab.
+    // them or two 新 NPCs would fight over one tab.
     const keyOf = b => b.def.repeating && b.name ? `${b.def.id}:${b.name}` : b.def.id;
 
     const tabs = doc.createElement("div");
@@ -484,7 +484,7 @@ function isSteppable(node) {
     if (node.nodeType === 3) return !node.textContent.trim();
     if (node.nodeType !== 1) return true;
     if (node.classList && node.classList.contains(CARD_CLASS)) return true;
-    // HR is deliberately NOT here. The World State template separates its
+    // HR is deliberately NOT here. The 世界状态 template separates its
     // sections with `---`, which renders as a rule, and skipping those left a
     // stray line floating above the card with nothing under it. They carry no
     // text, so consuming them costs the length accounting nothing.

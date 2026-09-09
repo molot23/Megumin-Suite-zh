@@ -84,7 +84,7 @@ function plain(t) {
 
 // These are DROPPED only when the body is the template itself. A row reading
 
-// "[Current clothing]" is not a fact about anyone and must not be shown as one,
+// "[当前 clothing]" is not a fact about anyone and must not be shown as one,
 
 // but the bracket alone cannot say which rows those are: a model filling the
 
@@ -1894,7 +1894,7 @@ function renderPack(label, items, ph) {
 
             <div class="meg-iv-band meg-iv-held">
 
-                <div class="meg-iv-band-h">In hand &amp; worn</div>
+                <div class="meg-iv-band-h">手持与穿戴</div>
 
                 ${held.map(line).join("")}
 

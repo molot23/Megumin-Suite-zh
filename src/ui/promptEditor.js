@@ -1,7 +1,7 @@
 // The reusable prompt-editing card.
 //
-// Five tabs render one of these — Story Director, Ban List, Image Gen, NPC Bank
-// and Memory Core — so it is a shared UI component rather than any one feature's.
+// Five tabs render one of these — 剧情导演, 禁用列表, Image Gen, NPC 库
+// and 记忆核心 — so it is a shared UI component rather than any one feature's.
 
 import { saveProfileToMemory } from "../core/profile.js";
 
@@ -52,7 +52,7 @@ export function renderPromptEditor(config) {
             <div class="ps-prompt-editor-body">
                 ${fieldsHtml}
                 <div class="ps-prompt-editor-actions" style="${opacityStyle}">
-                    <button class="ps-modern-btn secondary btn-reset-all" style="padding: 6px 12px; font-size: 0.75rem;" ${disabledAttr}><i class="fa-solid fa-rotate-left"></i> Reset All Defaults</button>
+                    <button class="ps-modern-btn secondary btn-reset-all" style="padding: 6px 12px; font-size: 0.75rem;" ${disabledAttr}><i class="fa-solid fa-rotate-left"></i> 重置全部默认值</button>
                 </div>
             </div>
         </div>

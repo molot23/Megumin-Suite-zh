@@ -65,7 +65,7 @@ export function renderBlocksTab(c) {
     const list = $(`<div class="blk-stack"></div>`);
 
     if (!inStack.length) {
-        list.append(`<div class="blk-empty">Nothing here yet. 添加数据块 from the right.</div>`);
+        list.append(`<div class="blk-empty">这里还没有内容。从右侧添加数据块。</div>`);
     }
 
     inStack.forEach((b, i) => {
@@ -113,7 +113,7 @@ export function renderBlocksTab(c) {
         row.find(".blk-edit").on("click", () => renderCustomBlockEditor(c, b.id));
         list.append(row);
 
-        // World State is the one block with a setting of its own: on most turns
+        // 世界状态 is the one block with a setting of its own: on most turns
         // it can send a shortened template and spend the full one only every few
         // replies. It rides under its own row rather than in a settings tab
         // somewhere else, because it is meaningless apart from this block.
@@ -125,7 +125,7 @@ export function renderBlocksTab(c) {
                     <div class="blk-sub-row">
                         <div>
                             <div class="blk-sub-label">紧凑模式</div>
-                            <div class="blk-sub-desc">Sends a shorter World State on most turns to save tokens.</div>
+                            <div class="blk-sub-desc">多数回合发送更短的世界状态以节省 token。</div>
                         </div>
                         <div class="ps-toggle-card ${ws.compactEnabled ? 'active' : ''}" id="blk_compact_toggle" style="padding:2px; min-width:40px; background:transparent; border-color:${ws.compactEnabled ? '#10b981' : 'var(--border-color)'}; cursor:pointer; border-radius:8px;">
                             <div class="ps-switch" style="transform: scale(0.7); ${ws.compactEnabled ? 'background:#10b981;' : ''}"></div>
@@ -134,7 +134,7 @@ export function renderBlocksTab(c) {
                     <div class="blk-sub-row" id="blk_freq_row" style="display:${ws.compactEnabled ? 'flex' : 'none'};">
                         <div>
                             <div class="blk-sub-label">完整状态每隔</div>
-                            <div class="blk-sub-desc">How often the complete template comes back.</div>
+                            <div class="blk-sub-desc">完整模板多久回来一次。</div>
                         </div>
                         <div style="display:flex; align-items:center; gap:6px;">
                             <input type="number" id="blk_full_freq" class="ps-modern-input" min="1" value="${ws.fullFreq || 5}" style="width:60px; padding:4px; text-align:center; font-size:0.72rem;" />
@@ -175,21 +175,21 @@ export function renderBlocksTab(c) {
         });
         pool.append(chip);
     });
-    const newBtn = $(`<button class="blk-add blk-add-new"><i class="fa-solid fa-wand-magic-sparkles"></i> Create custom block</button>`);
+    const newBtn = $(`<button class="blk-add blk-add-new"><i class="fa-solid fa-wand-magic-sparkles"></i> 创建自定义数据块</button>`);
     newBtn.on("click", () => renderCustomBlockEditor(c, null));
     pool.append(newBtn);
     left.append(pool);
 
     // ── PREVIEW ──
     right.append(`<div class="wstyle-section-head purple"><i class="fa-solid fa-eye"></i> 预览</div>`);
-    right.append(`<div class="blk-preview-note">This is the card the chat draws. Click a header to fold it.</div>`);
+    right.append(`<div class="blk-preview-note">这是聊天中绘制的卡片。点击标题可折叠。</div>`);
     const previewHost = $(`<div class="blk-preview"></div>`);
     right.append(previewHost);
 
     layout.append(left).append(right);
     c.append(layout);
 
-    renderBlocks预览(previewHost[0]);
+    renderBlocksPreview(previewHost[0]);
 }
 
 export function renderStatFieldEditor(c, def) {
@@ -233,7 +233,7 @@ export function renderStatFieldEditor(c, def) {
     wrap.append(rows);
 
     const tools = $(`<div class="blk-pool" style="margin-top:8px;"></div>`);
-    const addBtn = $(`<button class="blk-add"><i class="fa-solid fa-plus"></i> Add field</button>`);
+    const addBtn = $(`<button class="blk-add"><i class="fa-solid fa-plus"></i> 添加字段</button>`);
     addBtn.on("click", () => {
         cfg.fields.push({ id: "f_" + Date.now(), label: "New field", type: "meter", max: 100, start: 0 });
         saveProfileToMemory(); renderBlocksTab(c);
@@ -250,7 +250,7 @@ export function renderStatFieldEditor(c, def) {
                 }
             });
             saveProfileToMemory(); renderBlocksTab(c);
-            toastr.success(`${pack.label} fields added.`);
+            toastr.success(`${pack.label} 字段已添加。`);
         });
         tools.append(btn);
     });
@@ -259,14 +259,14 @@ export function renderStatFieldEditor(c, def) {
     return wrap;
 }
 
-export function renderBlocks预览(host) {
+export function renderBlocksPreview(host) {
     if (!host) return;
     host.innerHTML = "";
 
     const registry = meguminRenderRegistry();
     const active = meguminActiveBlocks();
     if (!active.length) {
-        host.innerHTML = `<div class="blk-empty">No blocks in the master block, so nothing is sent and nothing is drawn.</div>`;
+        host.innerHTML = `<div class="blk-empty">主数据块中没有内容，因此不会发送也不会绘制。</div>`;
         return;
     }
 
@@ -275,7 +275,7 @@ export function renderBlocks预览(host) {
     // content from a past reply would hide the very thing that just changed.
     //
     // buildBaseDict is what the real envelope is assembled from, so the preview
-    // inherits engine overrides, custom prompts and compact World State for free.
+    // inherits engine overrides, custom prompts and compact 世界状态 for free.
     let dict = {};
     try { dict = buildBaseDict(true) || {}; } catch (e) { dict = {}; }
 
@@ -293,7 +293,7 @@ export function renderBlocks预览(host) {
 
     const blocks = extractBlocks(sample, registry);
     if (!blocks.length) {
-        host.innerHTML = `<div class="blk-empty">Nothing to preview yet.</div>`;
+        host.innerHTML = `<div class="blk-empty">尚无可预览内容。</div>`;
         return;
     }
 
@@ -301,7 +301,7 @@ export function renderBlocks预览(host) {
     host.appendChild(buildBlocksCard(blocks, { preview: true, expanded: true, statFields: meguminStatFieldMap() }));
     const note = document.createElement("div");
     note.className = "blk-preview-source";
-    note.textContent = "Showing the templates the AI is asked to fill in.";
+    note.textContent = "显示要求 AI 填写的模板。";
     host.appendChild(note);
 }
 
@@ -328,22 +328,22 @@ export function renderCustomBlockEditor(c, editId) {
     const form = $(`
         <div class="mtab-panel">
             <div class="mtab-setting-row">
-                <div class="set-info"><div class="set-label">Name</div><div class="set-desc">Shown as the header in chat</div></div>
+                <div class="set-info"><div class="set-label">名称</div><div class="set-desc">显示为聊天中的标题</div></div>
                 <input type="text" id="blk_name" class="ps-modern-input" style="width:220px;" placeholder="e.g. Relationship Meter" value="${escapeHtmlAttr(draft.label)}" />
             </div>
             <div class="mtab-setting-row">
-                <div class="set-info"><div class="set-label">Emoji</div><div class="set-desc">Sits before the header</div></div>
+                <div class="set-info"><div class="set-label">Emoji</div><div class="set-desc">显示在标题前</div></div>
                 <input type="text" id="blk_emoji" class="ps-modern-input" style="width:70px; text-align:center;" value="${escapeHtmlAttr(draft.emoji)}" />
             </div>
             <div class="mtab-setting-row">
-                <div class="set-info"><div class="set-label">Shown as</div><div class="set-desc">Hidden blocks are still sent and still read by the side panel</div></div>
+                <div class="set-info"><div class="set-label">显示为</div><div class="set-desc">隐藏的数据块仍会发送，侧边栏仍会读取</div></div>
                 <select id="blk_vis" class="ps-modern-input" style="width:150px;">
                     ${BLOCK_VISIBILITY_CHOICES.map(o => `<option value="${o.v}" ${draft.visibility === o.v ? "selected" : ""}>${o.label}</option>`).join("")}
                 </select>
             </div>
             <div style="padding: 12px 0;">
                 <div class="set-label" style="margin-bottom:6px;">Template</div>
-                <div class="set-desc" style="margin-bottom:8px;">What the AI is told to write. Square brackets read as fill-me-in.</div>
+                <div class="set-desc" style="margin-bottom:8px;">告诉 AI 写什么。方括号表示待填写。</div>
                 <textarea id="blk_content" class="ps-modern-input" rows="8" style="width:100%; resize:vertical;" placeholder="e.g.&#10;**Trust:** [0-100] | **Tension:** [0-100]&#10;**Last shift:** [what moved it this scene]">${escapeHtmlAttr(draft.content)}</textarea>
             </div>
             <div style="font-size:0.68rem; color:var(--text-muted);">Tag: <code id="blk_tag_preview">&lt;${escapeHtmlAttr(draft.tag || "…")}&gt;</code></div>
@@ -360,8 +360,8 @@ export function renderCustomBlockEditor(c, editId) {
 
     const actions = $(`
         <div style="display:flex; gap:10px; margin-top:16px;">
-            <button class="ws-btn-small" id="blk_save" style="color:#10b981; border-color:rgba(16,185,129,0.4);"><i class="fa-solid fa-check"></i> Save</button>
-            <button class="ws-btn-small" id="blk_cancel"><i class="fa-solid fa-xmark"></i> Cancel</button>
+            <button class="ws-btn-small" id="blk_save" style="color:#10b981; border-color:rgba(16,185,129,0.4);"><i class="fa-solid fa-check"></i> 保存</button>
+            <button class="ws-btn-small" id="blk_cancel"><i class="fa-solid fa-xmark"></i> 取消</button>
         </div>
     `);
     actions.find("#blk_cancel").on("click", () => renderBlocksTab(c));

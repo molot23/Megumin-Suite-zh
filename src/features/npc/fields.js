@@ -24,9 +24,9 @@ import { escapeRegex } from "../../utils/regex.js";
 // job — an NPC dossier describes a person, and a block that is not in the stack
 // costs nothing, so there is no reason to duplicate Bonds inside it.
 export const NPC_FIELD_TYPES = [
-    { v: "text", label: "文本", hint: "a single line" },
-    { v: "longtext", label: "Paragraph", hint: "a few sentences of prose" },
-    { v: "list", label: "列表", hint: "bulleted entries, one per line" }
+    { v: "text", label: "文本", hint: "单行文本" },
+    { v: "longtext", label: "段落", hint: "几句散文" },
+    { v: "list", label: "列表", hint: "每行一条的条目列表" }
 ];
 
 // ── Structural fields ───────────────────────────────────────────────────────
@@ -107,7 +107,7 @@ export const NPC_DEFAULT_FIELDS = [
         fixed: true,
         persistent: true, updatable: true,
         placeholder: "Their actual occupation or place in the world, not just their immediate scene function",
-        hint: "What they do in the world. Updatable — people change jobs."
+        hint: "他们在世界上做什么。可更新——人会换工作。"
     },
     {
         id: "whereToFind", label: "可寻之处", type: "text",
@@ -174,14 +174,14 @@ export const NPC_DEFAULT_FIELDS = [
         icon: "fa-magnifying-glass", color: "#60a5fa",
         persistent: false, updatable: true,
         placeholder: "此 NPC 当前对 PC 的看法，以及可能如何变化",
-        hint: "Current, not permanent. Expected to move as the story does."
+        hint: "当前状态，非永久。预期随故事变化。"
     },
     {
         id: "agenda", label: "议程", type: "text",
         icon: "fa-bullseye", color: "#fb923c",
         persistent: false, updatable: true,
         placeholder: "他们当前在追求什么",
-        hint: "Current, not permanent. Expected to move as the story does."
+        hint: "当前状态，非永久。预期随故事变化。"
     },
     {
         id: "secrets", label: "秘密", type: "list",

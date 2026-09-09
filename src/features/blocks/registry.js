@@ -40,7 +40,7 @@ import { getSidePanelSettings } from "../../sidepanel/panel.js";
 // to write. Optional -- a block without one simply shows no tooltip.
 export const MEGUMIN_BLOCK_REGISTRY = [
     {
-        id: "dice", tag: "骰子", label: "骰点",
+        id: "dice", tag: "Dice", label: "骰点",
         emoji: "\u{1F3B2}", icon: "fa-dice-d20", color: "#22d3ee",
         visibility: "open", builtin: true, system: true,
         // The model writes one <Dice> per roll as often as it writes one tag
@@ -86,7 +86,7 @@ export const MEGUMIN_BLOCK_REGISTRY = [
         source: "[[npc_inner_chatter]]", legacyIds: ["npc_inner_chatter", "npc_inner_chatter_v2"]
     },
     {
-        id: "bonds", tag: "羁绊", label: "羁绊",
+        id: "bonds", tag: "Bonds", label: "羁绊",
         emoji: "❤️", icon: "fa-heart", color: "#f43f5e",
         visibility: "open", builtin: true,
         // Generated from the field list rather than read from a dict tag, so

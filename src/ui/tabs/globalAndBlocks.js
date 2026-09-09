@@ -28,7 +28,7 @@ import { engineUsesRenderLimits } from "../../core/engines.js";
 function customBadge(triggerOwner) {
     const slot = meguminSlotByTrigger(triggerOwner && triggerOwner.trigger);
     if (!slot || !slot.key || !hasSharedFragment(slot.key)) return "";
-    return `<span class="ecard-badge custom" title="你在开发模式中编辑过此项，已不再使用内置文本。"><i class="fa-solid fa-pen"></i> Custom</span>`;
+    return `<span class="ecard-badge custom" title="你在开发模式中编辑过此项，已不再使用内置文本。"><i class="fa-solid fa-pen"></i> 自定义</span>`;
 }
 
 export function renderGlobalAndBlocks(c) {
@@ -97,8 +97,8 @@ export function renderGlobalAndBlocks(c) {
             ${isV9 ? `
             <div class="mtab-setting-row" style="flex-direction: column; align-items: stretch; gap: 10px;">
                 <div class="set-info">
-                    <div class="set-label" style="color: #f43f5e;"><i class="fa-solid fa-layer-group"></i> V9 Dynamic Render Limits</div>
-                    <div class="set-desc">V9 switches between Lean (quick interactions) and Full (deep scenes). Set the word count ranges for each.</div>
+                    <div class="set-label" style="color: #f43f5e;"><i class="fa-solid fa-layer-group"></i> V9 动态渲染限制</div>
+                    <div class="set-desc">V9 在精简（快速互动）与完整（深度场景）之间切换。分别为二者设置字数范围。</div>
                 </div>
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                     <div style="flex: 1; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);">
@@ -112,7 +112,7 @@ export function renderGlobalAndBlocks(c) {
                     </div>
                     <div style="flex: 1; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);">
                         <div style="font-size: 0.7rem; font-weight: bold; color: var(--text-muted); margin-bottom: 2px;">完整渲染</div>
-                        <div style="font-size: 0.6rem; color: #10b981; margin-bottom: 6px; line-height: 1.2;">Triggered by the AI for scene changes, deep immersion, and major plot events.</div>
+                        <div style="font-size: 0.6rem; color: #10b981; margin-bottom: 6px; line-height: 1.2;">由 AI 在场景切换、深度沉浸与重大剧情事件时触发。</div>
                         <div style="display: flex; align-items: center; gap: 5px;">
                             <input type="number" id="ps_v9_full_min" class="ps-modern-input" style="width: 100%; text-align: center;" value="${localProfile.v9Limits.fullMin}" />
                             <span style="color: var(--text-muted);">to</span>
@@ -123,13 +123,13 @@ export function renderGlobalAndBlocks(c) {
             </div>
             ` : ``}
             <div class="mtab-setting-row">
-                <div class="set-info"><div class="set-label">Language Output</div><div class="set-desc">留空则默认（英语）</div></div>
+                <div class="set-info"><div class="set-label">语言输出</div><div class="set-desc">留空则默认（英语）</div></div>
                 <input type="text" id="ps_input_language" class="ps-modern-input" style="width: 180px;" placeholder="e.g. Arabic, French…" value="${localProfile.userLanguage || ''}" />
             </div>
             <div class="mtab-setting-row">
-                <div class="set-info"><div class="set-label">User Gender</div><div class="set-desc">确保 AI 正确称呼你</div></div>
+                <div class="set-info"><div class="set-label">用户性别</div><div class="set-desc">确保 AI 正确称呼你</div></div>
                 <select id="ps_select_pronouns" class="ps-modern-input" style="width: 180px; cursor: pointer;">
-                    <option value="off" ${localProfile.userPronouns === 'off' ? 'selected' : ''}>Off</option>
+                    <option value="off" ${localProfile.userPronouns === 'off' ? 'selected' : ''}>关</option>
                     <option value="male" ${localProfile.userPronouns === 'male' ? 'selected' : ''}>男性（他）</option>
                     <option value="female" ${localProfile.userPronouns === 'female' ? 'selected' : ''}>女性（她）</option>
                 </select>
@@ -172,7 +172,7 @@ export function renderGlobalAndBlocks(c) {
                 extraClass = 'locked-card';
                 v6BadgeHtml = `<span class="ecard-badge" style="background:rgba(239,68,68,0.12);color:#ef4444;"><i class="fa-solid fa-lock"></i> Requires V6</span>`;
             } else {
-                v6BadgeHtml = `<span class="ecard-badge v6-active"><i class="fa-solid fa-unlock"></i> V6 Active</span>`;
+                v6BadgeHtml = `<span class="ecard-badge v6-active"><i class="fa-solid fa-unlock"></i> V6 已激活</span>`;
             }
         }
 
@@ -182,7 +182,7 @@ export function renderGlobalAndBlocks(c) {
                 <div class="ecard-body">
                     <div class="ecard-title">
                         <span>${a.label}</span>
-                        ${isSel ? `<span class="ecard-badge" style="background:rgba(16,185,129,0.15);color:#10b981;"><i class="fa-solid fa-check"></i> On</span>` : ''}
+                        ${isSel ? `<span class="ecard-badge" style="background:rgba(16,185,129,0.15);color:#10b981;"><i class="fa-solid fa-check"></i> 开</span>` : ''}
                     </div>
                     <p class="ecard-desc">${addonDescriptions[a.id] || ""}</p>
                     ${badges || v6BadgeHtml ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">${badges}${v6BadgeHtml}</div>` : ''}
@@ -221,10 +221,10 @@ export function renderGlobalAndBlocks(c) {
             <div class="ecard-body">
                 <div class="ecard-title">
                     <span>电影拟声</span>
-                    ${isOno ? `<span class="ecard-badge" style="background:rgba(16,185,129,0.15);color:#10b981;"><i class="fa-solid fa-check"></i> On</span>` : ''}
+                    ${isOno ? `<span class="ecard-badge" style="background:rgba(16,185,129,0.15);color:#10b981;"><i class="fa-solid fa-check"></i> 开</span>` : ''}
                     ${customBadge({ trigger: "[[onomato]]" })}
                 </div>
-                <p class="ecard-desc">Force the AI to use precise phonetic sound words (e.g., click, thud) instead of abstract descriptions.</p>
+                <p class="ecard-desc">强制 AI 使用精确拟声词（如 click、thud），而非抽象描写。</p>
                 <div style="display: ${isOno ? 'flex' : 'none'}; margin-top: 8px; padding-top: 10px; border-top: 1px dashed var(--border-color); justify-content: space-between; align-items: center;">
                     <div>
                         <div style="font-weight:700; font-size: 0.75rem; color: var(--text-main);">动画拟声</div>
@@ -248,7 +248,7 @@ export function renderGlobalAndBlocks(c) {
     addonGrid.append(onoCard);
     c.append(addonGrid);
 
-    // Custom Engine Settings (Addons)
+    // Custom 引擎设置 (Addons)
     if (activeMode && activeMode.customToggles) {
         const customSettings = activeMode.customToggles.filter(t => t.location === "settings");
         if (customSettings.length > 0) {
@@ -259,7 +259,7 @@ export function renderGlobalAndBlocks(c) {
                     <div class="mtab-toggle-row ${isSel ? 'active' : ''}" style="${isSel ? 'border-color:#10b981;' : ''}">
                         <div class="toggle-info">
                             <div class="toggle-label" style="${isSel ? 'color:#10b981;' : ''}">${cs.name}</div>
-                            <div class="toggle-desc">Custom Module → [[${cs.attachPoint}]]</div>
+                            <div class="toggle-desc">自定义模块 → [[${cs.attachPoint}]]</div>
                         </div>
                         <div class="ps-switch" style="${isSel ? 'background:#10b981;' : ''}"></div>
                     </div>
@@ -287,11 +287,11 @@ export function renderGlobalAndBlocks(c) {
                 <div class="ecard-body">
                     <div class="ecard-title">
                         <span>${b.label}</span>
-                        ${isSel ? `<span class="ecard-badge" style="background:rgba(16,185,129,0.15);color:#10b981;"><i class="fa-solid fa-check"></i> On</span>` : ''}
+                        ${isSel ? `<span class="ecard-badge" style="background:rgba(16,185,129,0.15);color:#10b981;"><i class="fa-solid fa-check"></i> 开</span>` : ''}
                         ${customBadge(b)}
                     </div>
                     <p class="ecard-desc">${blockDescriptions[b.id] || ""}</p>
-                    ${isOverridden ? `<div style="margin-top:4px;"><span class="ecard-badge override"><i class="fa-solid fa-code-branch"></i> Engine Override</span></div>` : ''}
+                    ${isOverridden ? `<div style="margin-top:4px;"><span class="ecard-badge override"><i class="fa-solid fa-code-branch"></i> 引擎覆盖</span></div>` : ''}
                 </div>
             </div>
         `);

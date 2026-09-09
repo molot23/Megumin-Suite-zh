@@ -20,9 +20,9 @@ export const CONFIG_PREAMBLE = `These are standing settings for this story. Wher
 export const storyConfigFields = [
     {
         key: "genre", tag: "genre", label: "类型", icon: "fa-masks-theater", color: "#f59e0b", type: "text",
-        placeholder: "e.g. horror, romance",
+        placeholder: "例如：horror, romance",
         aiNote: "sets the conventions the story plays straight, never comments on",
-        hint: "The story's genre and the conventions that come with it. Played straight, never commented on.",
+        hint: "故事的类型及其惯例。直接采用，不作元评论。",
         // The first twelve are the genres readers asked for, in the order they
         // asked for them, so the common answer is the nearest one to hand. The
         // rest are the original list, kept because they are more specific than
@@ -37,9 +37,9 @@ export const storyConfigFields = [
     },
     {
         key: "culture", tag: "culture", label: "文化与设定", icon: "fa-globe", color: "#22c55e", type: "text",
-        placeholder: "e.g. Japanese, Western",
+        placeholder: "例如：Japanese, Western",
         aiNote: "the cultural world — names, honorifics, food, manners, idiom",
-        hint: "The cultural world the story runs on — names, honorifics, food, manners, social rules and the idiom people speak in. Works with era to place the story.",
+        hint: "故事运行的文化世界——姓名、敬语、饮食、礼仪、社交规则与口语。与时代一起定位故事。",
         chips: [
             "Japanese", "Korean", "Chinese", "wuxia / xianxia", "Southeast Asian", "Indian",
             "Middle Eastern", "North African", "West African", "Latin American", "Brazilian",
@@ -50,42 +50,42 @@ export const storyConfigFields = [
     },
     {
         key: "era", tag: "era", label: "时代", icon: "fa-hourglass-half", color: "#d97706", type: "text",
-        placeholder: "e.g. 1980s",
+        placeholder: "例如：1980s",
         aiNote: "the period the world runs on",
-        hint: "The year or period the world runs on.",
+        hint: "世界所处的年份或时期。",
         chips: ["ancient", "medieval", "renaissance", "victorian", "1920s", "1950s", "1970s", "1980s", "1990s", "present day", "near future", "far future", "post-apocalyptic"]
     },
     {
         key: "pov", tag: "pov", label: "视角", icon: "fa-eye", color: "#3b82f6", type: "select",
-        hint: "Narrative person and where the camera sits. Never loosens the {{user}} boundary.",
-        customPlaceholder: "e.g. third limited, sitting behind Maya's eyes",
+        hint: "叙述人称与镜头位置。绝不放松 {{user}} 边界。",
+        customPlaceholder: "例如：第三人称有限，坐在 Maya 视角后",
         options: [
-            { label: "second person on {{user}}", legacy: ["second person on {{user}}"],
+            { label: "第二人称对准 {{user}}", legacy: ["second person on {{user}}"],
               value: `second person — the narration addresses {{user}} as "you". Narrate what reaches {{user}}; NEVER what {{user}} decides, says, or feels about it` },
-            { label: "third limited", legacy: ["third limited"],
+            { label: "第三人称有限", legacy: ["third limited"],
               value: "third person limited — one focal consciousness per scene. The reader learns only what the focal character perceives, and the gaps in their knowledge stand" },
-            { label: "third limited following one character", legacy: ["third limited following one NPC"],
+            { label: "第三人称有限（跟随单一角色）", legacy: ["third limited following one NPC"],
               value: "third person limited, locked to a single character for the whole scene — their perception is the boundary of the narration. Changing heads mid-scene is PROHIBITED; change only at a scene break" },
-            { label: "third omniscient", legacy: ["third omniscient"],
+            { label: "第三人称全知", legacy: ["third omniscient"],
               value: "third person omniscient — access to every interior. The narration MAY move between minds, but each shift MUST be legible rather than slid into" },
-            { label: "first person", legacy: ["first person"],
+            { label: "第一人称", legacy: ["first person"],
               value: `first person — the focal character's "I", never {{user}}'s. Their bias colors every observation; they MAY be wrong about what they report` },
-            { label: "roving", legacy: ["roving"],
+            { label: "游移视角", legacy: ["roving"],
               value: "third person limited, roving — the focal character MAY change between scenes, NEVER within one. Each scene commits to a vantage and holds it to the end" }
         ]
     },
     {
         key: "focus", tag: "focus", label: "焦点", icon: "fa-crosshairs", color: "#eab308", type: "text",
-        placeholder: "e.g. the camera follows Maya",
+        placeholder: "例如：镜头跟随 Maya",
         aiNote: "whose story the camera favours",
-        hint: "Whose story this is, if the camera should favour someone other than {{user}}. Name them.",
+        hint: "若镜头应偏向 {{user}} 以外的某人，写明是谁的故事。",
         chips: []
     },
     {
         key: "tone", tag: "narration tone", label: "叙述语气", icon: "fa-cloud-sun-rain", color: "#a855f7", type: "text",
-        placeholder: "e.g. bleak, absurd",
+        placeholder: "例如：bleak, absurd",
         aiNote: "the emotional weather over everything; overrides the default register",
-        hint: "The mood that sits over the whole story, whatever is happening in a given scene.",
+        hint: "笼罩整个故事的情绪基调，不论单场发生什么。",
         // "lighthearted" is the one readers asked for by name — the opposite of
         // grimdark. It sits first because it is the counterweight to what these
         // engines default to, and warm/playful were near enough to look like it
@@ -94,78 +94,78 @@ export const storyConfigFields = [
     },
     {
         key: "narratorPresence", tag: "narrator_presence", label: "叙述者存在感", icon: "fa-comment-dots", color: "#14b8a6", type: "select",
-        customPlaceholder: "e.g. heavy. comment on everything",
-        hint: "How visible the narrator's attitude is. Light is your preset default.",
+        customPlaceholder: "例如：浓重。对一切发表评论",
+        hint: "叙述者态度有多明显。轻度是预设默认。",
         defaultLabel: "light",
         defaultAliases: ["light", "light (one beat per response)", "light (default: one beat per response)"],
         options: [
-            { label: "invisible", legacy: ["invisible (report only, no coloring)"],
+            { label: "隐形", legacy: ["invisible (report only, no coloring)"],
               value: "report only — the narration carries no attitude toward what it describes and never editorialises" },
-            { label: "heavy", legacy: ["heavy (commentary throughout)"],
+            { label: "浓重", legacy: ["heavy (commentary throughout)"],
               value: "the narrator's attitude is present throughout — dry, judging, or amused, and permitted to comment. The voice NEVER bleeds into any character's dialogue" }
         ]
     },
     {
         key: "npcSpeechStyle", tag: "npc_speech_style", label: "NPC 说话风格", icon: "fa-quote-left", color: "#0ea5e9", type: "text",
-        placeholder: "e.g. 1980s poetic",
+        placeholder: "例如：1980s poetic",
         aiNote: "how NPCs sound when they speak",
-        hint: "Override how the NPCs sound.",
+        hint: "覆盖 NPC 的说话方式。",
         chips: ["medieval poetic", "shakespearean", "victorian formal", "1920s slang", "1970s street", "1980s poetic", "modern casual", "corporate", "military clipped", "rural drawl", "cyberpunk street", "archaic high fantasy"]
     },
     {
         key: "npcDisposition", tag: "npc_disposition", label: "NPC 态度", icon: "fa-users", color: "#8b5cf6", type: "select",
 
-        customPlaceholder: "e.g. cold. the NPCs don't like {{user}}",
-        hint: "How the cast feels about {{user}} before they earn anything else. Ordinary is your preset default.",
+        customPlaceholder: "例如：冷淡。NPC 不喜欢 {{user}}",
+        hint: "在 {{user}} 赢得别的之前，角色群对其的态度。普通是预设默认。",
         defaultLabel: "ordinary",
         defaultAliases: ["ordinary"],
         options: [
-            { label: "warm", legacy: ["warm"],
+            { label: "温暖", legacy: ["warm"],
               value: "the cast likes {{user}} and shows it — seeking {{user}} out, taking {{user}}'s side, and giving warmth, trust and attention freely. This is the ground state, not something {{user}} has to earn" },
-            { label: "wary", legacy: ["wary"],
+            { label: "戒备", legacy: ["wary"],
               value: "the cast is polite but reserved with {{user}} — friendly on the surface, holding back what matters until they know {{user}} better. The warmth is close to the surface and comes with time" },
-            { label: "cold", legacy: ["cold"],
+            { label: "冷淡", legacy: ["cold"],
               value: "the cast is indifferent to {{user}} — {{user}}'s presence does not interest them and their own business outranks it. Attention has to be taken, not given" },
-            { label: "hostile", legacy: ["hostile"],
+            { label: "敌对", legacy: ["hostile"],
               value: "the cast is against {{user}} — obstructing, needling, or freezing {{user}} out, and needing a real reason to stop" }
         ]
     },
     {
         key: "difficulty", tag: "difficulty", label: "难度", icon: "fa-mountain", color: "#ef4444", type: "select",
         customPlaceholder: "e.g. hard. the world is against {{user}}",
-        hint: "How hard the world pushes back on what {{user}} attempts. Realistic is your preset default.",
+        hint: "世界对 {{user}} 行动的阻力有多大。现实是预设默认。",
         defaultLabel: "realistic",
         defaultAliases: ["realistic", "realistic (default)"],
         options: [
-            { label: "forgiving", legacy: ["forgiving (most attempts land)"],
+            { label: "宽容", legacy: ["forgiving (most attempts land)"],
               value: "most attempts land. Competence is assumed; failure arrives only where the fiction makes it unavoidable" },
-            { label: "harsh", legacy: ["harsh (competence required, failure common, mistakes carry a real cost)"],
+            { label: "严苛", legacy: ["harsh (competence required, failure common, mistakes carry a real cost)"],
               value: "competence is required and failure is common. Mistakes carry a cost that persists past the scene they happen in" }
         ]
     },
     {
         key: "friction", tag: "friction", label: "摩擦", icon: "fa-bolt", color: "#f97316", type: "select",
         customPlaceholder: "e.g. high. trouble is always around the corner",
-        hint: "How often trouble arrives. Normal is your preset default.",
+        hint: "麻烦出现的频率。正常是预设默认。",
         defaultLabel: "normal",
         defaultAliases: ["normal", "normal (the preset's own curve)"],
         options: [
-            { label: "low", legacy: ["low (only ever as earned consequence)"],
+            { label: "低", legacy: ["low (only ever as earned consequence)"],
               value: "complications arrive only as earned consequence of something already in motion — never introduced to keep a scene busy" },
-            { label: "high", legacy: ["high (complications every scene, pressure never fully releasing)"],
+            { label: "高", legacy: ["high (complications every scene, pressure never fully releasing)"],
               value: "a complication lands every scene and pressure NEVER fully releases — one thing resolving uncovers the next" }
         ]
     },
     {
         key: "explicitness", tag: "explicitness", label: "露骨程度", icon: "fa-fire", color: "#e11d48", type: "select",
         customPlaceholder: "e.g. graphic. give details",
-        hint: "How far scenes go and how directly they are written.",
+        hint: "场景能走多远、写得多直白。",
         options: [
-            { label: "fade to black", legacy: ["fade to black"],
+            { label: "黑屏转场", legacy: ["fade to black"],
               value: "fade to black — cut at the threshold of a sexual act and resume after it. The act MAY be acknowledged as having happened; it is NEVER depicted" },
-            { label: "plain", legacy: ["plain"],
+            { label: "直白", legacy: ["plain"],
               value: "plain — depict intimacy and violence directly but without anatomical detail. State what happens; do not linger on it" },
-            { label: "graphic", legacy: ["graphic"],
+            { label: "露骨", legacy: ["graphic"],
               value: "graphic — depict sex and violence in full physical detail, using direct words for bodies and acts. NEVER cut away, NEVER euphemise" }
         ]
     },
@@ -173,28 +173,28 @@ export const storyConfigFields = [
         key: "pace", tag: "pace", label: "节奏", icon: "fa-gauge-high", color: "#10b981", type: "select",
 
         customPlaceholder: "e.g. steady, but skip anything that isn't a real beat",
-        hint: "How fast story time moves.",
+        hint: "故事时间推进的速度。",
         options: [
-            { label: "slow burn", legacy: ["slow burn"],
+            { label: "慢热", legacy: ["slow burn"],
               value: "slow burn — the story moves slowly. Story time advances in minutes rather than days, and a situation is allowed to keep unfolding instead of being hurried toward its conclusion" },
-            { label: "steady", legacy: ["steady"],
+            { label: "稳进", legacy: ["steady"],
               value: "steady — the story keeps moving without rushing. Scenes get the time they need and no more: do not linger on a moment past its use, and do not rush ahead before it has played out" },
-            { label: "fast", legacy: ["fast"],
+            { label: "快速", legacy: ["fast"],
               value: "fast — the story moves quickly. Cut through any interval that changed nothing and keep landing on live moments; time jumps and changes of location come easily" }
         ]
     },
     {
         key: "length", tag: "length", label: "长度", icon: "fa-ruler-horizontal", color: "#06b6d4", type: "select",
         customPlaceholder: "e.g. around 300 words, longer when a scene earns it",
-        hint: "How long each reply should run.",
+        hint: "每条回复应有多长。",
         options: [
-            { label: "flexible", legacy: ["flexible"],
+            { label: "灵活", legacy: ["flexible"],
               value: "flexible — as short as 50 words for a quick one-on-one exchange, up to 700 when a scene earns the space. Match the length to what the moment actually needs; never pad to reach a number" },
-            { label: "250–350 words", legacy: ["250–350 words"],
+            { label: "250–350 词", legacy: ["250–350 words"],
               value: "250–350 words per response. When trimming to fit, cut description before dialogue" },
-            { label: "450–550 words", legacy: ["450–550 words"],
+            { label: "450–550 词", legacy: ["450–550 words"],
               value: "450–550 words per response. When trimming to fit, cut description before dialogue" },
-            { label: "minimum 900 words", legacy: ["minimum 900 words"],
+            { label: "至少 900 词", legacy: ["minimum 900 words"],
               value: "at least 900 words per response — earn the length with new material. NEVER pad by restating what the scene has already established" }
         ]
     },

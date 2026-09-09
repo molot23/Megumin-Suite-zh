@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
 /*
- * Megumin Suite — Side Panel chrome (window management)
+ * Megumin Suite — 侧边栏 chrome (window management)
  *
  * Dock/float mode, header drag (floating), edge/corner resize, viewport
- * clamping, and UI scale. Pointer Events only; geometry is applied to the
+ * clamping, and 界面缩放. Pointer Events only; geometry is applied to the
  * DOM every rAF during a gesture and persisted once on pointerup.
  *
  * Owns these DOM pieces on #meg-sp-panel:

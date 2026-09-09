@@ -410,13 +410,13 @@ export async function handlePromptInjection(data, type) {
         $content.find("textarea").val(promptString);
 
         const { Popup, POPUP_TYPE } = typeof getContext === "function" ? getContext() : window;
-        const popup = new Popup($content, POPUP_TYPE.CONFIRM, "Prompt Payload Preview", { okButton: "Send to AI", cancelButton: "Cancel", wide: true, large: true });
+        const popup = new Popup($content, POPUP_TYPE.CONFIRM, "提示词载荷预览", { okButton: "发送给 AI", cancelButton: "取消", wide: true, large: true });
 
         const confirmed = await popup.show();
 
         if (!confirmed) {
             messages.length = 0; // Empty the payload
-            toastr.info("Generation cancelled by user.");
+            toastr.info("用户已取消生成。");
             
             // FIX: Explicitly tell SillyTavern to abort to prevent Auto-Retry loops
             if (typeof window.stopGeneration === 'function') {

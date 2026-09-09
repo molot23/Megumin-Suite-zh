@@ -40,7 +40,7 @@ export async function npcGeneratePfp(npcName) {
     let styleStr = s.promptStyle === "illustrious" ? "Use Danbooru-style tags separated by commas. Focus on anime art style." : (s.promptStyle === "sdxl" ? "Use natural, descriptive prose and full sentences. Focus on photorealism." : "Use a comma-separated list of detailed keywords and visual descriptors.");
     let perspStr = "This is a CHARACTER PORTRAIT. Frame it as an upper-body/bust shot focused on the character's face and shoulders. Soft, flattering lighting. Clean or simple background. Capture their personality through expression and posture.";
 
-    toastr.info(`Generating portrait prompt for ${npcName}...`, "NPC 库");
+    toastr.info(`正在生成肖像提示词：${npcName}...`, "NPC 库");
     showKazumaProgress("AI is writing portrait prompt...");
 
     // Step 1: Ask the AI to generate an image prompt from the NPC dossier
@@ -67,7 +67,7 @@ export async function npcGeneratePfp(npcName) {
 
     if (!promptText || promptText.length < 5) {
         $("#kazuma_progress_overlay").hide();
-        toastr.error("AI returned an empty prompt.");
+        toastr.error("AI 返回了空提示词。");
         return null;
     }
 
@@ -78,7 +78,7 @@ export async function npcGeneratePfp(npcName) {
 
     const $content = $(`
         <div style="display:flex; flex-direction:column; gap:10px; font-family: 'Inter', sans-serif;">
-            <div style="font-size: 0.85rem; color: var(--text-muted);">Review or modify the character portrait prompt before rendering.</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">渲染前检查或修改角色肖像提示词。</div>
             <textarea class="ps-modern-input npc-preview-textarea" style="height: 150px; resize: vertical; font-family: monospace; font-size: 0.85rem; padding: 10px;">${promptText}</textarea>
         </div>
     `);
@@ -89,7 +89,7 @@ export async function npcGeneratePfp(npcName) {
         liveText = $(this).val();
     });
 
-    const popup = new Popup($content, POPUP_TYPE.CONFIRM, `Edit Portrait Prompt: ${npcName}`, { okButton: "Render Portrait", cancelButton: "取消", wide: true });
+    const popup = new Popup($content, POPUP_TYPE.CONFIRM, `编辑肖像提示词： ${npcName}`, { okButton: "渲染肖像", cancelButton: "取消", wide: true });
     const confirmed = await popup.show();
 
     if (!confirmed) {
@@ -100,7 +100,7 @@ export async function npcGeneratePfp(npcName) {
 
     promptText = liveText.trim();
     if (!promptText) {
-        toastr.warning("Prompt cannot be empty.");
+        toastr.warning("提示词不能为空。");
         setActiveNpcPfpRequest(null);
         return null;
     }
@@ -113,7 +113,7 @@ export async function npcGeneratePfp(npcName) {
     try {
         const res = await fetch('/api/sd/comfy/workflow', { method: 'POST', headers: getRequestHeaders(), body: JSON.stringify({ file_name: s.currentWorkflowName }) });
         if (!res.ok) throw new Error("Load failed"); workflowRaw = await res.json();
-    } catch (e) { $("#kazuma_progress_overlay").hide(); toastr.error("Could not load workflow."); return null; }
+    } catch (e) { $("#kazuma_progress_overlay").hide(); toastr.error("无法加载工作流。"); return null; }
 
     let workflow = (typeof workflowRaw === 'string') ? JSON.parse(workflowRaw) : workflowRaw;
     let finalSeed = Math.floor(Math.random() * 1000000000);
@@ -188,7 +188,7 @@ export async function npcGeneratePfp(npcName) {
                             npc.pfp = compressed;
                             saveProfileToMemory();
                             $("#kazuma_progress_overlay").hide();
-                            toastr.success(`Portrait generated for ${npcName}!`);
+                            toastr.success(`已生成肖像：${npcName}!`);
                             fireRefreshHook(REFRESH.NPC_LIST);
                             resolve(compressed);
                         } else {
@@ -199,5 +199,5 @@ export async function npcGeneratePfp(npcName) {
                 } catch (e) { }
             }, 1000);
         });
-    } catch (e) { $("#kazuma_progress_overlay").hide(); toastr.error("ComfyUI Error: " + e.message); return null; }
+    } catch (e) { $("#kazuma_progress_overlay").hide(); toastr.error("ComfyUI 错误：" + e.message); return null; }
 }
