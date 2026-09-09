@@ -29,18 +29,18 @@ import { t as zh } from "../i18n/index.js";
 // `title` stays English — it keys TAB_SYNC_KEYS / TABS_ALREADY_GLOBAL.
 // Dock labels go through zh().
 export const tabsUI = [
-    { title: "预设与思维链", sub: "选择核心预设与思维链，并设定故事的常驻规则。", icon: "fa-server", render: renderCoreAndCot },
-    { title: "人格", sub: "设定人格。", icon: "fa-user-astronaut", render: renderPersonality },
-    { title: "文风", sub: "选择故事叙述的文风。", icon: "fa-pen-nib", render: renderStoryConfig },
-    { title: "全局开关与扩展", sub: "语言、代词，以及挂在故事上的玩法系统。", icon: "fa-earth-americas", render: renderGlobalAndBlocks },
+    { title: "PRESETS & COT", sub: "选择核心预设与思维链，并设定故事的常驻规则。", icon: "fa-server", render: renderCoreAndCot },
+    { title: "Persona", sub: "设定叙述者声音并微调引擎行为。", icon: "fa-user-astronaut", render: renderPersonality },
+    { title: "Writing Style", sub: "选择故事叙述的文风。", icon: "fa-pen-nib", render: renderStoryConfig },
+    { title: "Global Toggles & Add Ons", sub: "语言、代词，以及挂在故事上的玩法系统。", icon: "fa-earth-americas", render: renderGlobalAndBlocks },
     { title: "BLOCKS", sub: "主数据块包含什么、顺序如何、如何显示。", icon: "fa-cubes", render: renderBlocksTab },
-    { title: "剧情导演", sub: "引导叙事，塑造接下来发生的事。", icon: "fa-clapperboard", render: renderStoryPlanner },
-    { title: "动态禁用词", sub: "扫描并禁用 AI 的重复套话。", icon: "fa-ban", render: renderBanList },
-    { title: "图像生成", sub: "连接 ComfyUI，在角色扮演中自动生成场景图。", icon: "fa-image", render: renderImageGen },
-    { title: "NPC 库", sub: "自动提取并追踪故事中的重要 NPC。", icon: "fa-address-book", render: renderNpcBank },
-    { title: "记忆核心", sub: "高级三层上下文与历史管理。", icon: "fa-memory", render: renderMemoryCore },
-    { title: "侧边栏", sub: "把追踪块从聊天中弹出到固定侧边栏。", icon: "fa-table-columns", render: renderSidePanelTab },
-    { title: "全局设置", sub: "扩展偏好与关于信息。", icon: "fa-gear", render: renderGlobalSettings }
+    { title: "Story Director", sub: "引导叙事，塑造接下来发生的事。", icon: "fa-clapperboard", render: renderStoryPlanner },
+    { title: "Dynamic Ban List", sub: "扫描并禁用 AI 的重复套话。", icon: "fa-ban", render: renderBanList },
+    { title: "Image Generation", sub: "连接 ComfyUI，在角色扮演中自动生成场景图。", icon: "fa-image", render: renderImageGen },
+    { title: "NPCs Bank", sub: "自动提取并追踪故事中的重要 NPC。", icon: "fa-address-book", render: renderNpcBank },
+    { title: "Memory Core", sub: "高级三层上下文与历史管理。", icon: "fa-memory", render: renderMemoryCore },
+    { title: "Side Panel", sub: "把追踪块从聊天中弹出到固定侧边栏。", icon: "fa-table-columns", render: renderSidePanelTab },
+    { title: "Global Settings", sub: "扩展偏好与关于信息。", icon: "fa-gear", render: renderGlobalSettings }
 ];
 
 export function switchTab(index) {
