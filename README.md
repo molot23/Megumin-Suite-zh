@@ -1,8 +1,8 @@
-> **本仓库说明（molot23 个人 fork）**  
+> **本仓库说明（molot23 · Megumin Suite 汉化版）**  
 > 这是 [Arif-salah/Megumin-Suite](https://github.com/Arif-salah/Megumin-Suite) 的 **界面简体中文** 个人分支：设置面板、侧边栏、数据块 UI、按钮/提示等用户可见文案已汉化。  
 > **AI 提示词与预设 JSON（`Presets/`、`data/cot`、`data/modes`、`src/prompts` 等）仍为英文**，以免改变模型行为。  
 > 原作者与上游项目致以感谢。上游许可为 **CC BY-NC**（非商业）；本 fork 同样仅供非商业使用。  
-> 安装地址：`https://github.com/molot23/Megumin-Suite`
+> 安装地址：`https://github.com/molot23/Megumin-Suite-zh`
 
 ---
 

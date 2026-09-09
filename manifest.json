@@ -1,5 +1,5 @@
 {
-  "display_name": "Megumin Suite (中文 UI)",
+  "display_name": "Megumin Suite 汉化版",
   "loading_order": 100,
   "requires": [],
   "optional": [],
@@ -8,5 +8,5 @@
   "author": "KazumaONIISAN",
   "version": "10.0",
   "generate_interceptor": "megumin_memory_intercept",
-  "homePage": "https://github.com/molot23/Megumin-Suite"
+  "homePage": "https://github.com/molot23/Megumin-Suite-zh"
 }
