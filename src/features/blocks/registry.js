@@ -40,7 +40,7 @@ import { getSidePanelSettings } from "../../sidepanel/panel.js";
 // to write. Optional -- a block without one simply shows no tooltip.
 export const MEGUMIN_BLOCK_REGISTRY = [
     {
-        id: "dice", tag: "Dice", label: "Roll",
+        id: "dice", tag: "骰子", label: "骰点",
         emoji: "\u{1F3B2}", icon: "fa-dice-d20", color: "#22d3ee",
         visibility: "open", builtin: true, system: true,
         // The model writes one <Dice> per roll as often as it writes one tag
@@ -62,8 +62,8 @@ export const MEGUMIN_BLOCK_REGISTRY = [
         requires: p => Boolean(p && (p.addons || []).includes("dice"))
     },
     {
-        id: "cyoa", tag: "CYOA", label: "Choices",
-        desc: "Choose-Your-Own-Adventure panel with 4 suggested actions for you to pick from each turn.",
+        id: "cyoa", tag: "CYOA", label: "选项",
+        desc: "每回合提供 4 个建议行动的选项面板。",
         emoji: "🎲", icon: "fa-list-check", color: "#38bdf8",
         visibility: "open", builtin: true,
         // The one block the reader acts on rather than reads, so it opens first
@@ -72,21 +72,21 @@ export const MEGUMIN_BLOCK_REGISTRY = [
         source: "[[cyoa]]", legacyIds: ["cyoa"]
     },
     {
-        id: "world", tag: "World_State", label: "World State",
-        desc: "Appends a tidy status panel after each response showing time, weather, location, and what characters are wearing.",
+        id: "world", tag: "World_State", label: "世界状态",
+        desc: "在每条回复后附加整洁的状态面板，显示时间、天气、地点与角色着装。",
         emoji: "📌", icon: "fa-thumbtack", color: "#f59e0b",
         visibility: "open", builtin: true,
         source: "[[infoblock]]", legacyIds: ["info"]
     },
     {
-        id: "chatter", tag: "NPC_Inner_Chatter", label: "NPC Inner Chatter",
-        desc: "Reveal NPC private thoughts the PC never hears — crushes, resentment, scheming, anxiety. This feeds future NPC behavior.",
+        id: "chatter", tag: "NPC_Inner_Chatter", label: "NPC 内心独白",
+        desc: "揭示 PC 听不到的 NPC 私心——暗恋、怨恨、算计、焦虑。这会影响后续 NPC 行为。",
         emoji: "💭", icon: "fa-comment-dots", color: "#a855f7",
         visibility: "open", builtin: true,
         source: "[[npc_inner_chatter]]", legacyIds: ["npc_inner_chatter", "npc_inner_chatter_v2"]
     },
     {
-        id: "bonds", tag: "Bonds", label: "Bonds",
+        id: "bonds", tag: "羁绊", label: "羁绊",
         emoji: "❤️", icon: "fa-heart", color: "#f43f5e",
         visibility: "open", builtin: true,
         // Generated from the field list rather than read from a dict tag, so
@@ -94,13 +94,13 @@ export const MEGUMIN_BLOCK_REGISTRY = [
         build: () => meguminBuildBondsTemplate()
     },
     {
-        id: "sheet", tag: "Character_Sheet", label: "Character Sheet",
+        id: "sheet", tag: "Character_Sheet", label: "角色表",
         emoji: "🎒", icon: "fa-shield-halved", color: "#38bdf8",
         visibility: "open", builtin: true,
         build: () => meguminBuildSheetTemplate()
     },
     {
-        id: "newNpc", tag: "New_NPC", label: "New NPC Dossier",
+        id: "newNpc", tag: "New_NPC", label: "新 NPC 档案",
         emoji: "🆕", icon: "fa-user-plus", color: "#10b981",
         visibility: "open", builtin: true, repeating: true, system: true,
         // The dossier rules ride in [[npc_dossier]] elsewhere in the prompt. The
@@ -121,7 +121,7 @@ export const MEGUMIN_BLOCK_REGISTRY = [
         slotRequires: dict => Boolean(String(dict["[[npc_dossier2]]"] || "").trim())
     },
     {
-        id: "npcUpdate", tag: "NPC_Update", label: "NPC Update",
+        id: "npcUpdate", tag: "NPC_Update", label: "NPC 更新",
         emoji: "🔄", icon: "fa-arrows-rotate", color: "#fbbf24",
         visibility: "open", builtin: true, repeating: true, system: true,
         // Same shape as New NPC above: the rules ride in their own dict tag and
@@ -136,7 +136,7 @@ export const MEGUMIN_BLOCK_REGISTRY = [
         slotRequires: dict => Boolean(String(dict["[[npc_updates]]"] || "").trim())
     },
     {
-        id: "tracker", tag: "Story_Tracker", label: "Story Tracker",
+        id: "tracker", tag: "Story_Tracker", label: "剧情追踪",
         emoji: "🎬", icon: "fa-map", color: "#f43f5e",
         visibility: "open", builtin: true, system: true,
         source: "[[storytracker]]",
@@ -352,7 +352,7 @@ export function meguminBuildBondsTemplate() {
     const line = fields.map(meguminStatFieldSpec).join(" | ");
     return [
         "[One line per named NPC present in the scene, plus any NPC whose numbers changed this scene. Nobody else.",
-        meguminStatRules(fields, "Bonds", { perSubject: true }),
+        meguminStatRules(fields, "羁绊", { perSubject: true }),
         "- These are feelings, not bodies. Do not describe clothing, posture or location here.]",
         "",
         `[NPC Name]: ${line}`
@@ -367,7 +367,7 @@ export function meguminBuildSheetTemplate() {
     const own = fields.filter(f => f.ownLine).map(meguminStatFieldSpec);
     return [
         "[{{user}}'s sheet.",
-        meguminStatRules(fields, "Character Sheet"),
+        meguminStatRules(fields, "角色表"),
         "- Inventory and skills change only when the story changes them. Do not restock or re-equip on your own.]",
         "",
         inline,
@@ -397,8 +397,8 @@ export function meguminAllBlockTags() {
 // The card is tabs now, so a block is either a tab or it is not. "collapsed" is
 // still accepted from profiles written before that and reads as shown.
 export const BLOCK_VISIBILITY_CHOICES = [
-    { v: "open", label: "Shown", hint: "Gets a tab in the chat card" },
-    { v: "hidden", label: "Hidden", hint: "No tab. Still sent, still read by the side panel." }
+    { v: "open", label: "显示", hint: "在聊天卡片中显示选项卡" },
+    { v: "hidden", label: "隐藏", hint: "不显示选项卡。仍会发送，侧边栏仍会读取。" }
 ];
 
 // Tag names are what every parser, the cleaner and the renderer key on, so a
@@ -427,45 +427,45 @@ export function validateCustomBlock(name, tag, editingId) {
 // Romance and Rivalry can both be on.
 export const STAT_FIELD_PACKS = {
     bonds: [
-        { id: "pack_romance", label: "Romance", fields: [
-            { id: "affection", label: "Affection", type: "meter", max: 100, start: 20 },
-            { id: "trust", label: "Trust", type: "meter", max: 100, start: 30 },
-            { id: "desire", label: "Desire", type: "meter", max: 100, start: 0 },
-            { id: "tension", label: "Tension", type: "meter", max: 100, start: 10 }
+        { id: "pack_romance", label: "浪漫", fields: [
+            { id: "affection", label: "好感", type: "meter", max: 100, start: 20 },
+            { id: "trust", label: "信任", type: "meter", max: 100, start: 30 },
+            { id: "desire", label: "欲望", type: "meter", max: 100, start: 0 },
+            { id: "tension", label: "张力", type: "meter", max: 100, start: 10 }
         ] },
-        { id: "pack_rivalry", label: "Rivalry", fields: [
-            { id: "respect", label: "Respect", type: "meter", max: 100, start: 20 },
-            { id: "fear", label: "Fear", type: "meter", max: 100, start: 0 },
-            { id: "grudge", label: "Grudge", type: "meter", max: 100, start: 0 }
+        { id: "pack_rivalry", label: "对立", fields: [
+            { id: "respect", label: "尊重", type: "meter", max: 100, start: 20 },
+            { id: "fear", label: "恐惧", type: "meter", max: 100, start: 0 },
+            { id: "grudge", label: "积怨", type: "meter", max: 100, start: 0 }
         ] },
-        { id: "pack_social", label: "Social", fields: [
-            { id: "reputation", label: "Reputation", type: "meter", max: 100, start: 50 },
-            { id: "suspicion", label: "Suspicion", type: "meter", max: 100, start: 0 }
+        { id: "pack_social", label: "社交", fields: [
+            { id: "reputation", label: "名声", type: "meter", max: 100, start: 50 },
+            { id: "suspicion", label: "嫌疑", type: "meter", max: 100, start: 0 }
         ] }
     ],
     sheet: [
         { id: "pack_rpg", label: "RPG", fields: [
             { id: "hp", label: "HP", type: "meter", max: 100, start: 100 },
-            { id: "stamina", label: "Stamina", type: "meter", max: 100, start: 100 },
-            { id: "mana", label: "Mana", type: "meter", max: 100, start: 100 },
-            { id: "gold", label: "Gold", type: "number", start: 0 },
-            { id: "skills", label: "Skills", type: "list", ownLine: true, hint: "Name rank, comma separated" },
-            { id: "inventory", label: "Inventory", type: "list", ownLine: true, hint: "item, item xN, or \"nothing\"" }
+            { id: "stamina", label: "耐力", type: "meter", max: 100, start: 100 },
+            { id: "mana", label: "魔力", type: "meter", max: 100, start: 100 },
+            { id: "gold", label: "金币", type: "number", start: 0 },
+            { id: "skills", label: "技能", type: "list", ownLine: true, hint: "名称 等级，逗号分隔" },
+            { id: "inventory", label: "背包", type: "list", ownLine: true, hint: "物品、物品 xN，或「nothing」" }
         ] },
-        { id: "pack_survival", label: "Survival", fields: [
-            { id: "hunger", label: "Hunger", type: "meter", max: 100, start: 0 },
-            { id: "thirst", label: "Thirst", type: "meter", max: 100, start: 0 },
-            { id: "warmth", label: "Warmth", type: "meter", max: 100, start: 100 },
-            { id: "injuries", label: "Injuries", type: "text", ownLine: true, hint: "or \"none\"" }
+        { id: "pack_survival", label: "生存", fields: [
+            { id: "hunger", label: "饥饿", type: "meter", max: 100, start: 0 },
+            { id: "thirst", label: "干渴", type: "meter", max: 100, start: 0 },
+            { id: "warmth", label: "体温", type: "meter", max: 100, start: 100 },
+            { id: "injuries", label: "伤势", type: "text", ownLine: true, hint: "或「none」" }
         ] }
     ]
 };
 
 export const STAT_FIELD_TYPES = [
-    { v: "meter", label: "Meter", hint: "0–max, drawn as a bar" },
-    { v: "number", label: "Number", hint: "a plain count, no cap" },
-    { v: "text", label: "Text", hint: "a short line of prose" },
-    { v: "list", label: "List", hint: "comma separated items" }
+    { v: "meter", label: "条形", hint: "0–最大值，显示为进度条" },
+    { v: "number", label: "数值", hint: "普通计数，无上限" },
+    { v: "text", label: "文本", hint: "一行短文" },
+    { v: "list", label: "列表", hint: "逗号分隔的条目" }
 ];
 
 // The stack decides what is in the block; localProfile.blocks is what actually

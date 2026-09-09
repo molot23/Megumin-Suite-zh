@@ -24,9 +24,9 @@ import { escapeRegex } from "../../utils/regex.js";
 // job — an NPC dossier describes a person, and a block that is not in the stack
 // costs nothing, so there is no reason to duplicate Bonds inside it.
 export const NPC_FIELD_TYPES = [
-    { v: "text", label: "Text", hint: "a single line" },
+    { v: "text", label: "文本", hint: "a single line" },
     { v: "longtext", label: "Paragraph", hint: "a few sentences of prose" },
-    { v: "list", label: "List", hint: "bulleted entries, one per line" }
+    { v: "list", label: "列表", hint: "bulleted entries, one per line" }
 ];
 
 // ── Structural fields ───────────────────────────────────────────────────────
@@ -73,36 +73,36 @@ export const NPC_SYSTEM_ROLES = ["name", "vitals", "imageTags"];
 //   Agenda      editable and updatable, and not persistent at all.
 export const NPC_DEFAULT_FIELDS = [
     {
-        id: "name", label: "Name", type: "text", system: "name",
+        id: "name", label: "姓名", type: "text", system: "name",
         icon: "fa-id-card", color: "#e5e7eb",
         fixed: true,
         persistent: true, updatable: false,
-        placeholder: "Full name + nickname or alias",
+        placeholder: "全名 + 昵称或别名",
         hint: "The identity key. Dedupe, updates and the card header all use it."
     },
     {
-        id: "age", label: "Age", type: "text", system: "vitals",
+        id: "age", label: "年龄", type: "text", system: "vitals",
         icon: "fa-cake-candles", color: "#e5e7eb",
         fixed: true,
         persistent: true, updatable: false,
         placeholder: "#"
     },
     {
-        id: "sex", label: "Sex", type: "text", system: "vitals",
+        id: "sex", label: "性别", type: "text", system: "vitals",
         icon: "fa-venus-mars", color: "#e5e7eb",
         fixed: true,
         persistent: true, updatable: false,
         placeholder: "M/F/Other"
     },
     {
-        id: "orientation", label: "Orientation", type: "text", system: "vitals",
+        id: "orientation", label: "性取向", type: "text", system: "vitals",
         icon: "fa-heart", color: "#e5e7eb",
         fixed: true,
         persistent: true, updatable: false,
         placeholder: "if relevant to plot"
     },
     {
-        id: "role", label: "Role", type: "text",
+        id: "role", label: "角色", type: "text",
         icon: "fa-briefcase", color: "#60a5fa",
         fixed: true,
         persistent: true, updatable: true,
@@ -110,7 +110,7 @@ export const NPC_DEFAULT_FIELDS = [
         hint: "What they do in the world. Updatable — people change jobs."
     },
     {
-        id: "whereToFind", label: "Where to Find Them", type: "text",
+        id: "whereToFind", label: "可寻之处", type: "text",
         icon: "fa-map-location-dot", color: "#34d399",
         fixed: true,
         persistent: true, updatable: false,
@@ -118,11 +118,11 @@ export const NPC_DEFAULT_FIELDS = [
         // the PC's bed" phrasing. Naming the failure made it available; asking
         // for an ordinary future weekday makes the current scene structurally
         // the wrong answer instead of a forbidden one.
-        placeholder: "A home district, a workplace, a regular haunt — somewhere they could still be found at 2pm on an ordinary Tuesday months from now",
+        placeholder: "居住区、工作场所或常去之处——几个月后某个普通周二下午两点仍能找到他们的地方",
         hint: "Where they live and work, not where the current scene put them."
     },
     {
-        id: "appearance", label: "Appearance", type: "longtext",
+        id: "appearance", label: "外貌", type: "longtext",
         icon: "fa-eye", color: "#a78bfa",
         fixed: true,
         persistent: true, updatable: false,
@@ -133,18 +133,18 @@ export const NPC_DEFAULT_FIELDS = [
         icon: "fa-tags", color: "#f472b6",
         fixed: true,
         persistent: true, updatable: false,
-        placeholder: "Booru-style appearance tags — see image_tag_rule. Body and face only.",
+        placeholder: "Booru 风格外貌标签——见 image_tag_rule。仅身体与面部。",
         hint: "Sent to ComfyUI, withheld from the model's text so it does not copy the tag syntax into prose."
     },
     {
-        id: "voice", label: "Voice", type: "text",
+        id: "voice", label: "嗓音", type: "text",
         icon: "fa-comment-dots", color: "#fbbf24",
         fixed: true,
         persistent: true, updatable: false,
-        placeholder: "How they speak — cadence, accent, verbal tics, topics they dodge"
+        placeholder: "他们如何说话——节奏、口音、口头禅、回避的话题"
     },
     {
-        id: "background", label: "Background", type: "longtext",
+        id: "background", label: "背景", type: "longtext",
         icon: "fa-book", color: "#34d399",
         ownLine: true,
         fixed: true,
@@ -152,16 +152,16 @@ export const NPC_DEFAULT_FIELDS = [
         placeholder: "3–5 sentences. Origin, how they got here, the event that shaped them. A life sketch, not a resume. Include facts the PC may never learn."
     },
     {
-        id: "innerCircle", label: "Inner Circle", type: "list",
+        id: "innerCircle", label: "核心圈子", type: "list",
         icon: "fa-people-group", color: "#fbbf24",
         ownLine: true,
         fixed: true,
         persistent: true, updatable: false,
         itemFormat: "[Name] — [Relationship] | [Age, status, current dynamic in one line]",
-        placeholder: "2–5 people. At least one must be off-screen and unknown to the story — a mother, an ex, a childhood friend, a rival. These are plot seeds, not flavour."
+        placeholder: "2–5 人。至少一人须在场外且故事尚不知晓——母亲、前任、发小、对手。这些是剧情种子，不是调味。"
     },
     {
-        id: "personality", label: "Personality", type: "list",
+        id: "personality", label: "性格", type: "list",
         icon: "fa-masks-theater", color: "#f472b6",
         ownLine: true,
         fixed: true,
@@ -173,18 +173,18 @@ export const NPC_DEFAULT_FIELDS = [
         id: "readOnPc", label: "Read on the PC", type: "text",
         icon: "fa-magnifying-glass", color: "#60a5fa",
         persistent: false, updatable: true,
-        placeholder: "What this NPC currently thinks of the PC, and how that could shift",
+        placeholder: "此 NPC 当前对 PC 的看法，以及可能如何变化",
         hint: "Current, not permanent. Expected to move as the story does."
     },
     {
-        id: "agenda", label: "Agenda", type: "text",
+        id: "agenda", label: "议程", type: "text",
         icon: "fa-bullseye", color: "#fb923c",
         persistent: false, updatable: true,
-        placeholder: "What they are working toward right now",
+        placeholder: "他们当前在追求什么",
         hint: "Current, not permanent. Expected to move as the story does."
     },
     {
-        id: "secrets", label: "Secrets", type: "list",
+        id: "secrets", label: "秘密", type: "list",
         icon: "fa-user-secret", color: "#ef4444",
         ownLine: true,
         persistent: false, updatable: true,
@@ -193,7 +193,7 @@ export const NPC_DEFAULT_FIELDS = [
         hint: "A list, so an update can add one secret or retire one without rewriting the rest."
     },
     {
-        id: "canonLock", label: "Canon Lock", type: "list",
+        id: "canonLock", label: "正史锁定", type: "list",
         icon: "fa-lock", color: "#a855f7",
         ownLine: true,
         persistent: true, updatable: false,

@@ -19,7 +19,7 @@ export const CONFIG_PREAMBLE = `These are standing settings for this story. Wher
 // ("hard. the world is against {{user}}") instead of the canned value.
 export const storyConfigFields = [
     {
-        key: "genre", tag: "genre", label: "Genre", icon: "fa-masks-theater", color: "#f59e0b", type: "text",
+        key: "genre", tag: "genre", label: "类型", icon: "fa-masks-theater", color: "#f59e0b", type: "text",
         placeholder: "e.g. horror, romance",
         aiNote: "sets the conventions the story plays straight, never comments on",
         hint: "The story's genre and the conventions that come with it. Played straight, never commented on.",
@@ -36,7 +36,7 @@ export const storyConfigFields = [
         ]
     },
     {
-        key: "culture", tag: "culture", label: "Culture & Setting", icon: "fa-globe", color: "#22c55e", type: "text",
+        key: "culture", tag: "culture", label: "文化与设定", icon: "fa-globe", color: "#22c55e", type: "text",
         placeholder: "e.g. Japanese, Western",
         aiNote: "the cultural world — names, honorifics, food, manners, idiom",
         hint: "The cultural world the story runs on — names, honorifics, food, manners, social rules and the idiom people speak in. Works with era to place the story.",
@@ -49,14 +49,14 @@ export const storyConfigFields = [
         ]
     },
     {
-        key: "era", tag: "era", label: "Era", icon: "fa-hourglass-half", color: "#d97706", type: "text",
+        key: "era", tag: "era", label: "时代", icon: "fa-hourglass-half", color: "#d97706", type: "text",
         placeholder: "e.g. 1980s",
         aiNote: "the period the world runs on",
         hint: "The year or period the world runs on.",
         chips: ["ancient", "medieval", "renaissance", "victorian", "1920s", "1950s", "1970s", "1980s", "1990s", "present day", "near future", "far future", "post-apocalyptic"]
     },
     {
-        key: "pov", tag: "pov", label: "Point of View", icon: "fa-eye", color: "#3b82f6", type: "select",
+        key: "pov", tag: "pov", label: "视角", icon: "fa-eye", color: "#3b82f6", type: "select",
         hint: "Narrative person and where the camera sits. Never loosens the {{user}} boundary.",
         customPlaceholder: "e.g. third limited, sitting behind Maya's eyes",
         options: [
@@ -75,14 +75,14 @@ export const storyConfigFields = [
         ]
     },
     {
-        key: "focus", tag: "focus", label: "Focus", icon: "fa-crosshairs", color: "#eab308", type: "text",
+        key: "focus", tag: "focus", label: "焦点", icon: "fa-crosshairs", color: "#eab308", type: "text",
         placeholder: "e.g. the camera follows Maya",
         aiNote: "whose story the camera favours",
         hint: "Whose story this is, if the camera should favour someone other than {{user}}. Name them.",
         chips: []
     },
     {
-        key: "tone", tag: "narration tone", label: "Narration Tone", icon: "fa-cloud-sun-rain", color: "#a855f7", type: "text",
+        key: "tone", tag: "narration tone", label: "叙述语气", icon: "fa-cloud-sun-rain", color: "#a855f7", type: "text",
         placeholder: "e.g. bleak, absurd",
         aiNote: "the emotional weather over everything; overrides the default register",
         hint: "The mood that sits over the whole story, whatever is happening in a given scene.",
@@ -93,7 +93,7 @@ export const storyConfigFields = [
         chips: ["lighthearted", "warm", "bleak", "absurd", "tense", "melancholy", "playful", "dreamlike", "clinical", "wistful", "manic"]
     },
     {
-        key: "narratorPresence", tag: "narrator_presence", label: "Narrator Presence", icon: "fa-comment-dots", color: "#14b8a6", type: "select",
+        key: "narratorPresence", tag: "narrator_presence", label: "叙述者存在感", icon: "fa-comment-dots", color: "#14b8a6", type: "select",
         customPlaceholder: "e.g. heavy. comment on everything",
         hint: "How visible the narrator's attitude is. Light is your preset default.",
         defaultLabel: "light",
@@ -106,14 +106,14 @@ export const storyConfigFields = [
         ]
     },
     {
-        key: "npcSpeechStyle", tag: "npc_speech_style", label: "NPC Speech Style", icon: "fa-quote-left", color: "#0ea5e9", type: "text",
+        key: "npcSpeechStyle", tag: "npc_speech_style", label: "NPC 说话风格", icon: "fa-quote-left", color: "#0ea5e9", type: "text",
         placeholder: "e.g. 1980s poetic",
         aiNote: "how NPCs sound when they speak",
         hint: "Override how the NPCs sound.",
         chips: ["medieval poetic", "shakespearean", "victorian formal", "1920s slang", "1970s street", "1980s poetic", "modern casual", "corporate", "military clipped", "rural drawl", "cyberpunk street", "archaic high fantasy"]
     },
     {
-        key: "npcDisposition", tag: "npc_disposition", label: "NPC Disposition", icon: "fa-users", color: "#8b5cf6", type: "select",
+        key: "npcDisposition", tag: "npc_disposition", label: "NPC 态度", icon: "fa-users", color: "#8b5cf6", type: "select",
 
         customPlaceholder: "e.g. cold. the NPCs don't like {{user}}",
         hint: "How the cast feels about {{user}} before they earn anything else. Ordinary is your preset default.",
@@ -131,7 +131,7 @@ export const storyConfigFields = [
         ]
     },
     {
-        key: "difficulty", tag: "difficulty", label: "Difficulty", icon: "fa-mountain", color: "#ef4444", type: "select",
+        key: "difficulty", tag: "difficulty", label: "难度", icon: "fa-mountain", color: "#ef4444", type: "select",
         customPlaceholder: "e.g. hard. the world is against {{user}}",
         hint: "How hard the world pushes back on what {{user}} attempts. Realistic is your preset default.",
         defaultLabel: "realistic",
@@ -144,7 +144,7 @@ export const storyConfigFields = [
         ]
     },
     {
-        key: "friction", tag: "friction", label: "Friction", icon: "fa-bolt", color: "#f97316", type: "select",
+        key: "friction", tag: "friction", label: "摩擦", icon: "fa-bolt", color: "#f97316", type: "select",
         customPlaceholder: "e.g. high. trouble is always around the corner",
         hint: "How often trouble arrives. Normal is your preset default.",
         defaultLabel: "normal",
@@ -157,7 +157,7 @@ export const storyConfigFields = [
         ]
     },
     {
-        key: "explicitness", tag: "explicitness", label: "Explicitness", icon: "fa-fire", color: "#e11d48", type: "select",
+        key: "explicitness", tag: "explicitness", label: "露骨程度", icon: "fa-fire", color: "#e11d48", type: "select",
         customPlaceholder: "e.g. graphic. give details",
         hint: "How far scenes go and how directly they are written.",
         options: [
@@ -170,7 +170,7 @@ export const storyConfigFields = [
         ]
     },
     {
-        key: "pace", tag: "pace", label: "Pace", icon: "fa-gauge-high", color: "#10b981", type: "select",
+        key: "pace", tag: "pace", label: "节奏", icon: "fa-gauge-high", color: "#10b981", type: "select",
 
         customPlaceholder: "e.g. steady, but skip anything that isn't a real beat",
         hint: "How fast story time moves.",
@@ -184,7 +184,7 @@ export const storyConfigFields = [
         ]
     },
     {
-        key: "length", tag: "length", label: "Length", icon: "fa-ruler-horizontal", color: "#06b6d4", type: "select",
+        key: "length", tag: "length", label: "长度", icon: "fa-ruler-horizontal", color: "#06b6d4", type: "select",
         customPlaceholder: "e.g. around 300 words, longer when a scene earns it",
         hint: "How long each reply should run.",
         options: [
@@ -247,7 +247,7 @@ export const builtInConfigPresets = [
         values: { genre: "survival, dark fantasy", tone: "bleak", pov: "third limited", pace: "steady", length: "450–550 words", difficulty: "harsh (competence required, failure common, mistakes carry a real cost)", friction: "high (complications every scene, pressure never fully releasing)", npcDisposition: "wary", explicitness: "graphic", narratorPresence: "", focus: "", culture: "high fantasy European", era: "", npcSpeechStyle: "", notes: "" }
     },
     {
-        id: "cfg_cozy", name: "Cozy Slice of Life", builtin: true,
+        id: "cfg_cozy", name: "温馨日常", builtin: true,
         values: { genre: "slice of life", tone: "warm", pov: "second person on {{user}}", pace: "slow burn", length: "250–350 words", difficulty: "forgiving (most attempts land)", friction: "low (only ever as earned consequence)", npcDisposition: "warm", explicitness: "fade to black", narratorPresence: "invisible (report only, no coloring)", focus: "", era: "present day", npcSpeechStyle: "modern casual", notes: "" }
     },
     {

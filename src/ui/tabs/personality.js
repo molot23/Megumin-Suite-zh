@@ -25,8 +25,8 @@ export function renderPersonality(c) {
                     <i class="fa-solid fa-masks-theater"></i>
                 </div>
                 <div>
-                    <h2>Persona</h2>
-                    <p>Set the narrator's voice and fine‑tune engine behavior.</p>
+                    <h2>人格</h2>
+                    <p>设定叙述者声音并微调引擎行为。</p>
                 </div>
             </div>
             <div class="mtab-header-badge" style="background: rgba(236,72,153,0.12); color: #ec4899; border: 1px solid rgba(236,72,153,0.25);">
@@ -75,7 +75,7 @@ export function renderPersonality(c) {
             "engine": "No personality overlay at all. The engine speaks in its purest form — precise, neutral, and fully under your control. Recommended for most setups."
         };
 
-        c.append(`<div class="wstyle-section-head purple"><i class="fa-solid fa-masks-theater"></i> Select Persona</div>`);
+        c.append(`<div class="wstyle-section-head purple"><i class="fa-solid fa-masks-theater"></i> 选择人格</div>`);
         const grid = $(`<div class="mtab-card-grid" style="margin-bottom: 24px;"></div>`);
         hardcodedLogic.personalities.forEach(p => {
             const isSel = localProfile.personality === p.id;
@@ -102,7 +102,7 @@ export function renderPersonality(c) {
     }
 
     // EXTRA TOGGLES (Always available)
-    c.append(`<div class="wstyle-section-head gold"><i class="fa-solid fa-sliders"></i> Extra Toggles</div>`);
+    c.append(`<div class="wstyle-section-head gold"><i class="fa-solid fa-sliders"></i> 额外开关</div>`);
     const toggleList = $(`<div class="mtab-card-list"></div>`);
     Object.entries(hardcodedLogic.toggles).forEach(([key, tog]) => {
         const isOn = localProfile.toggles[key];

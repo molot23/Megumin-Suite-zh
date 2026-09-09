@@ -23,22 +23,22 @@ import { useMeguminEngine } from "../../engine/tasks.js";
 
 export const SD_GENRES = {
     "slice-of-life": { label: "Slice of Life", desc: "Daily rhythms, small moments, character-driven warmth." },
-    "drama": { label: "Drama", desc: "Emotional conflict, relationship tension, high stakes feelings." },
-    "romance": { label: "Romance", desc: "Love as the central engine — pursuit, longing, devotion." },
-    "action": { label: "Action / Adventure", desc: "Physical danger, quests, combat, exploration." },
+    "drama": { label: "剧情", desc: "Emotional conflict, relationship tension, high stakes feelings." },
+    "romance": { label: "浪漫", desc: "Love as the central engine — pursuit, longing, devotion." },
+    "action": { label: "动作 / 冒险", desc: "Physical danger, quests, combat, exploration." },
     "mystery": { label: "Mystery / Thriller", desc: "Secrets, investigation, paranoia, carefully timed reveals." },
-    "fantasy": { label: "Fantasy / RPG", desc: "Magic systems, world-building, quests, power progression." },
+    "fantasy": { label: "奇幻 / RPG", desc: "Magic systems, world-building, quests, power progression." },
     "horror": { label: "Horror / Dark", desc: "Dread, survival, psychological terror, body horror." },
     "scifi": { label: "Sci-Fi", desc: "Technology, space, dystopia, transhumanism." },
-    "comedy": { label: "Comedy", desc: "Humor-driven, absurdist, sitcom energy, comedic timing." },
+    "comedy": { label: "喜剧", desc: "Humor-driven, absurdist, sitcom energy, comedic timing." },
     // Added from reader answers. Deliberately only the ones the nine above do not
     // already cover: Thriller lives inside Mystery, Adventure inside Action and
     // RPG inside Fantasy, so adding them again would be three ways to say the
     // same thing in one dropdown.
-    "anime": { label: "Anime / Light Novel", desc: "Genre-savvy tropes, ensemble cast, escalating arcs, tonal swings played straight." },
+    "anime": { label: "动漫 / 轻小说", desc: "Genre-savvy tropes, ensemble cast, escalating arcs, tonal swings played straight." },
     "tabletop": { label: "Tabletop RPG", desc: "D&D, Delta Green, Call of Cthulhu — a party, a table, and a world that answers to rules." },
     "psychological": { label: "Psychological", desc: "Interior pressure, unreliable perception, obsession, a slow unravelling." },
-    "freeform": { label: "Free-form", desc: "No genre conventions imposed. The story goes wherever the scene takes it." }
+    "freeform": { label: "自由形式", desc: "No genre conventions imposed. The story goes wherever the scene takes it." }
 };
 
 // The select value that means "the reader typed their own". Not a key in
@@ -52,12 +52,12 @@ export const SD_CUSTOM_GENRE = "custom";
 // model was sent another. An empty custom box falls back to the shipped default
 // rather than sending a blank line.
 export function sdGenreLabel(sp) {
-    if (!sp) return "Drama";
+    if (!sp) return "剧情";
     if (sp.primaryGenre === SD_CUSTOM_GENRE) {
         const typed = String(sp.customGenre || "").trim();
-        return typed || "Drama";
+        return typed || "剧情";
     }
-    return SD_GENRES[sp.primaryGenre]?.label || "Drama";
+    return SD_GENRES[sp.primaryGenre]?.label || "剧情";
 }
 
 // Sent to the model verbatim, so a tag has to read as an instruction on its own —
@@ -77,7 +77,7 @@ export const SD_FLAVORS = [
     "Dark Comedy", "Gothic", "Bittersweet", "Tragic", "Horror-Comedy", "Noir",
     "Lighthearted", "Cozy", "Grimdark", "Whimsical",
     // Setting & World
-    "Urban Fantasy", "Historical", "Survival", "Post-Apocalyptic", "Victorian Gothic", "Cyberpunk",
+    "Urban Fantasy", "Historical", "生存", "Post-Apocalyptic", "Victorian Gothic", "Cyberpunk",
     "Space Opera", "Wuxia / Xianxia", "Academy", "Military", "Small Town",
     // Character & Theme
     "Coming of Age", "Identity", "Cognitive Dissonance", "Moral Ambiguity", "Corruption Arc",
@@ -98,8 +98,8 @@ export function renderStoryPlanner(c) {
         genreOptions += `<option value="${id}" ${sp.primaryGenre === id ? 'selected' : ''}>${g.label}</option>`;
     });
     // Appended rather than added to SD_GENRES: that map is the vocabulary the
-    // Director is told about, and "Custom…" is a UI affordance, not a genre.
-    genreOptions += `<option value="${SD_CUSTOM_GENRE}" ${sp.primaryGenre === SD_CUSTOM_GENRE ? 'selected' : ''}>Custom…</option>`;
+    // Director is told about, and "自定义…" is a UI affordance, not a genre.
+    genreOptions += `<option value="${SD_CUSTOM_GENRE}" ${sp.primaryGenre === SD_CUSTOM_GENRE ? 'selected' : ''}>自定义…</option>`;
     const isCustomGenre = sp.primaryGenre === SD_CUSTOM_GENRE;
 
     // Build flavor chips
@@ -117,12 +117,12 @@ export function renderStoryPlanner(c) {
                     <i class="fa-solid fa-clapperboard"></i>
                 </div>
                 <div>
-                    <h2>Story Director</h2>
-                    <p>Direct the narrative. Shape what happens next.</p>
+                    <h2>剧情导演</h2>
+                    <p>引导叙事，塑造接下来发生的事。</p>
                 </div>
             </div>
             <div id="sd_header_badge" class="mtab-header-badge" style="background: ${sp.enabled ? 'rgba(16,185,129,0.12)' : 'rgba(255,255,255,0.06)'}; color: ${sp.enabled ? '#10b981' : 'var(--text-muted)'}; border: 1px solid ${sp.enabled ? 'rgba(16,185,129,0.25)' : 'var(--border-color)'};">
-                <i class="fa-solid fa-${sp.enabled ? 'circle-check' : 'circle-xmark'}" style="font-size:0.6rem;"></i> ${sp.enabled ? 'Enabled' : 'Disabled'}
+                <i class="fa-solid fa-${sp.enabled ? 'circle-check' : 'circle-xmark'}" style="font-size:0.6rem;"></i> ${sp.enabled ? '已启用' : '已禁用'}
             </div>
         </div>
 
@@ -138,7 +138,7 @@ export function renderStoryPlanner(c) {
         <div class="mtab-toggle-row ${sp.enabled ? 'active' : ''}" id="sd_enable_card" style="margin-bottom: 20px;">
             <div class="toggle-info">
                 <div class="toggle-label"><i class="fa-solid fa-clapperboard" style="color:var(--gold);"></i> Enable Story Director</div>
-                <div class="toggle-desc">Analyze your RP and generate narrative directives that steer the plot forward.</div>
+                <div class="toggle-desc">分析你的角色扮演并生成推动剧情的叙事指令。</div>
             </div>
             <div class="ps-switch"></div>
         </div>
@@ -151,7 +151,7 @@ export function renderStoryPlanner(c) {
 
                 <!-- Content Rating -->
                 <div class="sd-setting-group">
-                    <div class="sd-setting-label">Content Rating</div>
+                    <div class="sd-setting-label">内容分级</div>
                     <div class="sd-rating-pills">
                         <button class="sd-pill ${sp.contentRating === 'none' ? 'active' : ''}" data-rating="none">
                             <i class="fa-solid fa-infinity"></i> No Limit
@@ -172,7 +172,7 @@ export function renderStoryPlanner(c) {
                         <button class="sd-pacing-btn ${sp.pacing === 'slowburn' ? 'active' : ''}" data-pacing="slowburn">
                             <i class="fa-solid fa-moon"></i>
                             <span class="sd-pacing-name">Slow Burn</span>
-                            <span class="sd-pacing-desc">Character moments, no rush</span>
+                            <span class="sd-pacing-desc">角色时刻，不赶进度</span>
                         </button>
                         <button class="sd-pacing-btn ${sp.pacing === 'natural' ? 'active' : ''}" data-pacing="natural">
                             <i class="fa-solid fa-wind"></i>
@@ -181,7 +181,7 @@ export function renderStoryPlanner(c) {
                         </button>
                         <button class="sd-pacing-btn ${sp.pacing === 'accelerate' ? 'active' : ''}" data-pacing="accelerate">
                             <i class="fa-solid fa-forward-fast"></i>
-                            <span class="sd-pacing-name">Accelerate</span>
+                            <span class="sd-pacing-name">加速</span>
                             <span class="sd-pacing-desc">Push forward, big moves</span>
                         </button>
                     </div>
@@ -189,7 +189,7 @@ export function renderStoryPlanner(c) {
 
                 <!-- Primary Genre -->
                 <div class="sd-setting-group">
-                    <div class="sd-setting-label">Primary Genre</div>
+                    <div class="sd-setting-label">Primary 类型</div>
                     <select id="sd_genre" class="ps-modern-input" style="width: 100%; cursor: pointer;">
                         ${genreOptions}
                     </select>
@@ -239,7 +239,7 @@ export function renderStoryPlanner(c) {
                         <button id="sd_btn_evolve" class="wstyle-gen-btn" style="padding: 8px 18px; font-size: 0.78rem; background: rgba(139, 92, 246, 0.15); border-color: rgba(139, 92, 246, 0.3);" ${sp.currentPlan ? '' : 'disabled'}><i class="fa-solid fa-arrows-rotate"></i> Evolve</button>
                     </div>
                 </div>
-                <textarea id="sd_current_plan" class="ps-modern-input sd-directive-output" placeholder="Your narrative directive will appear here after generation.">${sp.currentPlan || ""}</textarea>
+                <textarea id="sd_current_plan" class="ps-modern-input sd-directive-output" placeholder="生成后，叙事指令将显示在这里。">${sp.currentPlan || ""}</textarea>
                 <div class="mtab-callout">
                     <i class="fa-solid fa-circle-info"></i>
                     <span>This directive is injected via <code>[[storyplan]]</code>. A feedback tracker is appended via <code>[[storytracker]]</code>.</span>
@@ -250,34 +250,34 @@ export function renderStoryPlanner(c) {
             <div class="mtab-panel">
                 <div class="mtab-panel-title gold"><i class="fa-solid fa-gears"></i> Engine Settings</div>
                 <div class="mtab-setting-row">
-                    <div class="set-info"><div class="set-label">Generation Backend</div></div>
+                    <div class="set-info"><div class="set-label">生成后端</div></div>
                     <select id="sd_backend" class="ps-modern-input" style="width: 220px; cursor: pointer;">
-                        <option value="direct" ${sp.backend === 'direct' ? 'selected' : ''}>Direct API Call (Fast)</option>
+                        <option value="direct" ${sp.backend === 'direct' ? 'selected' : ''}>直接 API 调用（快速）</option>
                         <option value="preset" ${sp.backend === 'preset' ? 'selected' : ''}>Megumin Engine Preset</option>
                     </select>
                 </div>
                 <div class="mtab-setting-row">
                     <div class="set-info">
-                        <div class="set-label">Context Limit</div>
+                        <div class="set-label">上下文限制</div>
                         <div class="set-desc">How much chat history the Director reads to analyze the plot.</div>
                     </div>
                     <select id="sd_context_limit" class="ps-modern-input" style="width: 220px; cursor: pointer;">
                         <option value="100" ${sp.contextLimit === 100 ? 'selected' : ''}>Last 100 Messages</option>
-                        <option value="0" ${sp.contextLimit === 0 ? 'selected' : ''}>Full Chat History</option>
+                        <option value="0" ${sp.contextLimit === 0 ? 'selected' : ''}>完整聊天记录</option>
                     </select>
                 </div>
                 <div class="mtab-setting-row">
                     <div class="set-info">
-                        <div class="set-label">Auto-Trigger Mode</div>
+                        <div class="set-label">自动触发模式</div>
                         <div class="set-desc">When should the Director evolve the story?</div>
                     </div>
                     <div style="display:flex; gap:8px; align-items:center;">
                         <select id="sd_trigger" class="ps-modern-input" style="width: 170px; cursor: pointer;">
                             <option value="manual" ${sp.triggerMode === 'manual' ? 'selected' : ''}>Manual Only</option>
-                            <option value="auto" ${sp.triggerMode === 'auto' ? 'selected' : ''}>Auto (Smart Status)</option>
-                            <option value="frequency" ${sp.triggerMode === 'frequency' ? 'selected' : ''}>Every X Replies (Safety Net)</option>
+                            <option value="auto" ${sp.triggerMode === 'auto' ? 'selected' : ''}>自动（智能状态）</option>
+                            <option value="frequency" ${sp.triggerMode === 'frequency' ? 'selected' : ''}>每 X 条回复（安全网）</option>
                         </select>
-                        <input type="number" id="sd_freq" class="ps-modern-input" value="${sp.autoFreq}" min="1" style="width: 60px; text-align: center; display: ${sp.triggerMode === 'frequency' ? 'block' : 'none'};" title="Fallback safety net interval" />
+                        <input type="number" id="sd_freq" class="ps-modern-input" value="${sp.autoFreq}" min="1" style="width: 60px; text-align: center; display: ${sp.triggerMode === 'frequency' ? 'block' : 'none'};" title="后备安全网间隔" />
                     </div>
                 </div>
             </div>
@@ -287,7 +287,7 @@ export function renderStoryPlanner(c) {
     // --- PROMPT EDITOR UI ---
     const spEditor = renderPromptEditor({
         id: "sd_prompt_editor",
-        title: "Advanced: Edit Prompts",
+        title: "高级：编辑提示词",
         defaultData: DEFAULT_PROMPTS.storyPlan,
         currentData: sp.customPrompts,
         enabled: sp.customPromptsEnabled,
@@ -300,7 +300,7 @@ export function renderStoryPlanner(c) {
             { key: "systemPrompt", label: "System Prompt (Manifesto)", hint: "Tokens: <code>{{charLore}}</code>, <code>{{userPersona}}</code>, <code>{{chatHistory}}</code>, <code>{{user}}</code>" },
             { key: "userPrompt", label: "User Task Prompt", hint: "Tokens: <code>{{user}}</code>, <code>{{directorSettings}}</code>" },
             { key: "thinkingPrompt", label: "Thinking Instructions", hint: "Must include output ordering instructions with <code>&lt;directive&gt;</code> tags." },
-            { key: "injectionTemplate", label: "Directive Injection Template", hint: "Tokens: <code>{{planText}}</code>" },
+            { key: "injectionTemplate", label: "指令注入模板", hint: "Tokens: <code>{{planText}}</code>" },
             { key: "trackerTemplate", label: "Story Tracker Template", hint: "Tokens: <code>{{user}}</code>" }
         ],
         onSave: (val, key) => {
@@ -326,11 +326,11 @@ export function renderStoryPlanner(c) {
         if (sp.enabled) {
             $(this).addClass("active");
             $("#sd_main_content").slideDown(200);
-            $("#sd_header_badge").css({ background: 'rgba(16,185,129,0.12)', color: '#10b981', 'border-color': 'rgba(16,185,129,0.25)' }).html(`<i class="fa-solid fa-circle-check" style="font-size:0.6rem;"></i> Enabled`);
+            $("#sd_header_badge").css({ background: 'rgba(16,185,129,0.12)', color: '#10b981', 'border-color': 'rgba(16,185,129,0.25)' }).html(`<i class="fa-solid fa-circle-check" style="font-size:0.6rem;"></i> 已启用`);
         } else {
             $(this).removeClass("active");
             $("#sd_main_content").slideUp(200);
-            $("#sd_header_badge").css({ background: 'rgba(255,255,255,0.06)', color: 'var(--text-muted)', 'border-color': 'var(--border-color)' }).html(`<i class="fa-solid fa-circle-xmark" style="font-size:0.6rem;"></i> Disabled`);
+            $("#sd_header_badge").css({ background: 'rgba(255,255,255,0.06)', color: 'var(--text-muted)', 'border-color': 'var(--border-color)' }).html(`<i class="fa-solid fa-circle-xmark" style="font-size:0.6rem;"></i> 已禁用`);
         }
     });
 
@@ -381,7 +381,7 @@ export function renderStoryPlanner(c) {
             $(this).removeClass("active");
         } else {
             if (sp.flavorTags.length >= 3) {
-                toastr.warning("Maximum 3 flavor tags allowed.");
+                toastr.warning("最多允许 3 个风味标签。");
                 return;
             }
             sp.flavorTags.push(flavor);
@@ -433,7 +433,7 @@ export function renderStoryPlanner(c) {
 
 export async function handleDirectiveGeneration(sp, btn, isEvolve) {
     const chatText = getChatForStoryDirector();
-    if (chatText.length < 100) return toastr.warning("Not enough chat history to generate a directive.");
+    if (chatText.length < 100) return toastr.warning("聊天记录不足，无法生成指令。");
 
     // `sp` was captured when the Story Director tab was rendered, so it can already be a
     // couple of chats old, and the generation below takes seconds on top of that. Stamp
@@ -456,7 +456,7 @@ export async function handleDirectiveGeneration(sp, btn, isEvolve) {
             // planMessageIndex would be counted against the wrong chat's length.
             if (meguminActiveDataIdentity() !== sdIdentity) {
                 console.debug(`[Megumin-Suite] Story Director ${isEvolve ? 'evolve' : 'generate'} declined: it started on "${sdIdentity}" but "${meguminActiveDataIdentity()}" is active now. The new directive was discarded, not applied.`);
-                toastr.info("Chat changed while the directive was generating. It was discarded.", "Story Director");
+                toastr.info("生成指令时聊天已切换，指令已丢弃。", "剧情导演");
                 return;
             }
             // Try <directive> tags first, fall back to <plot> for backward compat
@@ -469,11 +469,11 @@ export async function handleDirectiveGeneration(sp, btn, isEvolve) {
                 saveProfileToMemory();
                 toastr.success(isEvolve ? "Directive Evolved!" : "Directive Generated!");
             } else {
-                toastr.warning("AI failed to format the directive correctly. Try again.");
+                toastr.warning("AI 未能正确格式化指令。请重试。");
             }
         }
     } catch (e) {
-        toastr.error("Failed to generate directive.");
+        toastr.error("生成指令失败。");
         console.error("[Megumin Suite] Story Director error:", e);
     } finally {
         btn.prop("disabled", false).html(originalHtml);

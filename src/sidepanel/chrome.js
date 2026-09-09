@@ -99,7 +99,7 @@ function updateModeButton() {
     if (!modeBtn) return;
     const cfg = getSettings();
     const floating = cfg.mode === "floating";
-    modeBtn.title = floating ? "Dock panel" : "Float panel";
+    modeBtn.title = floating ? "停靠面板" : "浮动面板";
     modeBtn.innerHTML = floating
         ? '<i class="fa-solid fa-thumbtack"></i>'
         : '<i class="fa-solid fa-up-right-from-square"></i>';

@@ -49,7 +49,7 @@ function buildConfigSyncRow() {
                     style="${hostOn
                         ? (on ? "color:#10b981; border-color:rgba(16,185,129,0.45);" : "color:var(--gold); border-color:rgba(245,158,11,0.3);")
                         : "opacity:0.55;"}">
-                <i class="fa-solid fa-earth-americas"></i> ${on ? "On" : "Off"}
+                <i class="fa-solid fa-earth-americas"></i> ${on ? "开" : "关"}
             </button>`);
     };
 
@@ -65,7 +65,7 @@ function buildConfigSyncRow() {
         // out there alone — undoing a share nobody asked to undo would be worse.
         if (next) saveProfileToMemory();
         if (!meguminStoryConfigHostSynced()) {
-            toastr.info("Saved. It takes effect when this tab's Global switch is on.", "Megumin Suite");
+            toastr.info("已保存。当此选项卡的「全局」开关打开时生效。", "Megumin Suite");
         } else {
             toastr.success(next
                 ? "Story Config now travels with the other settings on this tab."
@@ -156,7 +156,7 @@ export function buildStoryConfigSection() {
         if (!pid) { toastr.info("Pick a preset first."); return; }
         const p = getAllConfigPresets().find(x => x.id === pid);
         if (!p) return;
-        if (p.builtin) { toastr.warning("Built-in presets can't be deleted."); return; }
+        if (p.builtin) { toastr.warning("内置预设不能删除。"); return; }
         if (!confirm(`Delete the preset "${p.name}"?`)) return;
         extension_settings[extensionName].configPresets = extension_settings[extensionName].configPresets.filter(x => x.id !== pid);
         saveSettingsDebounced();
@@ -165,7 +165,7 @@ export function buildStoryConfigSection() {
     });
 
     presetBar.find("#cfg_reset_all").on("click", () => {
-        if (!confirm("Set every setting back to preset default?")) return;
+        if (!confirm("将所有设置恢复为预设默认值？")) return;
         storyConfigFields.forEach(f => { cfg[f.key] = ""; });
         applyStoryConfigDefaults(cfg);
         saveProfileToMemory();
@@ -355,7 +355,7 @@ export function renderStoryConfig(c) {
     const genCount = hardcodedLogic.styleTemplates.filter(t => !existingNames.includes(t.name)).length;
     const precookedCount = hardcodedLogic.directStyles.length;
 
-    let activeStyleName = "Off";
+    let activeStyleName = "关";
     if (!isOff) {
         const ds = hardcodedLogic.directStyles.find(d => d.id === localProfile.activeStyleId);
         if (ds) activeStyleName = ds.name;
@@ -371,7 +371,7 @@ export function renderStoryConfig(c) {
             <div class="wstyle-header-left">
                 <div class="wstyle-header-icon"><i class="fa-solid fa-sliders"></i></div>
                 <div>
-                    <h2>Writing Style</h2>
+                    <h2>文风</h2>
                     <p>Pick the prose voice the story is told in.</p>
                 </div>
             </div>
@@ -415,7 +415,7 @@ export function renderStoryConfig(c) {
                             <div style="font-size: 0.9rem; font-weight: 800; color: #a855f7; line-height: 1.1;"><span id="lbl_narr">${100 - dVal}</span>%</div>
                         </div>
                         <div style="text-align: right; min-width: 0;">
-                            <div style="font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted);">Dialogue</div>
+                            <div style="font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted);">对话</div>
                             <div style="font-size: 0.9rem; font-weight: 800; color: #10b981; line-height: 1.1;"><span id="lbl_dial">${dVal}</span>%</div>
                         </div>
                     </div>
@@ -705,7 +705,7 @@ export function renderStyleEditor(c, editId, presetData = null) {
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <i class="fa-solid fa-sparkles" style="color: var(--gold); font-size: 0.9rem;"></i>
-                    <span style="font-weight: 700; font-size: 0.88rem; color: var(--text-main);">AI Author Matches</span>
+                    <span style="font-weight: 700; font-size: 0.88rem; color: var(--text-main);">AI 作者匹配</span>
                 </div>
                 <button id="ps_btn_get_authors_style" class="ps-modern-btn secondary" style="padding: 6px 14px; font-size: 0.73rem;">
                     <i class="fa-solid fa-lightbulb"></i> Generate Insights
@@ -713,7 +713,7 @@ export function renderStyleEditor(c, editId, presetData = null) {
             </div>
             <div id="ps_ai_author_box_style" class="wstyle-tag-grid" style="min-height: 20px; margin-bottom: 14px;"></div>
             <div style="border-top: 1px dashed var(--border-color); padding-top: 14px;">
-                <input type="text" id="ps_style_notes" class="ps-modern-input" placeholder="Custom directives or inspiration notes…" value="${currentStyle.notes || ''}" />
+                <input type="text" id="ps_style_notes" class="ps-modern-input" placeholder="自定义指令或灵感备注…" value="${currentStyle.notes || ''}" />
             </div>
         </div>
     `);
@@ -724,13 +724,13 @@ export function renderStyleEditor(c, editId, presetData = null) {
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <i class="fa-solid fa-scroll" style="color: #a855f7; font-size: 0.85rem;"></i>
-                    <span style="font-weight: 700; font-size: 0.88rem; color: var(--text-main);">Generated Rule</span>
+                    <span style="font-weight: 700; font-size: 0.88rem; color: var(--text-main);">已生成规则</span>
                 </div>
                 <button id="ps_btn_generate_style" class="wstyle-gen-btn" style="padding: 8px 18px; font-size: 0.78rem;">
                     <i class="fa-solid fa-bolt"></i> Generate Writing Rule
                 </button>
             </div>
-            <textarea id="ps_style_rule_text" placeholder="Select tags above and click Generate…">${currentStyle.rule || ''}</textarea>
+            <textarea id="ps_style_rule_text" placeholder="在上方选择标签并点击生成…">${currentStyle.rule || ''}</textarea>
             <div class="wstyle-info-callout">
                 <i class="fa-solid fa-circle-info"></i>
                 <span>After generating or editing your rule, hit <strong>Save</strong> in the toolbar above to apply it to your library.</span>
@@ -767,7 +767,7 @@ export function renderStyleEditor(c, editId, presetData = null) {
     });
 
     $("#ps_btn_get_authors_style").on("click", async function () {
-        if (!getCharacterKey()) return toastr.warning("Open a chat or group first so I can read the context!");
+        if (!getCharacterKey()) return toastr.warning("请先打开聊天或群组，以便读取上下文！");
         $(this).prop("disabled", true).html(`<i class="fa-solid fa-spinner fa-spin"></i> Brainstorming...`);
         await useMeguminEngine(async () => {
             const orderText = `Based on the active characters and scenario, give me EXACTLY 2 famous author names or literary writing styles (e.g. Edgar Allan Poe, Jane Austen style, Dark Fantasy Author) and 5 tags that fit the rp (e.g. internet culture, femboy, virtual game) whose writing style perfectly fits the tone and world. Return ONLY the 7 items separated by a comma. Do not explain them.`;

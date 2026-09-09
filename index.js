@@ -218,9 +218,9 @@ $("body").on("input", "#ps_main_current_rule", function () {
 // UNIFIED DEV BUTTON CLICK LISTENER
 $("body").off("click", "#ps_btn_dev_mode").on("click", "#ps_btn_dev_mode", function (e) {
     e.preventDefault();
-    if ($(this).text().includes("Exit Dev")) {
+    if ($(this).text().includes("退出开发")) {
         if (isDevEngineDirty) {
-            if (!confirm("You have unsaved changes in your custom engine. Are you sure you want to exit? Changes will be lost.")) return;
+            if (!confirm("自定义引擎有未保存的更改。确定要退出吗？更改将丢失。")) return;
         }
         setDevEngineDirty(false);
         switchTab(0);
@@ -329,13 +329,13 @@ jQuery(async () => {
             // 2. Inject the hamburger button into the top-app-bar (before .app-actions)
             const topBar = container.find(".top-app-bar");
             if (topBar.length && !topBar.find(".mobile-hamburger").length) {
-                topBar.prepend('<button class="mobile-hamburger" title="Menu"><i class="fa-solid fa-bars"></i></button>');
+                topBar.prepend('<button class="mobile-hamburger" title="菜单"><i class="fa-solid fa-bars"></i></button>');
             }
 
             // 3. Inject a drawer header at top of dock (navigation label)
             const dock = container.find(".dock");
             if (dock.length && !dock.find(".mobile-drawer-header").length) {
-                dock.prepend('<div class="mobile-drawer-header"><h3><i class="fa-solid fa-wand-magic-sparkles" style="margin-right:8px;color:var(--gold)"></i>Navigation</h3></div>');
+                dock.prepend('<div class="mobile-drawer-header"><h3><i class="fa-solid fa-wand-magic-sparkles" style="margin-right:8px;color:var(--gold)"></i>导航</h3></div>');
             }
 
             // 4. Inject drawer footer with Sync Global + Reset at bottom of dock
@@ -343,10 +343,10 @@ jQuery(async () => {
                 dock.append(`
                     <div class="mobile-drawer-footer">
                         <button class="mobile-drawer-footer-btn sync-global" id="mobile_sync_global">
-                            <i class="fa-solid fa-earth-americas"></i> Global: ${meguminIsTabSynced((tabsUI[currentTab] || {}).title) ? "On" : "Off"}
+                            <i class="fa-solid fa-earth-americas"></i> 全局：${meguminIsTabSynced((tabsUI[currentTab] || {}).title) ? "开" : "关"}
                         </button>
                         <button class="mobile-drawer-footer-btn danger" id="mobile_reset">
-                            <i class="fa-solid fa-rotate-left"></i> Reset Profile
+                            <i class="fa-solid fa-rotate-left"></i> 重置配置
                         </button>
                     </div>
                 `);
@@ -393,17 +393,17 @@ jQuery(async () => {
         setTimeout(initMobileDrawer, 500);
 
         $("body").on("click", "#ps_btn_reset", function () {
-            if (confirm("Are you sure you want to completely reset this character's profile to the default template?")) {
+            if (confirm("确定要将此角色的配置完全重置为默认模板吗？")) {
                 // A save debounced by an edit made just before the click would fire ~500ms
                 // from now, after the delete, and write the old profile straight back under
                 // the same live key. Drop it first, the same way the chat switch does.
                 cancelDebounce(_saveProfileDebouncedInner);
                 const key = getCharacterKey() || "default"; delete extension_settings[extensionName].profiles[key]; saveSettingsDebounced();
-                initProfile(); switchTab(0); toastr.info("Profile has been reset to defaults.");
+                initProfile(); switchTab(0); toastr.info("配置已重置为默认值。");
             }
         });
 
-        $("body").on("click", "#ps_btn_save_close", function () { saveProfileToMemory(); $("#prompt-slot-modal-overlay").fadeOut(200); toastr.success("Workflow Configured & Applied Successfully!"); });
+        $("body").on("click", "#ps_btn_save_close", function () { saveProfileToMemory(); $("#prompt-slot-modal-overlay").fadeOut(200); toastr.success("工作流已配置并成功应用！"); });
 
         if (typeof eventSource !== 'undefined' && typeof event_types !== 'undefined') {
             eventSource.on(event_types.APP_READY, () => {
@@ -494,7 +494,7 @@ jQuery(async () => {
 
                             // 3. Execute Auto-Evolve
                             if (needsEvolve) {
-                                toastr.info("Auto-Evolving Narrative Directive...", "Story Director");
+                                toastr.info("正在自动演化叙事指令...", "剧情导演");
                                 setTimeout(async () => {
                                     // getChatForStoryDirector() reads whatever chat is open
                                     // NOW, so once the chat has moved this would evolve the
@@ -521,7 +521,7 @@ jQuery(async () => {
                                                 $("#sd_current_plan").val(sp.currentPlan);
                                                 $("#sd_btn_evolve").prop("disabled", false);
                                             }
-                                            toastr.success("Narrative Directive Evolved silently!", "Story Director");
+                                            toastr.success("叙事指令已静默演化！", "剧情导演");
                                         }
                                     } catch (e) { console.error("[Megumin Suite] Story Director auto-evolve failed", e); }
                                 }, 2000); // Delay to let UI settle
@@ -555,7 +555,7 @@ jQuery(async () => {
                         }
 
                         if (hasWork) {
-                            toastr.info("Background Memory Scan Triggered...", "Megumin Suite");
+                            toastr.info("已触发后台记忆扫描...", "Megumin Suite");
                             // We run it after a small delay so ST finishes saving the chat first
                             setTimeout(async () => {
                                 await memProcessPendingChunks(true);
@@ -599,7 +599,7 @@ jQuery(async () => {
                                         messageIndex: chat.length - 1
                                     }));
                                     added = true;
-                                    toastr.success(`NPC added to Bank: ${npcName}`, "Megumin Suite");
+                                    toastr.success(`NPC 已加入库： ${npcName}`, "Megumin Suite");
                                     if ($("#npc_bank_list").length) renderNpcList();
                                 }
                             }
@@ -664,7 +664,7 @@ jQuery(async () => {
                     for (let i = matches.length - 1; i >= 0; i--) {
                         const match = matches[i];
                         const uniquePlaceholderId = `kazuma-img-${batchId}-${i}`;
-                        const placeholder = `<div id="${uniquePlaceholderId}" class="kazuma-img-placeholder" style="color:var(--gold); font-style: italic; margin: 10px 0;">[Generating Image...]</div>`;
+                        const placeholder = `<div id="${uniquePlaceholderId}" class="kazuma-img-placeholder" style="color:var(--gold); font-style: italic; margin: 10px 0;">[正在生成图像...]</div>`;
 
                         if (injectMode === "inline") {
                             modifiedMes = modifiedMes.substring(0, match.index) + placeholder + modifiedMes.substring(match.index + match[0].length);
@@ -696,7 +696,7 @@ jQuery(async () => {
                         const uniquePlaceholderId = `kazuma-img-${batchId}-${idx}`;
                         
                         setTimeout(() => {
-                            toastr.info(`Image tag ${idx + 1} detected. Sending to ComfyUI...`);
+                            toastr.info(`检测到图像标签 ${idx + 1}。正在发送到 ComfyUI...`);
                             igGenerateWithComfy(extractedPrompt, { 
                                 message: lastMsg, 
                                 index: msgIndex, 
@@ -748,7 +748,7 @@ jQuery(async () => {
                     if (ogExt && extension_settings.image_generation) extension_settings.image_generation.overswipe = ogExt;
                 }, 200);
 
-                toastr.info("Regenerating Image...", "Megumin Suite");
+                toastr.info("正在重新生成图像...", "Megumin Suite");
                 await igGenerateWithComfy(mediaObj.title, { message: message, element: $(element) });
             };
 
@@ -769,7 +769,7 @@ jQuery(async () => {
         $("body").off("click", "#close-prompt-slot-modal, #prompt-slot-modal-overlay").on("click", "#close-prompt-slot-modal, #prompt-slot-modal-overlay", function (e) {
             if (e.target === this) {
                 if (isDevEngineDirty) {
-                    if (!confirm("You have unsaved changes in your custom engine. Are you sure you want to close? Changes will be lost.")) return;
+                    if (!confirm("自定义引擎有未保存的更改。确定要关闭吗？更改将丢失。")) return;
                     setDevEngineDirty(false);
                 }
                 saveProfileToMemory();
@@ -782,7 +782,7 @@ jQuery(async () => {
                 clearInterval(int);
                 return;
             }
-            const b = `<div id="kazuma_quick_gen" class="interactable" title="Visualize Last Scene (Manual)" style="cursor: pointer; width: 35px; height: 35px; display: none; align-items: center; justify-content: center; margin-right: 5px; color: var(--gold);"><i class="fa-solid fa-image fa-lg"></i></div>`;
+            const b = `<div id="kazuma_quick_gen" class="interactable" title="可视化上一场景（手动）" style="cursor: pointer; width: 35px; height: 35px; display: none; align-items: center; justify-content: center; margin-right: 5px; color: var(--gold);"><i class="fa-solid fa-image fa-lg"></i></div>`;
             let t = $("#send_but_sheld");
             if (!t.length) t = $("#send_textarea");
             if (t.length) {

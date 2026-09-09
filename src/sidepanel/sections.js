@@ -41,11 +41,11 @@ function renderWorldState(ctx) {
     ) : null;
 
     const rows = [
-        kv("Date & Time", ws.dateTime),
-        kv("Location", ws.location),
-        kv("Weather", ws.weather),
-        kv("Arc Phase", ws.arcPhase),
-        kv("Scene Phase", ws.scenePhase),
+        kv("日期与时间", ws.dateTime),
+        kv("地点", ws.location),
+        kv("天气", ws.weather),
+        kv("弧光阶段", ws.arcPhase),
+        kv("场景阶段", ws.scenePhase),
     ].filter(Boolean);
 
     const container = el("div", { class: "meg-sp-ws" });
@@ -164,10 +164,10 @@ function renderInnerChatter(ctx) {
 // name, age, sex and orientation all in one field, so everything after the first
 // `|` is dropped — one fact reads better than four fragments. Long values are
 // cut so the header stays one line at any panel width.
-const DOSSIER_PREVIEW_KEYS = ["Role", "Occupation", "Age", "Sex", "Where to Find Them"];
+const DOSSIER_PREVIEW_KEYS = ["角色", "职业", "年龄", "性别", "可寻之处"];
 const DOSSIER_PREVIEW_MAX = 64;
 
-export function dossierPreview(fields) {
+export function dossier预览(fields) {
     const f = fields || {};
     const pick = k => (typeof f[k] === "string" && f[k].trim()) ? f[k].trim() : "";
     let s = "";
@@ -198,10 +198,10 @@ function renderNewNpcs(ctx) {
         d.open = !many;
         // Only worth the room when the body is hidden; with the body open the
         // same fact is already the first row under the header.
-        const preview = many ? dossierPreview(n.fields) : "";
+        const preview = many ? dossier预览(n.fields) : "";
         d.appendChild(el("summary", { class: "meg-sp-newnpc-head" },
             el("i", { class: "fa-solid fa-user-plus" }), " ",
-            el("span", { class: "meg-sp-newnpc-name" }, n.name || "Unnamed NPC"),
+            el("span", { class: "meg-sp-newnpc-name" }, n.name || "未命名 NPC"),
             // The six layout properties this line needs used to sit here in the
             // code, because the stylesheet was the author's own file and nothing
             // was being added to it. They are now the one rule the earlier round
@@ -276,7 +276,7 @@ function renderStoryPlanBody(ctx) {
     const sp = ctx.profile?.storyPlan || {};
     const plan = sp.currentPlan;
     if (!(sp.enabled || (plan && plan.trim()))) return null;
-    if (!plan || !plan.trim()) return el("div", { class: "meg-sp-muted" }, "Story Planner is empty.");
+    if (!plan || !plan.trim()) return el("div", { class: "meg-sp-muted" }, "剧情规划为空。");
     const lines = plan.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
     const list = el("ol", { class: "meg-sp-plan" });
     let added = 0;
@@ -315,7 +315,7 @@ function renderNpcBank(ctx) {
 
     const openBookBtn = el("button", {
         class: "meg-sp-book-btn",
-        title: "Open the full NPC Book (browse, edit, upload, generate portraits)",
+        title: "打开完整 NPC 手册（浏览、编辑、上传、生成肖像）",
         onclick: () => ctx.openNpcBook(),
     },
         el("i", { class: "fa-solid fa-book-open" }),
@@ -326,7 +326,7 @@ function renderNpcBank(ctx) {
 
     if (!npcs.length) {
         wrap.appendChild(el("div", { class: "meg-sp-muted", style: { marginTop: "8px" } },
-            "No NPCs banked yet. They get added automatically as the AI introduces them."));
+            "尚无收录的 NPC。AI 引入时会自动添加。"));
         return wrap;
     }
 
@@ -346,12 +346,12 @@ function renderNpcBank(ctx) {
         grid.appendChild(el("div", {
             class: "meg-sp-bank-mini",
             style: { "--accent": accentVar },
-            title: "Click to open in NPC Book",
+            title: "点击在 NPC 手册中打开",
             onclick: () => ctx.openNpcBook(idx),
         },
             portrait,
             el("div", { class: "meg-sp-bank-mini-info" },
-                el("div", { class: "meg-sp-bank-mini-name" }, n.name || "Unnamed"),
+                el("div", { class: "meg-sp-bank-mini-name" }, n.name || "未命名"),
                 ageSex ? el("div", { class: "meg-sp-bank-mini-meta" }, ageSex) : null,
                 (n.role || n.occupation)
                     ? el("div", { class: "meg-sp-bank-mini-occ" }, n.role || n.occupation)
@@ -379,30 +379,30 @@ function renderBanList(ctx) {
 // -----------------------------------------------------------------------------
 export const SECTION_REGISTRY = [
     {
-        id: "worldState", icon: "fa-thumbtack", title: "World State",
+        id: "worldState", icon: "fa-thumbtack", title: "世界状态",
         defaultOpen: true, order: 0, render: renderWorldState, badge: null,
     },
     {
-        id: "innerChatter", icon: "fa-comment-dots", title: "NPC Inner Chatter",
+        id: "innerChatter", icon: "fa-comment-dots", title: "NPC 内心独白",
         defaultOpen: true, order: 1, render: renderInnerChatter,
         badge: (ctx) => ctx.parsed?.innerChatter?.length || null,
     },
     {
-        id: "newNpcs", icon: "fa-user-plus", title: "New NPC Dossiers",
+        id: "newNpcs", icon: "fa-user-plus", title: "新 NPC 档案",
         defaultOpen: true, order: 2, render: renderNewNpcs,
         badge: (ctx) => ctx.parsed?.newNpcs?.length || null,
     },
     {
-        id: "storyPlan", icon: "fa-map", title: "Story Planner",
+        id: "storyPlan", icon: "fa-map", title: "剧情规划",
         defaultOpen: false, order: 3, render: renderStoryPlan, badge: null,
     },
     {
-        id: "npcBank", icon: "fa-address-book", title: "NPC Bank",
+        id: "npcBank", icon: "fa-address-book", title: "NPC 库",
         defaultOpen: false, order: 4, render: renderNpcBank,
         badge: (ctx) => ctx.profile?.npcBank?.npcs?.length || null,
     },
     {
-        id: "banList", icon: "fa-ban", title: "Ban List",
+        id: "banList", icon: "fa-ban", title: "禁用列表",
         defaultOpen: false, order: 5, render: renderBanList,
         badge: (ctx) => ctx.profile?.banList?.length || null,
     },

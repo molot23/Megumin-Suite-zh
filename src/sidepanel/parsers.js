@@ -189,16 +189,16 @@ export function getParsedBlockCounts(mesText) {
 // Phase). We never throw on missing fields — every section is best-effort.
 
 const ICON_TO_LABEL = [
-    { re: /📅|🗓/, label: "dateTime", name: "Date & Time" },
-    { re: /📍|🌍/, label: "location", name: "Location" },
-    { re: /☁|🌤|🌧|🌡|🌪|⛅|☀|🌫|⛈|🌩|🌨/, label: "weather", name: "Weather & Atmosphere" },
-    { re: /🎭|🎬/, label: "scenePhase", name: "Scene Phase" },
-    { re: /🔥|🧵/, label: "threads", name: "Unresolved Threads", multi: true },
+    { re: /📅|🗓/, label: "dateTime", name: "日期与时间" },
+    { re: /📍|🌍/, label: "location", name: "地点" },
+    { re: /☁|🌤|🌧|🌡|🌪|⛅|☀|🌫|⛈|🌩|🌨/, label: "weather", name: "天气与氛围" },
+    { re: /🎭|🎬/, label: "scenePhase", name: "场景阶段" },
+    { re: /🔥|🧵/, label: "threads", name: "未决线索", multi: true },
     // 📡 is the antenna the full template's Off-Screen heading actually uses;
     // 🛰 is the satellite, a different character. Without it that heading fell
     // through to the NPC catch-all, where a heading with no name in front of it
     // is dropped — so the whole Off-Screen list vanished from the panel.
-    { re: /🎤|🛰|📺|📡/, label: "offScreen", name: "Off-Screen", multi: true },
+    { re: /🎤|🛰|📺|📡/, label: "offScreen", name: "场外", multi: true },
     // The last three rows of the full template's own World State block. Until now
     // no table knew them, so the segment walk found nothing to do with any of the
     // three and dropped all of them into the leftover text at the foot of the
@@ -206,10 +206,10 @@ const ICON_TO_LABEL = [
     // same two in their other spelling, which a model reaches for often enough to
     // be worth a bar. 🎯 is kept apart from the 🎬 above it: they are two
     // different rows of the block and the panel draws them as two different fields.
-    { re: /🌱|🌰/, label: "plantedSeeds", name: "Planted Seeds", multi: true },
-    { re: /⏳|⌛/, label: "consequenceTimers", name: "Consequence Timers", multi: true },
-    { re: /🎯/, label: "arcPhase", name: "Arc Phase" },
-    { re: /👥|🧑‍🤝‍🧑/, label: "npcsHeading", name: "NPCs Present", skip: true },
+    { re: /🌱|🌰/, label: "plantedSeeds", name: "埋下的伏笔", multi: true },
+    { re: /⏳|⌛/, label: "consequenceTimers", name: "后果计时器", multi: true },
+    { re: /🎯/, label: "arcPhase", name: "弧光阶段" },
+    { re: /👥|🧑‍🤝‍🧑/, label: "npcsHeading", name: "在场 NPC", skip: true },
 ];
 
 function splitBullets(text) {
@@ -430,9 +430,9 @@ export function parseWorldState(raw) {
         // NPCs before PC: an `NPCs Present` heading with no emoji and no colon
         // satisfies the PC test as well, because "NPCs" contains "PC". Left second,
         // it took the player's slot and swallowed the NPC list. Nothing a PC heading
-        // looks like can start with "NPCs Present", so the reverse cannot happen.
+        // looks like can start with "在场 NPC", so the reverse cannot happen.
         if (/^[\*_]*\s*[\p{Emoji}]?\s*NPCs?\s*Present/iu.test(head)) {
-            return { label: "npcsHeading", name: "NPCs Present", skip: true };
+            return { label: "npcsHeading", name: "在场 NPC", skip: true };
         }
         // The full template heads the player's block with a standing person and
         // the character's own name: `**🧍 Adam:**`. There is no word in it to

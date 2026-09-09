@@ -218,7 +218,7 @@ function renderChoicesInto(pane, parsed, doc, opts) {
         if (c.placeholder) {
             btn.classList.add("meg-choice-placeholder");
             btn.disabled = true;
-            btn.title = "The model left this option unfilled";
+            btn.title = "模型未填写此选项";
         } else {
             btn.title = onChoice ? `Click to put in the input · Shift-click to send` : full;
         }
@@ -363,7 +363,7 @@ export function buildBlocksCard(blocks, opts = {}) {
         btn.innerHTML = `
             <span class="meg-blocks-tab-emoji">${b.def.emoji || ""}</span>
             <span class="meg-blocks-tab-label">${esc(b.name || b.def.label)}</span>
-            ${b.truncated ? `<span class="meg-block-flag" title="The reply was cut off before this block finished">cut</span>` : ""}
+            ${b.truncated ? `<span class="meg-block-flag" title="回复在此数据块完成前被截断">cut</span>` : ""}
         `;
         // Clicking the open tab shuts it again, back to whatever the resting
         // state is — which is the CYOA block when there is one, nothing when
@@ -416,7 +416,7 @@ export function buildBlocksCard(blocks, opts = {}) {
     const chev = doc.createElement("button");
     chev.type = "button";
     chev.className = "meg-blocks-collapse";
-    chev.title = "Fold";
+    chev.title = "折叠";
     chev.innerHTML = `<i class="fa-solid fa-chevron-down"></i>`;
     chev.addEventListener("click", e => {
         e.stopPropagation();

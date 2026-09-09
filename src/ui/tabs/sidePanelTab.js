@@ -20,7 +20,7 @@ export function renderSidePanelTab(c) {
     const pb = getPresentBarSettings();
 
     const enabledBadge = `<div id="megsp_header_badge" class="mtab-header-badge" style="background: ${cfg.enabled ? 'rgba(245,158,11,0.12)' : 'rgba(255,255,255,0.06)'}; color: ${cfg.enabled ? '#f59e0b' : 'var(--text-muted)'}; border: 1px solid ${cfg.enabled ? 'rgba(245,158,11,0.25)' : 'var(--border-color)'};">
-        <i class="fa-solid fa-${cfg.enabled ? 'circle-check' : 'circle-xmark'}" style="font-size:0.6rem;"></i> ${cfg.enabled ? 'Enabled' : 'Disabled'}
+        <i class="fa-solid fa-${cfg.enabled ? 'circle-check' : 'circle-xmark'}" style="font-size:0.6rem;"></i> ${cfg.enabled ? '已启用' : '已禁用'}
     </div>`;
 
     const isDocked = cfg.mode !== "floating";
@@ -40,8 +40,8 @@ export function renderSidePanelTab(c) {
                      <i class="fa-solid fa-table-columns"></i>
                 </div>
                 <div>
-                    <h2>Side Panel</h2>
-                    <p>Dockable / floatable tracker panel. Drag it by the header when floating, resize from the edge, reorder sections. Updates automatically as the AI replies.</p>
+                    <h2>侧边栏</h2>
+                    <p>可停靠 / 可浮动的追踪面板。浮动时可拖拽标题栏，从边缘调整大小，可重排分区。AI 回复时自动更新。</p>
                 </div>
             </div>
             ${enabledBadge}
@@ -49,7 +49,7 @@ export function renderSidePanelTab(c) {
 
         <div class="mtab-callout red" style="margin-bottom: 16px;">
             <i class="fa-solid fa-triangle-exclamation"></i>
-            <span><strong>Discontinued.</strong> Blocks do this better &mdash; a nicer card, far more
+            <span><strong>已停用。</strong> Blocks do this better &mdash; a nicer card, far more
             you can change about it, and it keeps up with new blocks as they land. And frankly,
             Kazuma doesn't like the side panel.
             <br><br>So it is no longer being developed and has not kept up: newer blocks, custom
@@ -60,45 +60,45 @@ export function renderSidePanelTab(c) {
 
         <div class="mtab-toggle-row ${cfg.enabled ? 'active' : ''}" id="megsp_enabled_row" style="margin-bottom: 20px;">
             <div class="toggle-info">
-                <div class="toggle-label"><i class="fa-solid fa-table-columns" style="color:var(--gold);"></i> Enable Side Panel</div>
-                <div class="toggle-desc">Mounts the panel on the page. When off, trackers stay inline in the chat as usual.</div>
+                <div class="toggle-label"><i class="fa-solid fa-table-columns" style="color:var(--gold);"></i> 启用侧边栏</div>
+                <div class="toggle-desc">将面板挂载到页面。关闭后，追踪块仍按往常内联显示在聊天中。</div>
             </div>
             <div class="ps-switch"></div>
         </div>
 
         <div id="megsp_main_content" style="display: ${cfg.enabled ? 'block' : 'none'};">
-            <div class="meg-sp-group-head"><i class="fa-solid fa-window-maximize"></i> Panel</div>
+            <div class="meg-sp-group-head"><i class="fa-solid fa-window-maximize"></i> 面板</div>
 
             <div class="meg-sp-settings-row">
                 <div>
-                    <div class="label">Mode</div>
-                    <div class="desc">Docked pins the panel to a screen edge; Floating turns it into a draggable, resizable window.</div>
+                    <div class="label">模式</div>
+                    <div class="desc">「停靠」将面板固定到屏幕边缘；「浮动」变为可拖拽、可调整大小的窗口。</div>
                 </div>
                 <div class="control">
                     <select id="megsp_mode" class="ps-modern-input" style="min-width: 140px;">
-                        <option value="docked" ${isDocked ? "selected" : ""}>Docked</option>
-                        <option value="floating" ${!isDocked ? "selected" : ""}>Floating</option>
+                        <option value="docked" ${isDocked ? "selected" : ""}>停靠</option>
+                        <option value="floating" ${!isDocked ? "selected" : ""}>浮动</option>
                     </select>
                 </div>
             </div>
 
             <div class="meg-sp-settings-row" id="megsp_position_row" style="${isDocked ? "" : "display:none;"}">
                 <div>
-                    <div class="label">Docked edge</div>
-                    <div class="desc">Which edge of the screen the panel anchors to.</div>
+                    <div class="label">停靠边缘</div>
+                    <div class="desc">面板锚定到屏幕的哪一侧。</div>
                 </div>
                 <div class="control">
                     <select id="megsp_position" class="ps-modern-input" style="min-width: 140px;">
-                        <option value="right" ${cfg.position === "right" ? "selected" : ""}>Right</option>
-                        <option value="left" ${cfg.position === "left" ? "selected" : ""}>Left</option>
+                        <option value="right" ${cfg.position === "right" ? "selected" : ""}>右侧</option>
+                        <option value="left" ${cfg.position === "left" ? "selected" : ""}>左侧</option>
                     </select>
                 </div>
             </div>
 
             <div class="meg-sp-settings-row" id="megsp_width_row" style="${isDocked ? "" : "display:none;"}">
                 <div>
-                    <div class="label">Docked width</div>
-                    <div class="desc">You can also drag the panel's inner edge to resize. Mobile clamps to 94% of viewport.</div>
+                    <div class="label">停靠宽度</div>
+                    <div class="desc">也可拖拽面板内侧边缘调整大小。移动端限制为视口的 94%。</div>
                 </div>
                 <div class="control">
                     <input id="megsp_width" type="number" min="320" max="1100" step="10" value="${cfg.width || 620}" class="ps-modern-input" style="width: 110px;" />
@@ -108,8 +108,8 @@ export function renderSidePanelTab(c) {
 
             <div class="meg-sp-settings-row">
                 <div>
-                    <div class="label">UI scale</div>
-                    <div class="desc">Zoom the whole panel — text, cards, avatars, everything.</div>
+                    <div class="label">界面缩放</div>
+                    <div class="desc">缩放整个面板——文字、卡片、头像等全部内容。</div>
                 </div>
                 <div class="control">
                     <input id="megsp_scale" type="range" min="0.8" max="1.4" step="0.05" value="${cfg.scale || 1}" style="width: 140px;" />
@@ -119,10 +119,10 @@ export function renderSidePanelTab(c) {
 
             <div class="meg-sp-settings-row">
                 <div>
-                    <div class="label">Reset floating position</div>
+                    <div class="label">重置浮动位置</div>
                     <div class="desc">Brings a lost floating panel back on screen at the default spot and size.</div>
                 </div>
-                <div class="control"><button id="megsp_float_reset" class="ps-modern-btn secondary"><i class="fa-solid fa-crosshairs"></i> Reset</button></div>
+                <div class="control"><button id="megsp_float_reset" class="ps-modern-btn secondary"><i class="fa-solid fa-crosshairs"></i> 重置</button></div>
             </div>
 
             <div class="meg-sp-group-head"><i class="fa-solid fa-layer-group"></i> Sections</div>
@@ -147,17 +147,17 @@ export function renderSidePanelTab(c) {
 
             <div class="meg-sp-settings-row">
                 <div>
-                    <div class="label">Reset section layout</div>
+                    <div class="label">重置分区布局</div>
                     <div class="desc">Restores default order, visibility, and open/closed states.</div>
                 </div>
-                <div class="control"><button id="megsp_sections_reset" class="ps-modern-btn secondary"><i class="fa-solid fa-rotate-left"></i> Reset</button></div>
+                <div class="control"><button id="megsp_sections_reset" class="ps-modern-btn secondary"><i class="fa-solid fa-rotate-left"></i> 重置</button></div>
             </div>
 
             <div class="meg-sp-group-head"><i class="fa-solid fa-users"></i> Present Characters Bar</div>
 
             <div class="mtab-toggle-row ${pb.enabled ? 'active' : ''}" id="megpb_enabled_row">
                 <div class="toggle-info">
-                    <div class="toggle-label">Enable Present Characters Bar</div>
+                    <div class="toggle-label">启用在场角色条</div>
                     <div class="toggle-desc">A Doom-style horizontal portrait strip next to the chat input. Pulls the cast from the AI's World State NPCs Present, portraits from the NPC Bank.</div>
                 </div>
                 <div class="ps-switch"></div>
@@ -165,13 +165,13 @@ export function renderSidePanelTab(c) {
 
             <div class="meg-sp-settings-row">
                 <div>
-                    <div class="label">Bar position</div>
+                    <div class="label">条带位置</div>
                     <div class="desc">Where the strip mounts relative to SillyTavern's message input.</div>
                 </div>
                 <div class="control">
                     <select id="megpb_position" class="ps-modern-input" style="min-width: 160px;">
-                        <option value="above" ${pb.position === "above" ? "selected" : ""}>Above input</option>
-                        <option value="below" ${pb.position === "below" ? "selected" : ""}>Below input</option>
+                        <option value="above" ${pb.position === "above" ? "selected" : ""}>输入框上方</option>
+                        <option value="below" ${pb.position === "below" ? "selected" : ""}>输入框下方</option>
                         <option value="off"   ${pb.position === "off"   ? "selected" : ""}>Off (hide)</option>
                     </select>
                 </div>
@@ -179,7 +179,7 @@ export function renderSidePanelTab(c) {
 
             <div class="meg-sp-settings-row">
                 <div>
-                    <div class="label">Card size</div>
+                    <div class="label">卡片尺寸</div>
                     <div class="desc">Width × height of each portrait card in the strip.</div>
                 </div>
                 <div class="control">
@@ -202,7 +202,7 @@ export function renderSidePanelTab(c) {
 
             <div class="meg-sp-settings-row">
                 <div>
-                    <div class="label">Force refresh</div>
+                    <div class="label">强制刷新</div>
                     <div class="desc">Re-parse the latest assistant message and rebuild the panel right now.</div>
                 </div>
                 <div class="control"><button id="megsp_refresh" class="ps-modern-btn primary"><i class="fa-solid fa-rotate"></i> Refresh</button></div>
@@ -228,11 +228,11 @@ export function renderSidePanelTab(c) {
         if (cfg.enabled) {
             $(this).addClass("active");
             $("#megsp_main_content").slideDown(200);
-            $("#megsp_header_badge").css({ background: 'rgba(245,158,11,0.12)', color: '#f59e0b', 'border-color': 'rgba(245,158,11,0.25)' }).html(`<i class="fa-solid fa-circle-check" style="font-size:0.6rem;"></i> Enabled`);
+            $("#megsp_header_badge").css({ background: 'rgba(245,158,11,0.12)', color: '#f59e0b', 'border-color': 'rgba(245,158,11,0.25)' }).html(`<i class="fa-solid fa-circle-check" style="font-size:0.6rem;"></i> 已启用`);
         } else {
             $(this).removeClass("active");
             $("#megsp_main_content").slideUp(200);
-            $("#megsp_header_badge").css({ background: 'rgba(255,255,255,0.06)', color: 'var(--text-muted)', 'border-color': 'var(--border-color)' }).html(`<i class="fa-solid fa-circle-xmark" style="font-size:0.6rem;"></i> Disabled`);
+            $("#megsp_header_badge").css({ background: 'rgba(255,255,255,0.06)', color: 'var(--text-muted)', 'border-color': 'var(--border-color)' }).html(`<i class="fa-solid fa-circle-xmark" style="font-size:0.6rem;"></i> 已禁用`);
         }
     });
     c.find("#megsp_mode").on("change", function () {
@@ -266,7 +266,7 @@ export function renderSidePanelTab(c) {
         cfg.float = { x: null, y: null, w: 620, h: 720 };
         saveSettingsDebounced();
         applyModeChange();
-        toastr.success("Floating position reset", "Megumin Suite");
+        toastr.success("浮动位置已重置", "Megumin Suite");
     });
 
     // ── Sections group ──
@@ -287,7 +287,7 @@ export function renderSidePanelTab(c) {
     c.find("#megsp_sections_reset").on("click", function () {
         resetSectionLayout();
         renderSidePanelTab(c);
-        toastr.success("Section layout reset", "Megumin Suite");
+        toastr.success("分区布局已重置", "Megumin Suite");
     });
 
     // ── Present Characters Bar group ──
@@ -326,10 +326,10 @@ export function renderSidePanelTab(c) {
     c.find("#megsp_refresh").on("click", function () {
         refreshSidePanel();
         refreshPresentBar();
-        toastr.success("Side panel refreshed", "Megumin Suite");
+        toastr.success("侧边栏已刷新", "Megumin Suite");
     });
     c.find("#megsp_reset_all").on("click", function () {
-        if (!confirm("Reset ALL side-panel settings to defaults?")) return;
+        if (!confirm("将所有侧边栏设置重置为默认值？")) return;
         delete extension_settings["Megumin-Suite"].sidePanel;
         delete extension_settings["Megumin-Suite"].presentBar;
         saveSettingsDebounced();
@@ -338,6 +338,6 @@ export function renderSidePanelTab(c) {
         refreshSidePanel();
         meguminScheduleBlocksRefresh();
         renderSidePanelTab(c);
-        toastr.success("Side-panel settings reset", "Megumin Suite");
+        toastr.success("侧边栏设置已重置", "Megumin Suite");
     });
 }

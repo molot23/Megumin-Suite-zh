@@ -29,7 +29,7 @@ import { hasSharedFragment } from "../../core/sharedFragments.js";
 function editedFlag(b) {
     const slot = b && b.source ? meguminSlotByTrigger(b.source) : null;
     if (!slot || !slot.key || !hasSharedFragment(slot.key)) return "";
-    return ` <span class="blk-edited-flag" title="You edited this in Dev Mode. It no longer uses the built-in text.">edited</span>`;
+    return ` <span class="blk-edited-flag" title="你在开发模式中编辑过此项，已不再使用内置文本。">edited</span>`;
 }
 
 export function renderBlocksTab(c) {
@@ -46,7 +46,7 @@ export function renderBlocksTab(c) {
             <div class="mtab-header-left">
                 <div class="mtab-header-icon" style="background: linear-gradient(135deg, #f59e0b, #b45309);"><i class="fa-solid fa-cubes"></i></div>
                 <div>
-                    <h2>Blocks</h2>
+                    <h2>数据块</h2>
                     <p>Everything in this list is sent as one master block at the end of the reply, and drawn in the chat as one collapsible card.</p>
                 </div>
             </div>
@@ -61,11 +61,11 @@ export function renderBlocksTab(c) {
     const right = $(`<div class="blk-col"></div>`);
 
     // ── IN THE BLOCK ──
-    left.append(`<div class="wstyle-section-head gold"><i class="fa-solid fa-list-ol"></i> Inside the master block</div>`);
+    left.append(`<div class="wstyle-section-head gold"><i class="fa-solid fa-list-ol"></i> 主数据块内</div>`);
     const list = $(`<div class="blk-stack"></div>`);
 
     if (!inStack.length) {
-        list.append(`<div class="blk-empty">Nothing here yet. Add a block from the right.</div>`);
+        list.append(`<div class="blk-empty">Nothing here yet. 添加数据块 from the right.</div>`);
     }
 
     inStack.forEach((b, i) => {
@@ -124,7 +124,7 @@ export function renderBlocksTab(c) {
                 <div class="blk-sub">
                     <div class="blk-sub-row">
                         <div>
-                            <div class="blk-sub-label">Compact mode</div>
+                            <div class="blk-sub-label">紧凑模式</div>
                             <div class="blk-sub-desc">Sends a shorter World State on most turns to save tokens.</div>
                         </div>
                         <div class="ps-toggle-card ${ws.compactEnabled ? 'active' : ''}" id="blk_compact_toggle" style="padding:2px; min-width:40px; background:transparent; border-color:${ws.compactEnabled ? '#10b981' : 'var(--border-color)'}; cursor:pointer; border-radius:8px;">
@@ -133,7 +133,7 @@ export function renderBlocksTab(c) {
                     </div>
                     <div class="blk-sub-row" id="blk_freq_row" style="display:${ws.compactEnabled ? 'flex' : 'none'};">
                         <div>
-                            <div class="blk-sub-label">Full state every</div>
+                            <div class="blk-sub-label">完整状态每隔</div>
                             <div class="blk-sub-desc">How often the complete template comes back.</div>
                         </div>
                         <div style="display:flex; align-items:center; gap:6px;">
@@ -163,9 +163,9 @@ export function renderBlocksTab(c) {
     left.append(list);
 
     // ── AVAILABLE ──
-    left.append(`<div class="wstyle-section-head green" style="margin-top:18px;"><i class="fa-solid fa-plus"></i> Add a block</div>`);
+    left.append(`<div class="wstyle-section-head green" style="margin-top:18px;"><i class="fa-solid fa-plus"></i> 添加数据块</div>`);
     const pool = $(`<div class="blk-pool"></div>`);
-    if (!available.length) pool.append(`<div class="blk-empty">Every block is already in.</div>`);
+    if (!available.length) pool.append(`<div class="blk-empty">所有数据块都已加入。</div>`);
     available.forEach(b => {
         const chip = $(`<button class="blk-add"${b.desc ? ` title="${escapeHtmlAttr(b.desc)}"` : ""}><span>${b.emoji || "📦"}</span> ${b.label}${editedFlag(b)}</button>`);
         chip.on("click", () => {
@@ -181,7 +181,7 @@ export function renderBlocksTab(c) {
     left.append(pool);
 
     // ── PREVIEW ──
-    right.append(`<div class="wstyle-section-head purple"><i class="fa-solid fa-eye"></i> Preview</div>`);
+    right.append(`<div class="wstyle-section-head purple"><i class="fa-solid fa-eye"></i> 预览</div>`);
     right.append(`<div class="blk-preview-note">This is the card the chat draws. Click a header to fold it.</div>`);
     const previewHost = $(`<div class="blk-preview"></div>`);
     right.append(previewHost);
@@ -189,21 +189,21 @@ export function renderBlocksTab(c) {
     layout.append(left).append(right);
     c.append(layout);
 
-    renderBlocksPreview(previewHost[0]);
+    renderBlocks预览(previewHost[0]);
 }
 
 export function renderStatFieldEditor(c, def) {
     const cfg = localProfile.statBlocks[def.id];
     const wrap = $(`<div class="blk-sub blk-sub-fields"></div>`);
 
-    wrap.append(`<div class="blk-sub-label" style="margin-bottom:2px;">Fields</div>
+    wrap.append(`<div class="blk-sub-label" style="margin-bottom:2px;">字段</div>
         <div class="blk-sub-desc" style="margin-bottom:8px;">What the AI is asked to track${def.id === "bonds" ? " for each NPC" : ""}. Every field costs tokens on every reply.</div>`);
 
     const rows = $(`<div class="stat-field-list"></div>`);
     (cfg.fields || []).forEach((f, i) => {
         const row = $(`
             <div class="stat-field">
-                <input type="text" class="ps-modern-input sf-label" value="${escapeHtmlAttr(f.label)}" placeholder="Name" />
+                <input type="text" class="ps-modern-input sf-label" value="${escapeHtmlAttr(f.label)}" placeholder="姓名" />
                 <select class="ps-modern-input sf-type">
                     ${STAT_FIELD_TYPES.map(t => `<option value="${t.v}" ${f.type === t.v ? "selected" : ""} title="${t.hint}">${t.label}</option>`).join("")}
                 </select>
@@ -259,7 +259,7 @@ export function renderStatFieldEditor(c, def) {
     return wrap;
 }
 
-export function renderBlocksPreview(host) {
+export function renderBlocks预览(host) {
     if (!host) return;
     host.innerHTML = "";
 
@@ -318,8 +318,8 @@ export function renderCustomBlockEditor(c, editId) {
             <div class="mtab-header-left">
                 <div class="mtab-header-icon" style="background: linear-gradient(135deg, #10b981, #047857);"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
                 <div>
-                    <h2>${existing ? "Edit" : "New"} block</h2>
-                    <p>Give it a name, an emoji and the template the AI fills in.</p>
+                    <h2>${existing ? "编辑" : "New"} block</h2>
+                    <p>给它一个名称、一个 emoji，以及 AI 填写的模板。</p>
                 </div>
             </div>
         </div>

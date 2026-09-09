@@ -132,7 +132,7 @@ const CARRIERS = {
 
 const SCOPE_META = {
     engine: { cls: "scope-engine", label: "This engine", icon: "fa-microchip" },
-    shared: { cls: "scope-shared", label: "Add-on", icon: "fa-puzzle-piece" },
+    shared: { cls: "scope-shared", label: "扩展项", icon: "fa-puzzle-piece" },
     auto: { cls: "scope-auto", label: "Automatic", icon: "fa-wand-magic-sparkles" },
 };
 
@@ -143,7 +143,7 @@ function onelineOf(value) {
 }
 
 function statusOf(slot, modeData) {
-    if (!meguminSlotIsLive(slot, localProfile)) return { text: "Off", cls: "st-off" };
+    if (!meguminSlotIsLive(slot, localProfile)) return { text: "关", cls: "st-off" };
     if (slot.scope === "auto" && !slot.overridable) return { text: "Automatic", cls: "st-auto" };
     const { source, value } = resolveSlot(slot, modeData);
     if (source !== "builtin") return { text: "Edited", cls: "st-custom" };
@@ -315,7 +315,7 @@ function renderSlotEditor(slot, modeData, onChanged) {
 
     $wrap.append(`
         <textarea class="ps-modern-input dev-slot-input" spellcheck="false"
-            placeholder="Empty — nothing is added at this point in the prompt.">${esc(editable)}</textarea>
+            placeholder="空——提示词此处不添加任何内容。">${esc(editable)}</textarea>
     `);
 
     // A picker is a long list -- 43 chain-of-thought scripts -- so it is a
@@ -329,7 +329,7 @@ function renderSlotEditor(slot, modeData, onChanged) {
                 <div class="dev-picker">
                     <label>${esc(slot.picker.label)}</label>
                     <select class="ps-modern-input">
-                        <option value="">Choose one…</option>
+                        <option value="">选择一个…</option>
                         ${opts.map((o, i) => `<option value="${i}">${esc(o.label)}</option>`).join("")}
                     </select>
                 </div>
@@ -345,7 +345,7 @@ function renderSlotEditor(slot, modeData, onChanged) {
     }
 
     const $tools = $(`<div class="dev-slot-tools"></div>`);
-    const presets = slot.presets || (slot.fallback ? [{ label: "Built-in default", value: slot.fallback }] : []);
+    const presets = slot.presets || (slot.fallback ? [{ label: "内置默认", value: slot.fallback }] : []);
     presets.forEach(pr => {
         const $b = $(`<button class="ps-modern-btn secondary">${esc(pr.label)}</button>`);
         $b.on("click", () => {
@@ -356,7 +356,7 @@ function renderSlotEditor(slot, modeData, onChanged) {
         $tools.append($b);
     });
     if (source !== "builtin" && builtin) {
-        const $r = $(`<button class="ps-modern-btn secondary"><i class="fa-solid fa-rotate-left"></i> Reset to default</button>`);
+        const $r = $(`<button class="ps-modern-btn secondary"><i class="fa-solid fa-rotate-left"></i> 重置为默认</button>`);
         $r.on("click", () => $wrap.find(".dev-slot-input").val(builtin).trigger("change"));
         $tools.append($r);
     }
@@ -408,7 +408,7 @@ async function promptForModule(existing) {
             <input type="text" id="m_n" class="ps-modern-input" value="${esc(m.name)}" placeholder="e.g. Extra combat detail" />
             <label>Which tab should its on/off switch live in?</label>
             <select id="m_l" class="ps-modern-input">
-                <option value="settings" ${m.location === "settings" ? "selected" : ""}>Add-ons tab</option>
+                <option value="settings" ${m.location === "settings" ? "selected" : ""}>扩展选项卡</option>
                 <option value="addons" ${m.location === "addons" ? "selected" : ""}>Global tab</option>
             </select>
             <label>The text to add</label>
@@ -416,11 +416,11 @@ async function promptForModule(existing) {
         </div>
     `);
     const ok = await new Popup($p, POPUP_TYPE.CONFIRM, existing ? "Edit module" : "Add module",
-        { okButton: "Save", cancelButton: "Cancel", wide: true }).show();
+        { okButton: "保存", cancelButton: "取消", wide: true }).show();
     if (!ok) return null;
     const content = $p.find("#m_c").val();
     if (!content || !content.trim()) {
-        toastr.warning("A module with no text would do nothing, so it was not added.");
+        toastr.warning("没有文本的模块不会生效，因此未添加。");
         return null;
     }
     return { name: $p.find("#m_n").val() || "Module", location: $p.find("#m_l").val(), content };
@@ -442,9 +442,9 @@ function renderModulesFor(slot, modeData, rerender) {
                     <div class="dev-module-head">
                         <i class="fa-solid fa-puzzle-piece"></i>
                         <span class="dev-module-name">${esc(mod.name)}</span>
-                        <span class="dev-module-where">switch in ${mod.location === "addons" ? "Global" : "Add-ons"}</span>
-                        <i class="dev-module-edit fa-solid fa-pen-to-square" title="Edit"></i>
-                        <i class="dev-module-del fa-solid fa-trash" title="Remove"></i>
+                        <span class="dev-module-where">switch in ${mod.location === "addons" ? "全局" : "扩展"}</span>
+                        <i class="dev-module-edit fa-solid fa-pen-to-square" title="编辑"></i>
+                        <i class="dev-module-del fa-solid fa-trash" title="移除"></i>
                     </div>
                     <div class="dev-module-body">${esc(onelineOf(mod.content))}</div>
                 </div>
@@ -458,7 +458,7 @@ function renderModulesFor(slot, modeData, rerender) {
             });
             $m.find(".dev-module-del").on("click", async () => {
                 const ok = await new Popup($(`<div>Remove <b>${esc(mod.name)}</b> from this engine?</div>`),
-                    POPUP_TYPE.CONFIRM, "Remove module", { okButton: "Remove", cancelButton: "Keep" }).show();
+                    POPUP_TYPE.CONFIRM, "Remove module", { okButton: "移除", cancelButton: "Keep" }).show();
                 if (!ok) return;
                 modeData.customToggles = modeData.customToggles.filter(x => x.id !== mod.id);
                 setDevEngineDirty(true);
@@ -508,11 +508,11 @@ function renderLanding(c) {
         <div class="dev-doors">
             <div class="dev-door dev-door-addons" id="dev_door_addons">
                 <div class="dev-door-icon"><i class="fa-solid fa-puzzle-piece"></i></div>
-                <div class="dev-door-title">Add-ons</div>
+                <div class="dev-door-title">扩展</div>
                 <div class="dev-door-desc">
                     The pieces every engine shares — thinking steps, MVU, the ban list,
                     death and combat, the output blocks.
-                    <b>Change one here and every engine uses it.</b>
+                    <b>在此更改一次，所有引擎都会使用。</b>
                 </div>
                 <div class="dev-door-meta">${changed
                     ? `${changed} changed`
@@ -521,7 +521,7 @@ function renderLanding(c) {
             </div>
             <div class="dev-door dev-door-engines" id="dev_door_engines">
                 <div class="dev-door-icon"><i class="fa-solid fa-microchip"></i></div>
-                <div class="dev-door-title">Engines</div>
+                <div class="dev-door-title">引擎</div>
                 <div class="dev-door-desc">
                     The rules that make one engine write differently from another.
                     Shown as the real prompt, in the real order, with your add-ons marked
@@ -535,7 +535,7 @@ function renderLanding(c) {
         </div>
         <div class="dev-door-hint">
             <i class="fa-solid fa-circle-info"></i>
-            Not sure? Almost everything people want to change lives in <b>Add-ons</b>.
+            Not sure? Almost everything people want to change lives in <b>扩展</b>.
             You only need an engine to rewrite how the AI is told to write.
         </div>
     `);
@@ -551,7 +551,7 @@ function renderLanding(c) {
 
 function renderAddonsList(c) {
     $("#ps_stage_sub").text("Shared by every engine. Pick one to edit it and see where it goes.");
-    c.append(backBar("Add-ons", () => renderDevMode("landing")));
+    c.append(backBar("扩展", () => renderDevMode("landing")));
 
     const slots = meguminAddonSlots();
 
@@ -650,7 +650,7 @@ function renderEnginesList(c) {
     session.engine = null;
     setDevEngineDirty(false);
     $("#ps_stage_sub").text("An engine is the set of rules telling the AI how to write.");
-    c.append(backBar("Engines", () => renderDevMode("landing")));
+    c.append(backBar("引擎", () => renderDevMode("landing")));
 
     c.append(`
         <div class="dev-actions">
@@ -680,7 +680,7 @@ function renderEnginesList(c) {
     });
 
     const customModes = extension_settings[extensionName].customModes || [];
-    c.append(`<div class="ps-rule-title dev-rule green"><i class="fa-solid fa-microchip"></i> Your Engines</div>`);
+    c.append(`<div class="ps-rule-title dev-rule green"><i class="fa-solid fa-microchip"></i> Your 引擎</div>`);
 
     if (!customModes.length) {
         c.append(`<div class="dev-empty">None yet. Pick a built-in one below to start from.</div>`);
@@ -694,9 +694,9 @@ function renderEnginesList(c) {
                         <div class="ps-card-desc">${m.parentId ? `Copy of ${esc(m.parentId)}` : "Your own engine"}</div>
                     </div>
                     <div style="display:flex; gap:8px; margin-top:20px; width:100%;">
-                        <button class="ps-modern-btn secondary dev-export" title="Export"><i class="fa-solid fa-download"></i></button>
+                        <button class="ps-modern-btn secondary dev-export" title="导出"><i class="fa-solid fa-download"></i></button>
                         <button class="ps-modern-btn primary dev-edit" style="flex:2;"><i class="fa-solid fa-pen"></i> Edit</button>
-                        <button class="ps-modern-btn secondary dev-delete" title="Delete" style="color:#ef4444;"><i class="fa-solid fa-trash"></i></button>
+                        <button class="ps-modern-btn secondary dev-delete" title="删除" style="color:#ef4444;"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>
             `);
@@ -713,7 +713,7 @@ function renderEnginesList(c) {
             card.find(".dev-delete").on("click", async () => {
                 const ok = await new Popup(
                     $(`<div>Delete <b>${esc(m.label)}</b>? This cannot be undone.<br><br>Your add-ons are not affected.</div>`),
-                    POPUP_TYPE.CONFIRM, "Delete engine", { okButton: "Delete", cancelButton: "Keep" }).show();
+                    POPUP_TYPE.CONFIRM, "Delete engine", { okButton: "删除", cancelButton: "Keep" }).show();
                 if (!ok) return;
                 extension_settings[extensionName].customModes =
                     extension_settings[extensionName].customModes.filter(x => x.id !== m.id);
@@ -732,7 +732,7 @@ function renderEnginesList(c) {
             <div class="ps-card">
                 <div style="width:100%;">
                     <div class="ps-card-title"><span>${esc(m.label)}</span></div>
-                    <div class="ps-card-desc">Built in. Makes you an editable copy.</div>
+                    <div class="ps-card-desc">内置。会为你创建一个可编辑副本。</div>
                 </div>
                 <div style="width:100%; margin-top:20px;">
                     <button class="ps-modern-btn secondary dev-clone"><i class="fa-solid fa-copy"></i> Make A Copy</button>
@@ -1042,7 +1042,7 @@ export function renderDevMode(view = "landing", arg = null, passedModeData = nul
     $("#btn_apply_tab_all").hide();
     $("#ps_btn_save_close").hide();
     $("#ps_btn_dev_mode")
-        .html(`<i class="fa-solid fa-right-from-bracket"></i> Exit Dev`)
+        .html(`<i class="fa-solid fa-right-from-bracket"></i> 退出开发`)
         .css("color", "#10b981");
 
     if (!extension_settings[extensionName].customModes) extension_settings[extensionName].customModes = [];

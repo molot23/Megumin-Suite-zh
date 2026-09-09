@@ -39,8 +39,8 @@ function enhancedDialogueMarkup(m, isLocked) {
     return `
         <div class="ecard-opt ${on ? "on" : ""}" title="Swap this engine's dialogue rules for the stricter, prescriptive set: named categories, orthographic cues for emotion, and an explicit ban list. For models that read the shipped section as a suggestion.">
             <div class="ecard-opt-text">
-                <span class="ecard-opt-label"><i class="fa-solid fa-comment-dots"></i> Enhanced Dialogue</span>
-                <span class="ecard-opt-state">${on ? "On" : "Off"}</span>
+                <span class="ecard-opt-label"><i class="fa-solid fa-comment-dots"></i> Enhanced 对话</span>
+                <span class="ecard-opt-state">${on ? "开" : "关"}</span>
             </div>
             <div class="ecard-opt-switch"></div>
         </div>`;
@@ -74,28 +74,28 @@ export function renderCoreAndCot(c) {
     const root = $(`<div style="display: flex; flex-direction: column; height: 100%;"></div>`);
 
     const descriptions = {
-        "balance": "The original Secret Sauce. NPCs react naturally — no simping, no needless hostility.",
-        "balance Test": "New and improved balance mode that aims to use less tokens and more creativity.",
-        "cinematic": "Hollywood-inspired storytelling. Dramatic beats and heightened tension.",
-        "dark": "Balance but harsher. The world is unforgiving and consequences hit harder.",
-        "v6-anime-director": "Advanced cinematic framing and pacing. Designed to emulate high-budget anime direction.",
-        "v6-dream-team": "The ultimate 6-specialist writer room. Unprecedented narrative consistency and realism.",
-        "v6-dream-team-lite": "A streamlined version of the Dream Team. Faster generation with lower token overhead.",
-        "v7-core": "The V7 Core engine. The perfect middle ground: cinematic pacing, realistic friction, and relentless world progression.",
-        "v7-reality": "The V7 Reality engine. Grounded, unrelenting simulation with zero narrative protection.",
-        "v7-gentle": "The V7 Gentle engine. A softer, more intimate storytelling flow.",
-        "v7.5": "The Kismet engine. Focused purely on inescapable narrative momentum, pushing the story forward as the unseen author of fate.",
-        "v8-m": "Unmatched in complex human psychology, authentic flawed dialogue, and autonomous, multi-layered story plotting.",
-        "v8-lite": "A streamlined, highly efficient version of Obsidian. Retains the core rules of psychology, dialogue, and momentum with a much lighter token footprint.",
-        "v8-fusion": "The absolute pinnacle of the Megumin Suite. A hybrid engine mixing V8 Obsidian's deep psychology with V6 Dream Team's specialist writer room framework.",
-        "v10-core": "The storyteller. Ukiyo is the looser of the two — a teller with a temperament, spinning the world and its history, following whatever in the scene is most alive. It trades a little polish for invention: the prose wanders, reaches for an image, and occasionally overreaches. Pick it for atmosphere, momentum and a world that feels told rather than composed. Neither V10 is a downgrade of the other — run a few scenes on each and keep the one that sounds like the story you want to read.",
-        "v10-shura": "The writer. Shura is the stricter of the two — no slop, no AI tells, no line that exists to manage the scene. Every character is the protagonist of their own story, acting from their own values, and none of them is a villain in their own eyes; there is no objective right or wrong for the narration to take sides on. Pick it for prose that reads like a book and a cast that drives the story itself. Neither V10 is a downgrade of the other — run a few scenes on each and keep the one that sounds like the story you want to read.",
-        "v10-core-cw": "Ukiyo, with the narrator writing {{user}} as well. It reads how you write — diction, rhythm, how boldly you act — and plays your character in that voice. Anything you write yourself is canon and is never overwritten or corrected. Your history stays yours; only the acting is shared.",
-        "v10-shura-cw": "Shura with shared authorship: every character is a protagonist, {{user}} among them, and the narrator writes them all in your voice. It yields the moment you take a turn back, and never invents your past. For hands-off, cinematic play — watching the story rather than steering each beat.",
-        "v9-core": "The definitive, final Megumin V9 Preset. V9 Mirage is the absolute pinnacle of narrative simulation, delivering hyper-realistic psychology, visceral atmospheric grounding, and dynamic world consequences. This is the ultimate, highly recommended preset.",
-        "v9-lite": "An experimental beta engine with a slightly different, highly stylized narrative flow. Proved interesting enough to include for those who want an alternative storytelling rhythm. Note: this doesn't support custom Writing style it have it own one. ",
-        "v9-director": "A unique beta hybrid blending the specialized writer-room mechanics of V8 Fusion with the raw psychological depth of V9 Xin. Highly experimental. Note: this doesn't support custom Writing style it have it own one.",
-        "v9-immersion": "A streamlined, lightweight version of V9 Mirage. It retains the core philosophy and brutal realism of Mirage but runs with a smaller context footprint. V9 Mirage is still recommended if your model can handle it."
+        "balance": "最初的秘方。NPC 自然反应——不舔、不无端敌意。",
+        "balance Test": "改进版平衡模式，目标是更少 token、更多创意。",
+        "cinematic": "好莱坞式叙事。戏剧节拍与更高张力。",
+        "dark": "更严酷的平衡。世界冷酷，后果更重。",
+        "v6-anime-director": "进阶电影分镜与节奏。模拟高预算动画导演手法。",
+        "v6-dream-team": "终极六人专家编剧室。叙事一致性与真实感极高。",
+        "v6-dream-team-lite": "梦之队精简版。生成更快，token 开销更低。",
+        "v7-core": "V7 Core 引擎。电影节奏、真实摩擦与不停运转的世界之间的最佳平衡。",
+        "v7-reality": "V7 Reality 引擎。接地气的无情模拟，零叙事保护。",
+        "v7-gentle": "V7 Gentle 引擎。更柔软、更亲密的叙事流。",
+        "v7.5": "Kismet 引擎。专注于不可逃避的叙事动量，如命运的隐形作者推动故事。",
+        "v8-m": "擅长复杂人类心理、真实带瑕疵的对话，以及自主、多层的剧情编排。",
+        "v8-lite": "Obsidian 的精简高效版。保留心理、对话与动量核心规则，token 占用更轻。",
+        "v8-fusion": "Megumin Suite 的巅峰之作。融合 V8 Obsidian 深层心理与 V6 梦之队专家编剧室框架。",
+        "v10-core": "说书人。Ukiyo 更松弛——有性情的讲述者，编织世界与其历史，追随场景里最鲜活的东西。略牺牲打磨换取发明：文笔会游荡、追一个意象、偶尔用力过猛。适合要氛围、动量、被「讲」出来而非「编排」出来的世界。两个 V10 互不降级——各跑几场，留下听起来像你想读的那个。",
+        "v10-shura": "写作者。Shura 更严格——无注水、无 AI 腔、没有为了控场而存在的句子。每个角色都是自己故事的主角，按自己的价值观行动，在自己眼中都不是反派；叙述不会站队对错。适合读起来像书的文笔，以及由角色自己推动的故事。两个 V10 互不降级——各跑几场，留下听起来像你想读的那个。",
+        "v10-core-cw": "Ukiyo，且叙述者也写 {{user}}。它会读你的写法——用词、节奏、行动胆量——并用那种声音扮演你的角色。你自己写的一切都是正史，永不被覆盖或纠正。你的历史仍属于你；共享的只有「演出」。",
+        "v10-shura-cw": "带共同作者的 Shura：每个角色都是主角，{{user}} 也一样，叙述者用你的声音写他们全部。你一接手就立刻让位，且从不编造你的过去。适合放手观看的电影式游玩——看故事，而不是驾驭每一拍。",
+        "v9-core": "最终定稿的 Megumin V9 预设。V9 Mirage 是叙事模拟的巅峰：超真实心理、强烈氛围落地与动态世界后果。强烈推荐。",
+        "v9-lite": "实验性 beta 引擎，叙事流更风格化。有趣到值得收录，给想要另一种节奏的人。注意：不支持自定义文风，自带文风。",
+        "v9-director": "独特的 beta 混合体：融合 V8 Fusion 的专家编剧室机制与 V9 Xin 的原始心理深度。高度实验性。注意：不支持自定义文风，自带文风。",
+        "v9-immersion": "V9 Mirage 的精简轻量版。保留 Mirage 核心哲学与残酷真实感，上下文占用更小。若模型吃得消，仍推荐完整 Mirage。"
     };
 
     const activeEng = hardcodedLogic.modes.find(m => m.id === localProfile.mode);
@@ -122,8 +122,8 @@ export function renderCoreAndCot(c) {
                     <i class="fa-solid fa-server"></i>
                 </div>
                 <div>
-                    <h2>PRESETS & COT</h2>
-                    <p>Choose the core preset, and COT.</p>
+                    <h2>预设与思维链</h2>
+                    <p>选择核心预设与思维链。</p>
                 </div>
             </div>
             <div class="wstyle-active-badge">
@@ -139,10 +139,10 @@ export function renderCoreAndCot(c) {
     const mainArea = $(`<div class="ws-main"></div>`);
 
     // --- BUILD SIDEBAR ---
-    sidebar.append(`<div class="ws-sidebar-title">Configuration</div>`);
+    sidebar.append(`<div class="ws-sidebar-title">配置</div>`);
     
-    const btnOfficial = $(`<button class="ws-nav-btn active" data-target="sec-official"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-server"></i> Official Engines</span> <span class="ws-badge">${totalCount}</span></button>`);
-    const btnCustom = $(`<button class="ws-nav-btn" data-target="sec-custom"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-microchip"></i> Custom Engines</span> <span class="ws-badge">${customCount}</span></button>`);
+    const btnOfficial = $(`<button class="ws-nav-btn active" data-target="sec-official"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-server"></i> Official 引擎</span> <span class="ws-badge">${totalCount}</span></button>`);
+    const btnCustom = $(`<button class="ws-nav-btn" data-target="sec-custom"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-microchip"></i> Custom 引擎</span> <span class="ws-badge">${customCount}</span></button>`);
     
     sidebar.append(btnOfficial).append(btnCustom);
     sidebar.append(`<div style="height: 1px; background: var(--border-color); margin: 8px 0;"></div>`);
@@ -165,7 +165,7 @@ export function renderCoreAndCot(c) {
     // ==========================================
     // ── A. OFFICIAL ENGINES ──
     // ==========================================
-    secOfficial.append(`<h3 style="margin-top: 0; color: var(--gold); font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-server"></i> Official Megumin Engines</h3>`);
+    secOfficial.append(`<h3 style="margin-top: 0; color: var(--gold); font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-server"></i> Official Megumin 引擎</h3>`);
     secOfficial.append(`
         <div class="mtab-callout gold" style="margin-bottom: 20px;">
             <i class="fa-solid fa-lightbulb"></i>
@@ -272,14 +272,14 @@ export function renderCoreAndCot(c) {
     const activeEngineForToggles = [...hardcodedLogic.modes, ...(extension_settings[extensionName].customModes || [])].find(m => m.id === localProfile.mode);
     const isV7ForToggles = isV7Engine(activeEngineForToggles);
     if (isV7ForToggles) {
-        secOfficial.append(`<div class="wstyle-section-head blue" style="margin-top: 15px;"><i class="fa-solid fa-layer-group"></i> V7 Modules (Turn off to disable)</div>`);
+        secOfficial.append(`<div class="wstyle-section-head blue" style="margin-top: 15px;"><i class="fa-solid fa-layer-group"></i> V7 模块（关闭即禁用）</div>`);
         const v7ToggleList = $(`<div class="mtab-card-list"></div>`);
         const v7Toggles = [
-            { id: "v7_ooc", label: "OOC Protocol", desc: "Allows out-of-character directives." },
-            { id: "v7_pcsolo", label: "PC Solo Physicality", desc: "Narration of PC when unobserved." },
-            { id: "v7_intro", label: "Introduction Protocol", desc: "How new NPCs enter the story." },
-            { id: "v7_culture", label: "Cultural Anchoring", desc: "Real-world integration and references." },
-            { id: "v7_scene", label: "Scene Choreography", desc: "Focus shifting and crowd management." }
+            { id: "v7_ooc", label: "OOC 协议", desc: "允许角色外指令。" },
+            { id: "v7_pcsolo", label: "PC 独处身体描写", desc: "无人观察时对 PC 的叙述。" },
+            { id: "v7_intro", label: "介绍协议", desc: "新 NPC 如何进入故事。" },
+            { id: "v7_culture", label: "文化锚定", desc: "现实世界整合与引用。" },
+            { id: "v7_scene", label: "场景调度", desc: "焦点切换与人群管理。" }
         ];
 
         v7Toggles.forEach(tog => {
@@ -304,7 +304,7 @@ export function renderCoreAndCot(c) {
     // ==========================================
     // ── B. CUSTOM ENGINES ──
     // ==========================================
-    secCustom.append(`<h3 style="margin-top: 0; color: #10b981; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-microchip"></i> Your Custom Engines</h3>`);
+    secCustom.append(`<h3 style="margin-top: 0; color: #10b981; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-microchip"></i> Your Custom 引擎</h3>`);
     const customModes = extension_settings[extensionName].customModes || [];
 
     if (customModes.length === 0) {
@@ -323,7 +323,7 @@ export function renderCoreAndCot(c) {
                                 <i class="fa-solid fa-pen"></i> Edit
                             </button>
                         </div>
-                        <p class="ecard-desc">Custom Engine Flow</p>
+                        <p class="ecard-desc">自定义引擎流程</p>
                         ${enhancedDialogueMarkup(m, false)}
                     </div>
                 </div>
@@ -368,7 +368,7 @@ export function renderCoreAndCot(c) {
             secCot.append(`
                 <div class="mtab-callout green" style="margin-bottom:20px;">
                     <i class="fa-solid fa-shield-halved"></i>
-                    <span><strong>Custom Engine Logic Active</strong> — This Engine provides its own [[COT]] and [[prefill]]. Selections below will be overridden by the Engine's code.</span>
+                    <span><strong>自定义引擎逻辑已激活</strong> — 此引擎自带 [[COT]] 与 [[prefill]]。下方选择会被引擎代码覆盖。</span>
                 </div>
             `);
         }
@@ -421,27 +421,27 @@ export function renderCoreAndCot(c) {
         else if (localProfile.mode.includes("v9")) allowedCotTypes = ["v9", "v9-lite", "v9-director", "v9-immersion", "v9-hybrid"];
 
         // Thinking Frameworks
-        secCot.append(`<div class="wstyle-section-head purple"><i class="fa-solid fa-diagram-project"></i> Select Framework</div>`);
+        secCot.append(`<div class="wstyle-section-head purple"><i class="fa-solid fa-diagram-project"></i> 选择框架</div>`);
         const typeGrid = $(`<div class="mtab-card-grid" style="margin-bottom: 24px;"></div>`);
         const types = [
-            { id: "v10-ukiyo", label: "CoT V10 Ukiyo", desc: "The long-form reasoning built for Ukiyo. Thinks like a novelist muttering before a draft \u2014 present tense, a little messy, never a plan. No phases, no checklists, no audits.", isNew: true },
-            { id: "v10-ukiyo-cap", label: "CoT V10 Ukiyo \u2014 Thinking Cap", desc: "The same writer's mind with a hard ceiling on the thinking phase. For models that over-think.", isNew: true },
-            { id: "v10-shura", label: "CoT V10 Shura", desc: "Seven rules carried into the writing rather than a plan made before it. Built for V10 Shura, and the lightest of the four.", isNew: true },
-            { id: "v10-shura-cap", label: "CoT V10 Shura \u2014 Thinking Cap", desc: "The same seven rules with a hard ceiling on the thinking phase. For models that over-think.", isNew: true },
-            { id: "v1", label: "CoT V1 (Classic)", desc: "The original 8-step framework. Focuses heavily on the NPC's internal emotional landscape vs their observable actions." },
-            { id: "v2", label: "CoT V2 (New)", desc: "The new experimental framework. Stricter reality checks, info audits, better NPCs, and hook generation." },
-            { id: "v6", label: "CoT V6 (Dream Team)", desc: "The full 4-phase sequence designed specifically for V6 engines. Specialized validation and modeling." },
-            { id: "v6-lite", label: "CoT V6 (Lite)", desc: "A streamlined 3-phase sequence. Less token overhead while maintaining narrative rules." },
-            { id: "v7", label: "CoT V7", desc: "The new V7 sequence with 5-phase strict ground truth rebuilding."},
-            { id: "v7-lite", label: "CoT V7 (Lite)", desc: "A streamlined 5-phase sequence for V7." },
-            { id: "v7.5", label: "CoT V7.5 Kismet", desc: "The new V7.5 sequence focused on story engine mechanics." },
-            { id: "v8", label: "CoT V8", desc: "The new V8 narrative processing sequence." },
-            { id: "v8-fusion", label: "CoT V8 Fusion", desc: "The new V8 Fusion narrative processing sequence." },
-            { id: "v9", label: "CoT V9 Mirage", desc: "The primary and most balanced reasoning sequence, purpose-built for the V9 Mirage engine. The gold standard for modern roleplay.", isNew: true },
-            { id: "v9-director", label: "CoT V9 Mirage Air", desc: "A lighter, version of CoT V9 Mirage, it give Different output Try and see if you like.", isNew: true },
-            { id: "v9-immersion", label: "CoT V9 Mirage Max", desc: "The heavy-duty, maximum-thinking sequence. Forces the AI to dive incredibly deep into sensory data and psychological realism before generating a single word.", isNew: true },
-            { id: "v9-hybrid", label: "CoT V9 Kuromaku", desc: "A specialized multi-agent reasoning sequence designed specifically to pair with the V9 Kuromaku engine.", isNew: true },
-            { id: "v9-lite", label: "CoT V9 Cui (Lite)", desc: "A highly streamlined, fast-executing reasoning sequence perfectly paired with the V9 Cui engine to save tokens.", isNew: true }
+            { id: "v10-ukiyo", label: "思维链 V10 Ukiyo", desc: "为 Ukiyo 打造的长篇推理。像小说家动笔前自言自语——现在时、有点乱、从不是计划。无阶段、无清单、无审计。", isNew: true },
+            { id: "v10-ukiyo-cap", label: "思维链 V10 Ukiyo — 思考上限", desc: "同样的写作者心智，但对思考阶段设硬上限。适合过度思考的模型。", isNew: true },
+            { id: "v10-shura", label: "思维链 V10 Shura", desc: "七条规则带入写作本身，而非事先计划。为 V10 Shura 打造，也是四者中最轻的。", isNew: true },
+            { id: "v10-shura-cap", label: "思维链 V10 Shura — 思考上限", desc: "同样的七条规则，但对思考阶段设硬上限。适合过度思考的模型。", isNew: true },
+            { id: "v1", label: "思维链 V1（经典）", desc: "最初的 8 步框架。侧重 NPC 内在情绪景观与可观察行动的对照。" },
+            { id: "v2", label: "思维链 V2（新）", desc: "新的实验框架。更严的现实检查、信息审计、更好的 NPC 与钩子生成。" },
+            { id: "v6", label: "思维链 V6（梦之队）", desc: "专为 V6 引擎设计的完整 4 阶段序列。专门验证与建模。" },
+            { id: "v6-lite", label: "思维链 V6（精简）", desc: "精简 3 阶段序列。在保持叙事规则的同时降低 token 开销。" },
+            { id: "v7", label: "思维链 V7", desc: "新的 V7 序列，含 5 阶段严格事实重建。"},
+            { id: "v7-lite", label: "思维链 V7（精简）", desc: "面向 V7 的精简 5 阶段序列。" },
+            { id: "v7.5", label: "思维链 V7.5 Kismet", desc: "聚焦故事引擎机制的新 V7.5 序列。" },
+            { id: "v8", label: "思维链 V8", desc: "新的 V8 叙事处理序列。" },
+            { id: "v8-fusion", label: "思维链 V8 Fusion", desc: "新的 V8 Fusion 叙事处理序列。" },
+            { id: "v9", label: "思维链 V9 Mirage", desc: "主要且最均衡的推理序列，专为 V9 Mirage 引擎打造。现代角色扮演的金标准。", isNew: true },
+            { id: "v9-director", label: "思维链 V9 Mirage Air", desc: "更轻的 CoT V9 Mirage 版本，输出不同。试试看喜不喜欢。", isNew: true },
+            { id: "v9-immersion", label: "思维链 V9 Mirage Max", desc: "重度、最大思考序列。迫使 AI 在写下一个字前深深潜入感官与心理真实。", isNew: true },
+            { id: "v9-hybrid", label: "思维链 V9 Kuromaku", desc: "专为搭配 V9 Kuromaku 引擎的多智能体推理序列。", isNew: true },
+            { id: "v9-lite", label: "思维链 V9 Cui（精简）", desc: "高度精简、执行快速的推理序列，与 V9 Cui 引擎搭配以节省 token。", isNew: true }
         ];
         types.forEach(t => {
             const isSel = currentType === t.id;
@@ -480,11 +480,11 @@ export function renderCoreAndCot(c) {
         });
         secCot.append(typeGrid);
 
-        // Thinking Effort
+        // 思考力度
         if (!localProfile.thinkEffort) localProfile.thinkEffort = "unspecified";
         if (!localProfile.customThinkEffort) localProfile.customThinkEffort = "100";
 
-        secCot.append(`<div class="wstyle-section-head purple"><i class="fa-solid fa-gauge-high"></i> Thinking Effort</div>`);
+        secCot.append(`<div class="wstyle-section-head purple"><i class="fa-solid fa-gauge-high"></i> 思考力度</div>`);
         const effortGrid = $(`<div class="mtab-card-grid" style="margin-bottom: 24px; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));"></div>`);
         const efforts = [
             { id: "100", label: "100 Words" },
@@ -512,7 +512,7 @@ export function renderCoreAndCot(c) {
             const customBlock = $(`
                 <div class="mtab-panel" style="margin-top:-14px; margin-bottom:24px;">
                     <div class="mtab-setting-row">
-                        <div class="set-info"><div class="set-label">Custom Word Count</div></div>
+                        <div class="set-info"><div class="set-label">自定义字数</div></div>
                         <input type="number" id="ps_input_custom_effort" class="ps-modern-input" style="width: 150px;" value="${localProfile.customThinkEffort}" min="1" />
                     </div>
                 </div>
@@ -529,7 +529,7 @@ export function renderCoreAndCot(c) {
             <div class="mtab-toggle-row ${localProfile.thinkingV2 ? 'active' : ''}" style="margin-bottom: 24px; cursor: pointer;">
                 <div class="toggle-info">
                     <div class="toggle-label"><i class="fa-solid fa-sparkles" style="color:#a855f7;"></i> Gemini Thinking Override</div>
-                    <div class="toggle-desc">Enable ONLY for Gemini models to inject specific XML tags.</div>
+                    <div class="toggle-desc">仅对 Gemini 模型启用以注入特定 XML 标签。</div>
                 </div>
                 <div class="ps-switch"></div>
             </div>
@@ -538,7 +538,7 @@ export function renderCoreAndCot(c) {
         secCot.append(v2Card);
 
         // Language
-        secCot.append(`<div class="wstyle-section-head gold"><i class="fa-solid fa-language"></i> Reasoning Language</div>`);
+        secCot.append(`<div class="wstyle-section-head gold"><i class="fa-solid fa-language"></i> 推理语言</div>`);
         const langGrid = $(`<div class="mtab-card-grid" style="margin-bottom: 20px; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));"></div>`);
         let langs = [
             { id: "english", label: "English" }, { id: "arabic", label: "Arabic (العربية)", rec: true }, { id: "spanish", label: "Spanish (Español)" },

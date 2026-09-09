@@ -17,7 +17,7 @@ function ensureOverlay() {
     $("body").append(`
         <div id="kazuma_progress_overlay" style="position: fixed; bottom: 20px; right: 20px; width: 300px; background: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 15px; z-index: 99999; box-shadow: 0 10px 30px rgba(0,0,0,0.8); display: none; align-items: center; gap: 15px; font-family: 'Inter', sans-serif;">
             <div style="flex:1">
-                <span id="kazuma_progress_text" style="font-weight: 600; font-size: 0.85rem; color: #fff; margin-bottom: 8px; display: block;">Generating Image...</span>
+                <span id="kazuma_progress_text" style="font-weight: 600; font-size: 0.85rem; color: #fff; margin-bottom: 8px; display: block;">正在生成图像...</span>
                 <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
                     <div id="kazuma_progress_fill" style="height: 100%; width: 100%; border-radius: 3px;"></div>
                 </div>
@@ -29,7 +29,7 @@ function ensureOverlay() {
 
 const STRIPES = "linear-gradient(45deg, #a855f7 25%, transparent 25%, transparent 50%, #a855f7 50%, #a855f7 75%, transparent 75%, transparent)";
 
-export function showKazumaProgress(text = "Processing...", percent = null) {
+export function showKazumaProgress(text = "处理中...", percent = null) {
     ensureOverlay();
     $("#kazuma_progress_text").text(text);
 

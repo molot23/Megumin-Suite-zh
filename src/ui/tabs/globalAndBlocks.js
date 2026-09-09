@@ -28,7 +28,7 @@ import { engineUsesRenderLimits } from "../../core/engines.js";
 function customBadge(triggerOwner) {
     const slot = meguminSlotByTrigger(triggerOwner && triggerOwner.trigger);
     if (!slot || !slot.key || !hasSharedFragment(slot.key)) return "";
-    return `<span class="ecard-badge custom" title="You edited this in Dev Mode. It no longer uses the built-in text."><i class="fa-solid fa-pen"></i> Custom</span>`;
+    return `<span class="ecard-badge custom" title="你在开发模式中编辑过此项，已不再使用内置文本。"><i class="fa-solid fa-pen"></i> Custom</span>`;
 }
 
 export function renderGlobalAndBlocks(c) {
@@ -46,7 +46,7 @@ export function renderGlobalAndBlocks(c) {
         "dice": "A d20 decides whether risky attempts land. The AI rolls before it writes the scene, so the story follows the die rather than the die following the story. The roll gets its own tab on the block card."
     };
 
-    // Only MVU is left in this tab's Output Formats section, so only MVU needs a line
+    // Only MVU is left in this tab's 输出格式 section, so only MVU needs a line
     // here. The tracker blocks' descriptions moved onto MEGUMIN_BLOCK_REGISTRY as `desc`
     // when they moved to the BLOCKS tab -- they were sitting here unreachable, because
     // the section below filters to mvu and nothing else ever reached this map.
@@ -69,8 +69,8 @@ export function renderGlobalAndBlocks(c) {
                     <i class="fa-solid fa-earth-americas"></i>
                 </div>
                 <div>
-                    <h2>Global Toggles & Blocks</h2>
-                    <p>Configure global parameters, gameplay add-ons, and UI tracker blocks.</p>
+                    <h2>全局开关与数据块</h2>
+                    <p>配置全局参数、玩法扩展与界面追踪块。</p>
                 </div>
             </div>
             <div class="mtab-header-badge" style="background: rgba(59,130,246,0.12); color: #3b82f6; border: 1px solid rgba(59,130,246,0.25);">
@@ -83,14 +83,14 @@ export function renderGlobalAndBlocks(c) {
     c.append(`
         <div class="mtab-callout blue" style="margin-bottom: 20px;">
             <i class="fa-solid fa-circle-info"></i>
-            <span><strong>Did you know?</strong> Global Preferences set the language and pronouns every engine reads. Gameplay Add-ons bolt extra systems onto the story — dice, death, combat, HTML props. Output Formats is just MVU, a compatibility contract with another extension. The tracker blocks live in the <b>BLOCKS</b> tab, not here.</span>
+            <span><strong>你知道吗？</strong> 全局偏好 set the language and pronouns every engine reads. 玩法扩展 bolt extra systems onto the story — dice, death, combat, HTML props. 输出格式 is just MVU, a compatibility contract with another extension. The tracker blocks live in the <b>BLOCKS</b> tab, not here.</span>
         </div>
     `);
 
     // ==========================================
     // ── 1. GLOBAL PREFERENCES ──
     // ==========================================
-    c.append(`<div class="wstyle-section-head blue"><i class="fa-solid fa-sliders"></i> Global Preferences</div>`);
+    c.append(`<div class="wstyle-section-head blue"><i class="fa-solid fa-sliders"></i> 全局偏好</div>`);
     
     const extraPanel = $(`
         <div class="mtab-panel" style="margin-bottom: 24px;">
@@ -111,7 +111,7 @@ export function renderGlobalAndBlocks(c) {
                         </div>
                     </div>
                     <div style="flex: 1; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);">
-                        <div style="font-size: 0.7rem; font-weight: bold; color: var(--text-muted); margin-bottom: 2px;">FULL RENDER</div>
+                        <div style="font-size: 0.7rem; font-weight: bold; color: var(--text-muted); margin-bottom: 2px;">完整渲染</div>
                         <div style="font-size: 0.6rem; color: #10b981; margin-bottom: 6px; line-height: 1.2;">Triggered by the AI for scene changes, deep immersion, and major plot events.</div>
                         <div style="display: flex; align-items: center; gap: 5px;">
                             <input type="number" id="ps_v9_full_min" class="ps-modern-input" style="width: 100%; text-align: center;" value="${localProfile.v9Limits.fullMin}" />
@@ -123,15 +123,15 @@ export function renderGlobalAndBlocks(c) {
             </div>
             ` : ``}
             <div class="mtab-setting-row">
-                <div class="set-info"><div class="set-label">Language Output</div><div class="set-desc">Leave empty for default (English)</div></div>
+                <div class="set-info"><div class="set-label">Language Output</div><div class="set-desc">留空则默认（英语）</div></div>
                 <input type="text" id="ps_input_language" class="ps-modern-input" style="width: 180px;" placeholder="e.g. Arabic, French…" value="${localProfile.userLanguage || ''}" />
             </div>
             <div class="mtab-setting-row">
-                <div class="set-info"><div class="set-label">User Gender</div><div class="set-desc">Ensure the AI addresses you correctly</div></div>
+                <div class="set-info"><div class="set-label">User Gender</div><div class="set-desc">确保 AI 正确称呼你</div></div>
                 <select id="ps_select_pronouns" class="ps-modern-input" style="width: 180px; cursor: pointer;">
                     <option value="off" ${localProfile.userPronouns === 'off' ? 'selected' : ''}>Off</option>
-                    <option value="male" ${localProfile.userPronouns === 'male' ? 'selected' : ''}>Male (Him/He)</option>
-                    <option value="female" ${localProfile.userPronouns === 'female' ? 'selected' : ''}>Female (Her/She)</option>
+                    <option value="male" ${localProfile.userPronouns === 'male' ? 'selected' : ''}>男性（他）</option>
+                    <option value="female" ${localProfile.userPronouns === 'female' ? 'selected' : ''}>女性（她）</option>
                 </select>
             </div>
         </div>
@@ -148,7 +148,7 @@ export function renderGlobalAndBlocks(c) {
     // ==========================================
     // ── 2. GAMEPLAY ADD-ONS ──
     // ==========================================
-    c.append(`<div class="wstyle-section-head blue"><i class="fa-solid fa-puzzle-piece"></i> Gameplay Add-ons</div>`);
+    c.append(`<div class="wstyle-section-head blue"><i class="fa-solid fa-puzzle-piece"></i> 玩法扩展</div>`);
     c.append(`
         <div class="mtab-callout gold" style="margin-bottom: 16px;">
             <i class="fa-solid fa-triangle-exclamation"></i>
@@ -220,14 +220,14 @@ export function renderGlobalAndBlocks(c) {
             <div class="ecard-accent"></div>
             <div class="ecard-body">
                 <div class="ecard-title">
-                    <span>Cinematic Sounds</span>
+                    <span>电影拟声</span>
                     ${isOno ? `<span class="ecard-badge" style="background:rgba(16,185,129,0.15);color:#10b981;"><i class="fa-solid fa-check"></i> On</span>` : ''}
                     ${customBadge({ trigger: "[[onomato]]" })}
                 </div>
                 <p class="ecard-desc">Force the AI to use precise phonetic sound words (e.g., click, thud) instead of abstract descriptions.</p>
                 <div style="display: ${isOno ? 'flex' : 'none'}; margin-top: 8px; padding-top: 10px; border-top: 1px dashed var(--border-color); justify-content: space-between; align-items: center;">
                     <div>
-                        <div style="font-weight:700; font-size: 0.75rem; color: var(--text-main);">Animate Sounds</div>
+                        <div style="font-weight:700; font-size: 0.75rem; color: var(--text-main);">动画拟声</div>
                         <div style="font-size: 0.65rem; color: var(--text-muted);">Wrap in HTML tags. For capable AI only.</div>
                     </div>
                     <div class="ps-toggle-card ${isOnoStyle ? 'active' : ''}" id="ono_inner_toggle" style="padding: 4px; min-width: 44px; justify-content: center; background: transparent; border-color: ${isOnoStyle ? '#10b981' : 'var(--border-color)'};">
@@ -275,7 +275,7 @@ export function renderGlobalAndBlocks(c) {
     // Everything the reader sees as a block lives in the BLOCKS tab. What stays
     // here is MVU, which is not a tracker at all but a contract with another
     // extension, and never enters the envelope.
-    c.append(`<div class="wstyle-section-head green"><i class="fa-solid fa-cubes"></i> Output Formats</div>`);
+    c.append(`<div class="wstyle-section-head green"><i class="fa-solid fa-cubes"></i> 输出格式</div>`);
     const formatGrid = $(`<div class="mtab-card-grid"></div>`);
 
     hardcodedLogic.blocks.filter(b => b.id === "mvu").forEach(b => {

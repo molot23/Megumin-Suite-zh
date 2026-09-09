@@ -48,7 +48,7 @@ export function npcDecorateUpdatePane(paneEl, msgIndex) {
                 <b>${esc(h.npc)}</b>
                 <span class="meg-npcupd-field">${esc(h.label)}</span>
                 <span class="meg-npcupd-op" style="color:${OP_COLOR[h.op] || "#94a3b8"};">${OP_LABEL[h.op] || h.op}</span>
-                <button type="button" class="meg-npcupd-undo" title="Put this back the way it was">
+                <button type="button" class="meg-npcupd-undo" title="恢复为原来的样子">
                     <i class="fa-solid fa-rotate-left"></i> Undo
                 </button>
             </div>
@@ -73,7 +73,7 @@ export function npcDecorateUpdatePane(paneEl, msgIndex) {
         paneEl.innerHTML = "";
         npcDecorateUpdatePane(paneEl, msgIndex);
         if (!paneEl.innerHTML.trim()) {
-            paneEl.innerHTML = `<div class="meg-npcupd-empty">All changes from this reply were undone.</div>`;
+            paneEl.innerHTML = `<div class="meg-npcupd-empty">此回复的全部更改已撤销。</div>`;
         }
     };
 

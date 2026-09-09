@@ -24,20 +24,23 @@ import { renderImageGen } from "../features/imagegen/index.js";
 import { renderNpcBank } from "../features/npc/ui.js";
 import { renderMemoryCore } from "../features/memory/index.js";
 import { renderBlocksTab } from "../features/blocks/ui.js";
+import { t as zh } from "../i18n/index.js";
 
+// `title` stays English — it keys TAB_SYNC_KEYS / TABS_ALREADY_GLOBAL.
+// Dock labels go through zh().
 export const tabsUI = [
-    { title: "PRESETS & COT", sub: "Choose the core preset and COT, and set the standing rules of the story.", icon: "fa-server", render: renderCoreAndCot },
-    { title: "Persona", sub: "Define the personality.", icon: "fa-user-astronaut", render: renderPersonality },
-    { title: "Writing Style", sub: "Pick the prose voice the story is told in.", icon: "fa-pen-nib", render: renderStoryConfig },
-    { title: "Global Toggles & Add Ons", sub: "Language, pronouns, and the gameplay systems bolted onto the story.", icon: "fa-earth-americas", render: renderGlobalAndBlocks },
-    { title: "BLOCKS", sub: "What goes inside the master block, in what order, and how it looks.", icon: "fa-cubes", render: renderBlocksTab },
-    { title: "Story Director", sub: "Direct the narrative. Shape what happens next.", icon: "fa-clapperboard", render: renderStoryPlanner },
-    { title: "Dynamic Ban List", sub: "Scan and ban repetitive AI phrases.", icon: "fa-ban", render: renderBanList },
-    { title: "Image Generation", sub: "Wire up ComfyUI to auto-generate scene images during roleplay.", icon: "fa-image", render: renderImageGen },
-    { title: "NPCs Bank", sub: "Automatically extract and track significant NPCs in the story.", icon: "fa-address-book", render: renderNpcBank },
-    { title: "Memory Core", sub: "Advanced 3-Tier Context & History Management.", icon: "fa-memory", render: renderMemoryCore },
-    { title: "Side Panel", sub: "Pop the tracker blocks out of the chat into a fixed side panel.", icon: "fa-table-columns", render: renderSidePanelTab },
-    { title: "Global Settings", sub: "Extension preferences and about info.", icon: "fa-gear", render: renderGlobalSettings }
+    { title: "PRESETS & COT", sub: "选择核心预设与思维链，并设定故事的常驻规则。", icon: "fa-server", render: renderCoreAndCot },
+    { title: "Persona", sub: "设定人格。", icon: "fa-user-astronaut", render: renderPersonality },
+    { title: "Writing Style", sub: "选择故事叙述的文风。", icon: "fa-pen-nib", render: renderStoryConfig },
+    { title: "Global Toggles & Add Ons", sub: "语言、代词，以及挂在故事上的玩法系统。", icon: "fa-earth-americas", render: renderGlobalAndBlocks },
+    { title: "BLOCKS", sub: "主数据块包含什么、顺序如何、如何显示。", icon: "fa-cubes", render: renderBlocksTab },
+    { title: "Story Director", sub: "引导叙事，塑造接下来发生的事。", icon: "fa-clapperboard", render: renderStoryPlanner },
+    { title: "Dynamic Ban List", sub: "扫描并禁用 AI 的重复套话。", icon: "fa-ban", render: renderBanList },
+    { title: "Image Generation", sub: "连接 ComfyUI，在角色扮演中自动生成场景图。", icon: "fa-image", render: renderImageGen },
+    { title: "NPCs Bank", sub: "自动提取并追踪故事中的重要 NPC。", icon: "fa-address-book", render: renderNpcBank },
+    { title: "Memory Core", sub: "高级三层上下文与历史管理。", icon: "fa-memory", render: renderMemoryCore },
+    { title: "Side Panel", sub: "把追踪块从聊天中弹出到固定侧边栏。", icon: "fa-table-columns", render: renderSidePanelTab },
+    { title: "Global Settings", sub: "扩展偏好与关于信息。", icon: "fa-gear", render: renderGlobalSettings }
 ];
 
 export function switchTab(index) {
@@ -47,7 +50,7 @@ export function switchTab(index) {
     // The toggle is per tab, so its label has to follow the tab.
     setTimeout(updateGlobalSyncButton, 0);
 
-    $("#ps_btn_dev_mode").html(`<i class="fa-solid fa-code"></i> Dev`).css("color", "#a855f7");
+    $("#ps_btn_dev_mode").html(`<i class="fa-solid fa-code"></i> 开发`).css("color", "#a855f7");
 
     let isSameTab = (currentTab === index);
     const container = $("#ps_stage_content");
@@ -66,9 +69,10 @@ export function switchTab(index) {
         
         // Render all normal tabs
         for (let i = 0; i < tabsUI.length - 1; i++) {
-            const t = tabsUI[i];
-            dotsContainer.append(`<div class="dock-icon sidebar-step" id="dot_${i}" title="${t.title}">
-                <i class="fa-solid ${t.icon}"></i> <span>${t.title}</span>
+            const tabDef = tabsUI[i];
+            const label = zh(tabDef.title);
+            dotsContainer.append(`<div class="dock-icon sidebar-step" id="dot_${i}" title="${label}">
+                <i class="fa-solid ${tabDef.icon}"></i> <span>${label}</span>
             </div>`);
         }
         
@@ -76,8 +80,9 @@ export function switchTab(index) {
         dotsContainer.append(`<div style="flex-grow: 1;"></div>`); 
         const lastIdx = tabsUI.length - 1;
         const lastTab = tabsUI[lastIdx];
-        dotsContainer.append(`<div class="dock-icon sidebar-step" id="dot_${lastIdx}" title="${lastTab.title}" style="margin-bottom: 15px; color: #a1a1aa; transition: 0.2s;">
-            <i class="fa-solid ${lastTab.icon}"></i> <span>${lastTab.title}</span>
+        const lastLabel = zh(lastTab.title);
+        dotsContainer.append(`<div class="dock-icon sidebar-step" id="dot_${lastIdx}" title="${lastLabel}" style="margin-bottom: 15px; color: #a1a1aa; transition: 0.2s;">
+            <i class="fa-solid ${lastTab.icon}"></i> <span>${lastLabel}</span>
         </div>`);
     }
 
@@ -105,13 +110,14 @@ export function switchTab(index) {
 export function toggleTabGlobalSync() {
     const title = (tabsUI[currentTab] || {}).title;
     if (!title) return;
+    const label = zh(title);
 
     if (TABS_ALREADY_GLOBAL.includes(title)) {
-        toastr.info(`${title} is stored globally already — it is the same on every character.`, "Megumin Suite");
+        toastr.info(`「${label}」已全局存储——在每个角色上都相同。`, "Megumin Suite");
         return;
     }
     if (!TAB_SYNC_KEYS[title]) {
-        toastr.info("This tab has nothing to sync.", "Megumin Suite");
+        toastr.info("此选项卡没有可同步的内容。", "Megumin Suite");
         return;
     }
 
@@ -125,13 +131,13 @@ export function toggleTabGlobalSync() {
         if (!ok) {
             map[title] = false;
             saveSettingsDebounced();
-            toastr.warning("The panel is still showing the previous chat's settings. Reopen it and try again.", "Megumin Suite");
+            toastr.warning("面板仍在显示上一聊天的设置。请重新打开后再试。", "Megumin Suite");
             updateGlobalSyncButton();
             return;
         }
-        toastr.success(`${title} now applies to every character. Changes here follow automatically.`, "Megumin Suite");
+        toastr.success(`「${label}」现已应用于每个角色。此处更改会自动同步。`, "Megumin Suite");
     } else {
-        toastr.info(`${title} is back to per-character.`, "Megumin Suite");
+        toastr.info(`「${label}」已恢复为按角色保存。`, "Megumin Suite");
     }
 
     updateGlobalSyncButton();
@@ -151,21 +157,22 @@ export function updateGlobalSyncButton() {
     if (!btn.length) return;
 
     const title = (tabsUI[currentTab] || {}).title;
+    const label = zh(title);
     const alreadyGlobal = TABS_ALREADY_GLOBAL.includes(title);
     const syncable = Boolean(TAB_SYNC_KEYS[title]);
     const on = meguminIsTabSynced(title);
 
     if (alreadyGlobal || !syncable) {
-        btn.html(`<i class="fa-solid fa-earth-americas"></i> Global`)
-            .attr("title", alreadyGlobal ? "This tab is stored globally already." : "This tab has nothing to sync.")
+        btn.html(`<i class="fa-solid fa-earth-americas"></i> 全局`)
+            .attr("title", alreadyGlobal ? "此选项卡已全局存储。" : "此选项卡没有可同步的内容。")
             .css({ color: "var(--text-muted)", "border-color": "var(--border-color)", opacity: "0.55" });
         return;
     }
 
-    btn.html(`<i class="fa-solid fa-earth-americas"></i> Global: ${on ? "On" : "Off"}`)
+    btn.html(`<i class="fa-solid fa-earth-americas"></i> 全局：${on ? "开" : "关"}`)
         .attr("title", on
-            ? `Every change on the ${title} tab is copied to all characters. Click to stop.`
-            : `Changes on the ${title} tab stay with this character. Click to make them global.`)
+            ? `「${label}」选项卡的每次更改都会复制到所有角色。点击停止。`
+            : `「${label}」选项卡的更改仅作用于当前角色。点击设为全局。`)
         .css({
             color: on ? "#10b981" : "var(--gold)",
             "border-color": on ? "rgba(16,185,129,0.45)" : "rgba(245,158,11,0.3)",

@@ -30,7 +30,7 @@ export function renderPromptEditor(config) {
             <div class="ps-prompt-field" style="${opacityStyle}">
                 <div class="ps-prompt-field-label">
                     <span class="pf-name"><i class="fa-solid fa-code"></i> ${f.label}</span>
-                    <button class="pf-reset" data-key="${f.key}" title="Reset to default" ${disabledAttr}><i class="fa-solid fa-rotate-left"></i> Reset</button>
+                    <button class="pf-reset" data-key="${f.key}" title="重置为默认" ${disabledAttr}><i class="fa-solid fa-rotate-left"></i> 重置</button>
                 </div>
                 <textarea class="ps-prompt-textarea" data-key="${f.key}" ${disabledAttr}>${escapedVal}</textarea>
                 <div class="pf-hint">${f.hint}</div>
@@ -43,7 +43,7 @@ export function renderPromptEditor(config) {
             <div class="ps-prompt-editor-toggle" style="display:flex; justify-content:space-between; align-items:center;">
                 <div style="display:flex; align-items:center; gap:12px;">
                     <span class="pe-title"><i class="fa-solid fa-pen-to-square"></i> ${title}</span>
-                    <div class="ps-toggle-card ${enabled ? 'active' : ''} pe-enable-toggle" style="padding: 2px; min-width: 36px; background: transparent; border-color: ${enabled ? '#10b981' : 'var(--border-color)'}; cursor: pointer; border-radius: 8px;" title="Enable custom prompts override">
+                    <div class="ps-toggle-card ${enabled ? 'active' : ''} pe-enable-toggle" style="padding: 2px; min-width: 36px; background: transparent; border-color: ${enabled ? '#10b981' : 'var(--border-color)'}; cursor: pointer; border-radius: 8px;" title="启用自定义提示词覆盖">
                         <div class="ps-switch" style="transform: scale(0.65); ${enabled ? 'background: #10b981;' : ''}"></div>
                     </div>
                 </div>

@@ -54,8 +54,8 @@ export function renderGlobalSettings(c) {
                     <i class="fa-solid fa-gear"></i>
                 </div>
                 <div>
-                    <h2>Global Settings</h2>
-                    <p>Preferences that apply to every character and every chat.</p>
+                    <h2>全局设置</h2>
+                    <p>应用于每个角色与每次聊天的偏好。</p>
                 </div>
             </div>
             <div class="mtab-header-badge" style="background: rgba(168,85,247,0.12); color: #a855f7; border: 1px solid rgba(168,85,247,0.25);">
@@ -67,20 +67,20 @@ export function renderGlobalSettings(c) {
     const $content = $(`<div style="display:flex; flex-direction:column; gap:10px;"></div>`);
 
     // ── BEHAVIOUR ───────────────────────────────────────────────────────────
-    $content.append(`<div class="wstyle-section-head blue"><i class="fa-solid fa-sliders"></i> Behaviour</div>`);
+    $content.append(`<div class="wstyle-section-head blue"><i class="fa-solid fa-sliders"></i> 行为</div>`);
     $content.append(`
-        <div class="mtab-toggle-row ${gs.promptPreview ? 'active' : ''}" id="gs_toggle_prompt_preview" style="cursor: pointer;">
+        <div class="mtab-toggle-row ${gs.prompt预览 ? 'active' : ''}" id="gs_toggle_prompt_preview" style="cursor: pointer;">
             <div class="toggle-info">
-                <div class="toggle-label"><i class="fa-solid fa-magnifying-glass" style="color: var(--gold);"></i> Prompt Payload Preview</div>
+                <div class="toggle-label"><i class="fa-solid fa-magnifying-glass" style="color: var(--gold);"></i> 提示词载荷预览</div>
                 <div class="toggle-desc">Shows the finished prompt in a popup before it is sent, so you can read exactly what the AI receives. Cancelling the popup stops the generation.</div>
             </div>
-            <div class="ps-switch" style="${gs.promptPreview ? 'background: var(--gold);' : ''}"></div>
+            <div class="ps-switch" style="${gs.prompt预览 ? 'background: var(--gold);' : ''}"></div>
         </div>
     `);
     $content.append(`
         <div class="mtab-toggle-row ${gs.enableUtilityPrefill ? 'active' : ''}" id="gs_toggle_utility_prefill" style="cursor: pointer;">
             <div class="toggle-info">
-                <div class="toggle-label"><i class="fa-solid fa-wand-sparkles" style="color: #10b981;"></i> Utility Prefills</div>
+                <div class="toggle-label"><i class="fa-solid fa-wand-sparkles" style="color: #10b981;"></i> 工具预填充</div>
                 <div class="toggle-desc">Puts an opening &lt;think&gt; into the AI's mouth for background jobs — Image Gen, the Ban List, the Story Director, NPC scans. <b>Off by default:</b> Claude and several other APIs reject a prefill outright. Turn it on only if yours accepts one.</div>
             </div>
             <div class="ps-switch" style="${gs.enableUtilityPrefill ? 'background: #10b981;' : ''}"></div>
@@ -88,17 +88,17 @@ export function renderGlobalSettings(c) {
     `);
 
     // ── DATA ────────────────────────────────────────────────────────────────
-    $content.append(`<div class="wstyle-section-head gold" style="margin-top:8px;"><i class="fa-solid fa-floppy-disk"></i> Data</div>`);
+    $content.append(`<div class="wstyle-section-head gold" style="margin-top:8px;"><i class="fa-solid fa-floppy-disk"></i> 数据</div>`);
     $content.append(`
         <div class="mtab-panel" style="margin: 0; padding: 12px 16px;">
             <div class="mtab-setting-row" style="padding: 0; border: none;">
                 <div class="set-info">
-                    <div class="set-label"><i class="fa-solid fa-floppy-disk" style="color: var(--gold);"></i> Profile Save Mode</div>
-                    <div class="set-desc"><b>Per Character</b> shares your settings across every chat with that character. <b>Per Chat</b> keeps each chat and each branch on its own settings.</div>
+                    <div class="set-label"><i class="fa-solid fa-floppy-disk" style="color: var(--gold);"></i> 配置保存模式</div>
+                    <div class="set-desc"><b>Per Character</b> shares your settings across every chat with that character. <b>按聊天</b> keeps each chat and each branch on its own settings.</div>
                 </div>
                 <select id="gs_save_mode" class="ps-modern-input" style="width: 180px; cursor: pointer;">
-                    <option value="character" ${gs.saveMode === 'character' ? 'selected' : ''}>Per Character (Default)</option>
-                    <option value="chat" ${gs.saveMode === 'chat' ? 'selected' : ''}>Per Chat</option>
+                    <option value="character" ${gs.saveMode === 'character' ? 'selected' : ''}>按角色（默认）</option>
+                    <option value="chat" ${gs.saveMode === 'chat' ? 'selected' : ''}>按聊天</option>
                 </select>
             </div>
         </div>
@@ -108,14 +108,14 @@ export function renderGlobalSettings(c) {
     // Skipped entirely while the URL is blank. A button that goes nowhere is
     // worse than no button at all.
     if (SUBMIT_FORM_URL) {
-        $content.append(`<div class="wstyle-section-head purple" style="margin-top:8px;"><i class="fa-solid fa-paper-plane"></i> Send me a card</div>`);
+        $content.append(`<div class="wstyle-section-head purple" style="margin-top:8px;"><i class="fa-solid fa-paper-plane"></i> 给我寄一张卡</div>`);
         $content.append(`
             <div class="mtab-panel gs-submit" style="margin: 0;">
                 <div class="gs-submit-body">
                     <div class="gs-submit-icon"><i class="fa-solid fa-inbox"></i></div>
                     <div>
                         <div class="gs-submit-title">Got a card or a scenario worth playing?</div>
-                        <div class="gs-submit-text">I have been running out of things to roleplay, so I am collecting recommendations. Attach a character card, describe a scenario, or just drop a link to something you enjoyed. <b>Completely anonymous</b> — no sign-in, no name, nothing tying it back to you. I cannot reply, so say everything you want to say in the form.</div>
+                        <div class="gs-submit-text">I have been running out of things to roleplay, so I am collecting recommendations. Attach a character card, describe a scenario, or just drop a link to something you enjoyed. <b>完全匿名</b> — no sign-in, no name, nothing tying it back to you. I cannot reply, so say everything you want to say in the form.</div>
                     </div>
                 </div>
                 <a class="gs-submit-btn" href="${SUBMIT_FORM_URL}" target="_blank" rel="noopener noreferrer">
@@ -127,7 +127,7 @@ export function renderGlobalSettings(c) {
     }
 
     // ── ABOUT ───────────────────────────────────────────────────────────────
-    $content.append(`<div class="wstyle-section-head green" style="margin-top:8px;"><i class="fa-solid fa-circle-info"></i> About</div>`);
+    $content.append(`<div class="wstyle-section-head green" style="margin-top:8px;"><i class="fa-solid fa-circle-info"></i> 关于</div>`);
     $content.append(`
         <div class="mtab-panel gs-about" style="margin: 0;">
             <div class="gs-about-title">Megumin Suite ${SUITE_VERSION}</div>
@@ -164,7 +164,7 @@ export function renderGlobalSettings(c) {
             $(this).find(".ps-switch").css("background", gs[key] ? colour : "");
         });
     };
-    wireToggle("#gs_toggle_prompt_preview", "promptPreview", "var(--gold)");
+    wireToggle("#gs_toggle_prompt_preview", "prompt预览", "var(--gold)");
     wireToggle("#gs_toggle_utility_prefill", "enableUtilityPrefill", "#10b981");
 
     $content.find("#gs_save_mode").on("change", function () {
@@ -177,7 +177,7 @@ export function renderGlobalSettings(c) {
         gs.saveMode = $(this).val();
         saveSettingsDebounced();
         initProfile(); // Immediately reloads the correct profile
-        toastr.success(`Save mode changed to Per ${gs.saveMode === 'chat' ? 'Chat' : 'Character'}.`);
+        toastr.success(`Save mode changed to Per ${gs.saveMode === 'chat' ? '聊天' : '角色'}.`);
     });
 
     c.append($content);

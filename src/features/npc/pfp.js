@@ -21,7 +21,7 @@ import { npcBuildTextFromData } from "./data.js";
 export async function npcGeneratePfp(npcName) {
     const s = localProfile.imageGen;
     if (!s || !s.enabled || !s.currentWorkflowName) {
-        toastr.warning("Image Generation must be enabled and configured first.");
+        toastr.warning("须先启用并配置图像生成。");
         return null;
     }
 
@@ -40,7 +40,7 @@ export async function npcGeneratePfp(npcName) {
     let styleStr = s.promptStyle === "illustrious" ? "Use Danbooru-style tags separated by commas. Focus on anime art style." : (s.promptStyle === "sdxl" ? "Use natural, descriptive prose and full sentences. Focus on photorealism." : "Use a comma-separated list of detailed keywords and visual descriptors.");
     let perspStr = "This is a CHARACTER PORTRAIT. Frame it as an upper-body/bust shot focused on the character's face and shoulders. Soft, flattering lighting. Clean or simple background. Capture their personality through expression and posture.";
 
-    toastr.info(`Generating portrait prompt for ${npcName}...`, "NPC Bank");
+    toastr.info(`Generating portrait prompt for ${npcName}...`, "NPC 库");
     showKazumaProgress("AI is writing portrait prompt...");
 
     // Step 1: Ask the AI to generate an image prompt from the NPC dossier
@@ -58,7 +58,7 @@ export async function npcGeneratePfp(npcName) {
     } catch (e) {
         console.error("NPC PFP prompt generation failed:", e);
         $("#kazuma_progress_overlay").hide();
-        toastr.error("Failed to generate portrait prompt.");
+        toastr.error("生成肖像提示词失败。");
         setActiveNpcPfpRequest(null);
         return null;
     } finally {
@@ -89,11 +89,11 @@ export async function npcGeneratePfp(npcName) {
         liveText = $(this).val();
     });
 
-    const popup = new Popup($content, POPUP_TYPE.CONFIRM, `Edit Portrait Prompt: ${npcName}`, { okButton: "Render Portrait", cancelButton: "Cancel", wide: true });
+    const popup = new Popup($content, POPUP_TYPE.CONFIRM, `Edit Portrait Prompt: ${npcName}`, { okButton: "Render Portrait", cancelButton: "取消", wide: true });
     const confirmed = await popup.show();
 
     if (!confirmed) {
-        toastr.info("Portrait generation cancelled.");
+        toastr.info("肖像生成已取消。");
         setActiveNpcPfpRequest(null);
         return null;
     }
@@ -105,7 +105,7 @@ export async function npcGeneratePfp(npcName) {
         return null;
     }
 
-    toastr.info("Sending portrait prompt to ComfyUI...", "NPC Bank");
+    toastr.info("正在将肖像提示词发送到 ComfyUI...", "NPC 库");
     showKazumaProgress("Rendering NPC Portrait...");
 
     // Step 2: Send the AI-generated prompt to ComfyUI
