@@ -38,7 +38,7 @@ function buildConfigSyncRow() {
         const hostOn = meguminStoryConfigHostSynced();
         row.html(`
             <div class="cfg-sync-text">
-                <span class="cfg-sync-label"><i class="fa-solid fa-earth-americas"></i> Share Story Config with every character</span>
+                <span class="cfg-sync-label"><i class="fa-solid fa-earth-americas"></i> 与每个角色共享故事配置</span>
                 <span class="cfg-sync-desc">${hostOn
                     ? (on
                         ? "These fields are copied to every character along with the rest of this tab."
@@ -68,8 +68,8 @@ function buildConfigSyncRow() {
             toastr.info("已保存。当此选项卡的「全局」开关打开时生效。", "Megumin Suite");
         } else {
             toastr.success(next
-                ? "Story Config now travels with the other settings on this tab."
-                : "Story Config stays with this character now.", "Megumin Suite");
+                ? "故事配置现已随此选项卡的其他设置同步。"
+                : "故事配置现在仅保存在此角色。", "Megumin Suite");
         }
     });
 
@@ -83,7 +83,7 @@ export function buildStoryConfigSection() {
     applyStoryConfigDefaults(cfg);
     const sec = $(`<div class="ws-section" id="sec-config"></div>`);
 
-    sec.append(`<h3 style="margin-top: 0; color: var(--gold); font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-sliders"></i> Story Config</h3>`);
+    sec.append(`<h3 style="margin-top: 0; color: var(--gold); font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-sliders"></i> 故事配置</h3>`);
 
     // No master toggle: the block is always injected. Anything left on 预设默认
     // still emits no line, so "off" is expressed per field rather than for the whole
@@ -378,7 +378,7 @@ export function renderStoryConfig(c) {
             <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
                 <div class="wstyle-active-badge ${isOff ? 'off' : ''}">
                     <i class="fa-solid ${isOff ? 'fa-power-off' : 'fa-pen-nib'}"></i>
-                    ${isOff ? 'No Style' : activeStyleName}
+                    ${isOff ? '无文风' : activeStyleName}
                 </div>
             </div>
         </div>
@@ -445,11 +445,11 @@ export function renderStoryConfig(c) {
     sidebar.append(`<div class="ws-sidebar-title">文风</div>`);
 
     // Off Button
-    const btnOff = $(`<button class="ws-nav-btn ${isOff ? 'active-green' : ''}"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-power-off" style="color:${isLockedStyleEngine ? '#ef4444' : ''}"></i> No Style (Off)</span> ${isLockedStyleEngine ? '<i class="fa-solid fa-lock" style="color:#ef4444; font-size:0.7rem;"></i>' : ''}</button>`);
+    const btnOff = $(`<button class="ws-nav-btn ${isOff ? 'active-green' : ''}"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-power-off" style="color:${isLockedStyleEngine ? '#ef4444' : ''}"></i> 无文风（关）</span> ${isLockedStyleEngine ? '<i class="fa-solid fa-lock" style="color:#ef4444; font-size:0.7rem;"></i>' : ''}</button>`);
     if (!isLockedStyleEngine) {
         btnOff.on("click", () => { localProfile.activeStyleId = null; localProfile.aiRule = ""; saveProfileToMemory(); renderStyleLibrary(c); });
     } else {
-        btnOff.css({"opacity":"0.6", "cursor":"not-allowed"}).attr("title", "Modern Engines require a narrative style directive.");
+        btnOff.css({"opacity":"0.6", "cursor":"not-allowed"}).attr("title", "现代引擎需要叙事文风指令。");
     }
     sidebar.append(btnOff);
     sidebar.append(`<div style="height: 1px; background: var(--border-color); margin: 8px 0;"></div>`);
@@ -457,7 +457,7 @@ export function renderStoryConfig(c) {
     // Nav Buttons
     const btnPrecooked = $(`<button class="ws-nav-btn active"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-fire-burner"></i> 现成文风</span> <span class="ws-badge">${precookedCount}</span></button>`);
     const btnCustom = $(`<button class="ws-nav-btn"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-book"></i> 我的文库</span> <span class="ws-badge">${customCount}</span></button>`);
-    const btnGenerators = $(`<button class="ws-nav-btn"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Generators</span> <span class="ws-badge">${genCount}</span></button>`);
+    const btnGenerators = $(`<button class="ws-nav-btn"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-wand-magic-sparkles"></i> AI 生成器</span> <span class="ws-badge">${genCount}</span></button>`);
 
     sidebar.append(btnPrecooked).append(btnCustom).append(btnGenerators);
 
@@ -469,7 +469,7 @@ export function renderStoryConfig(c) {
     const secGenerators = $(`<div class="ws-section" id="sec-generators" style="display:none;"></div>`);
 
     // A. PRECOOKED
-    secPrecooked.append(`<h3 style="margin-top: 0; color: var(--gold); font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-fire-burner"></i> Precooked Styles</h3>`);
+    secPrecooked.append(`<h3 style="margin-top: 0; color: var(--gold); font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-fire-burner"></i> 现成文风</h3>`);
     const gridPre = $(`<div class="ws-grid"></div>`);
     hardcodedLogic.directStyles.forEach(ds => {
         const isSel = localProfile.activeStyleId === ds.id;
@@ -571,7 +571,7 @@ export function renderStoryConfig(c) {
     secCustom.append(gridCust);
 
     // C. GENERATORS
-    secGenerators.append(`<h3 style="margin-top: 0; color: #a855f7; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Generators</h3>`);
+    secGenerators.append(`<h3 style="margin-top: 0; color: #a855f7; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-wand-magic-sparkles"></i> AI 生成器</h3>`);
     const gridGen = $(`<div class="ws-grid"></div>`);
     hardcodedLogic.styleTemplates.forEach(tpl => {
         if (existingNames.includes(tpl.name)) return;

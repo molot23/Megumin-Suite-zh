@@ -128,10 +128,7 @@ export function renderStoryPlanner(c) {
 
         <div class="mtab-callout gold" style="margin-bottom: 16px;">
             <i class="fa-solid fa-circle-info"></i>
-            <span><strong>V10 其实不太需要这个。</strong> Its engine already drives the plot
-            forward on its own, so the Director is optional rather than recommended there. Switch it
-            on if you want a hand on the wheel &mdash; a specific arc, a pace change, a beat you want
-            reached &mdash; and leave it off otherwise.</span>
+            <span><strong>V10 其实不太需要这个。</strong>其引擎本身就会推动剧情前进，因此在那里导演是可选而非推荐。若你想亲手掌舵——特定弧线、节奏变化、或想抵达的某个节拍——再打开；否则保持关闭即可。</span>
         </div>
 
         <!-- MASTER TOGGLE -->
@@ -154,35 +151,35 @@ export function renderStoryPlanner(c) {
                     <div class="sd-setting-label">内容分级</div>
                     <div class="sd-rating-pills">
                         <button class="sd-pill ${sp.contentRating === 'none' ? 'active' : ''}" data-rating="none">
-                            <i class="fa-solid fa-infinity"></i> No Limit
+                            <i class="fa-solid fa-infinity"></i> 不限
                         </button>
                         <button class="sd-pill ${sp.contentRating === 'sfw' ? 'active' : ''}" data-rating="sfw">
-                            <i class="fa-solid fa-shield-halved"></i> SFW
+                            <i class="fa-solid fa-shield-halved"></i> 全年龄
                         </button>
                         <button class="sd-pill ${sp.contentRating === 'nsfw' ? 'active' : ''}" data-rating="nsfw">
-                            <i class="fa-solid fa-fire"></i> NSFW
+                            <i class="fa-solid fa-fire"></i> 成人向
                         </button>
                     </div>
                 </div>
 
                 <!-- Pacing -->
                 <div class="sd-setting-group">
-                    <div class="sd-setting-label">Pacing</div>
+                    <div class="sd-setting-label">节奏</div>
                     <div class="sd-pacing-selector">
                         <button class="sd-pacing-btn ${sp.pacing === 'slowburn' ? 'active' : ''}" data-pacing="slowburn">
                             <i class="fa-solid fa-moon"></i>
-                            <span class="sd-pacing-name">Slow Burn</span>
+                            <span class="sd-pacing-name">慢热</span>
                             <span class="sd-pacing-desc">角色时刻，不赶进度</span>
                         </button>
                         <button class="sd-pacing-btn ${sp.pacing === 'natural' ? 'active' : ''}" data-pacing="natural">
                             <i class="fa-solid fa-wind"></i>
-                            <span class="sd-pacing-name">Natural</span>
-                            <span class="sd-pacing-desc">Organic flow, balanced</span>
+                            <span class="sd-pacing-name">自然</span>
+                            <span class="sd-pacing-desc">有机流动，张弛有度</span>
                         </button>
                         <button class="sd-pacing-btn ${sp.pacing === 'accelerate' ? 'active' : ''}" data-pacing="accelerate">
                             <i class="fa-solid fa-forward-fast"></i>
                             <span class="sd-pacing-name">加速</span>
-                            <span class="sd-pacing-desc">Push forward, big moves</span>
+                            <span class="sd-pacing-desc">向前推进，大动作</span>
                         </button>
                     </div>
                 </div>

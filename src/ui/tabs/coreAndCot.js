@@ -148,10 +148,10 @@ export function renderCoreAndCot(c) {
     sidebar.append(`<div style="height: 1px; background: var(--border-color); margin: 8px 0;"></div>`);
     
     const cfgCount = countActiveConfigFields(localProfile.storyConfig);
-    const btnConfig = $(`<button class="ws-nav-btn" data-target="sec-config"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-sliders" style="color: var(--gold);"></i> Story Config</span> <span style="display:flex; align-items:center; gap:6px;"><span class="ws-new-pill">✨ New</span>${cfgCount > 0 ? `<span class="ws-badge">${cfgCount}</span>` : ''}</span></button>`);
+    const btnConfig = $(`<button class="ws-nav-btn" data-target="sec-config"><span style="display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-sliders" style="color: var(--gold);"></i> 故事配置</span> <span style="display:flex; align-items:center; gap:6px;"><span class="ws-new-pill">✨ 新</span>${cfgCount > 0 ? `<span class="ws-badge">${cfgCount}</span>` : ''}</span></button>`);
     sidebar.append(btnConfig);
 
-    const btnCot = $(`<button class="ws-nav-btn" data-target="sec-cot"><span style="display:flex; align-items:center; gap:10px; color: ${localProfile.cotEnabled ? 'var(--text-main)' : 'var(--text-muted)'};"><i class="fa-solid fa-brain" style="color: ${localProfile.cotEnabled ? '#a855f7' : ''};"></i> Reasoning (CoT)</span> <span style="font-size: 0.6rem; font-weight: bold; color: ${localProfile.cotEnabled ? '#10b981' : '#ef4444'};">${localProfile.cotEnabled ? 'ON' : 'OFF'}</span></button>`);
+    const btnCot = $(`<button class="ws-nav-btn" data-target="sec-cot"><span style="display:flex; align-items:center; gap:10px; color: ${localProfile.cotEnabled ? 'var(--text-main)' : 'var(--text-muted)'};"><i class="fa-solid fa-brain" style="color: ${localProfile.cotEnabled ? '#a855f7' : ''};"></i> 推理（CoT）</span> <span style="font-size: 0.6rem; font-weight: bold; color: ${localProfile.cotEnabled ? '#10b981' : '#ef4444'};">${localProfile.cotEnabled ? '开' : '关'}</span></button>`);
     sidebar.append(btnCot);
 
     layout.append(sidebar);
@@ -169,7 +169,7 @@ export function renderCoreAndCot(c) {
     secOfficial.append(`
         <div class="mtab-callout gold" style="margin-bottom: 20px;">
             <i class="fa-solid fa-lightbulb"></i>
-            <span><strong>Pro Tip:</strong> The Engine defines the "laws of physics" and pacing of your story. The Reasoning acts as the AI's internal scratchpad. For the best experience, match V9 Mirage with CoT V9 Mirage.</span>
+            <span><strong>专业提示：</strong>引擎定义故事的「物理法则」与节奏。思维链是 AI 的内部草稿本。为获得最佳体验，请将 V9 Mirage 与思维链 V9 Mirage 配对使用。</span>
         </div>
     `);
 
@@ -215,7 +215,7 @@ export function renderCoreAndCot(c) {
                 <div class="ecard-body">
                     <div class="ecard-title">
                         <span>${m.label}</span>
-                        ${isSel ? `<span class="ecard-badge" style="background:rgba(16,185,129,0.15);color:#10b981;"><i class="fa-solid fa-check"></i> Active</span>` : ''}
+                        ${isSel ? `<span class="ecard-badge" style="background:rgba(16,185,129,0.15);color:#10b981;"><i class="fa-solid fa-check"></i> 使用中</span>` : ''}
                     </div>
                     <p class="ecard-desc">${descriptions[m.id] || ""}</p>
                     ${badges ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">${badges}</div>` : ''}
@@ -457,7 +457,7 @@ export function renderCoreAndCot(c) {
                     <div class="ecard-body">
                         <div class="ecard-title">
                             <span>${t.label}</span>
-                            ${isSel ? `<span class="ecard-badge" style="background:rgba(168,85,247,0.15);color:#a855f7;"><i class="fa-solid fa-check"></i> Active</span>` : ''}
+                            ${isSel ? `<span class="ecard-badge" style="background:rgba(168,85,247,0.15);color:#a855f7;"><i class="fa-solid fa-check"></i> 使用中</span>` : ''}
                         </div>
                         <p class="ecard-desc">${t.desc}</p>
                         ${badges ? `<div style="margin-top:4px;">${badges}</div>` : ''}
@@ -549,7 +549,7 @@ export function renderCoreAndCot(c) {
         langs.forEach(l => {
             const isSel = currentLang === l.id;
             let badges = '';
-            if (l.rec) badges = `<span class="ecard-badge rec"><i class="fa-solid fa-star"></i> Pro Tip</span>`;
+            if (l.rec) badges = `<span class="ecard-badge rec"><i class="fa-solid fa-star"></i> 专业提示</span>`;
 
             const card = $(`
                 <div class="mtab-eng-card ${isSel ? 'active' : ''}">

@@ -47,11 +47,11 @@ export function renderBlocksTab(c) {
                 <div class="mtab-header-icon" style="background: linear-gradient(135deg, #f59e0b, #b45309);"><i class="fa-solid fa-cubes"></i></div>
                 <div>
                     <h2>数据块</h2>
-                    <p>Everything in this list is sent as one master block at the end of the reply, and drawn in the chat as one collapsible card.</p>
+                    <p>此列表中的全部内容会作为一条主数据块附加在回复末尾，并在聊天中绘制为一张可折叠卡片。</p>
                 </div>
             </div>
             <div class="mtab-header-badge" style="background: rgba(245,158,11,0.12); color:#f59e0b; border:1px solid rgba(245,158,11,0.25);">
-                <i class="fa-solid fa-layer-group" style="font-size:0.6rem;"></i> ${inStack.length} in block
+                <i class="fa-solid fa-layer-group" style="font-size:0.6rem;"></i> 块内 ${inStack.length} 项
             </div>
         </div>
     `);

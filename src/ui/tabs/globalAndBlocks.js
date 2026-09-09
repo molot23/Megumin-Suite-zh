@@ -74,7 +74,7 @@ export function renderGlobalAndBlocks(c) {
                 </div>
             </div>
             <div class="mtab-header-badge" style="background: rgba(59,130,246,0.12); color: #3b82f6; border: 1px solid rgba(59,130,246,0.25);">
-                <i class="fa-solid fa-gears" style="font-size:0.6rem;"></i> ${localProfile.addons.length + localProfile.blocks.length} Active Modules
+                <i class="fa-solid fa-gears" style="font-size:0.6rem;"></i> ${localProfile.addons.length + localProfile.blocks.length} 个已启用模块
             </div>
         </div>
     `);
@@ -83,7 +83,7 @@ export function renderGlobalAndBlocks(c) {
     c.append(`
         <div class="mtab-callout blue" style="margin-bottom: 20px;">
             <i class="fa-solid fa-circle-info"></i>
-            <span><strong>你知道吗？</strong> 全局偏好 set the language and pronouns every engine reads. 玩法扩展 bolt extra systems onto the story — dice, death, combat, HTML props. 输出格式 is just MVU, a compatibility contract with another extension. The tracker blocks live in the <b>BLOCKS</b> tab, not here.</span>
+            <span><strong>你知道吗？</strong>「全局偏好」设定每个引擎都会读取的语言与代词。「玩法扩展」为故事加装额外系统——骰子、死亡、战斗、HTML 道具。「输出格式」只是 MVU，与另一扩展的兼容约定。追踪块在「数据块」选项卡，不在这里。</span>
         </div>
     `);
 
@@ -124,7 +124,7 @@ export function renderGlobalAndBlocks(c) {
             ` : ``}
             <div class="mtab-setting-row">
                 <div class="set-info"><div class="set-label">语言输出</div><div class="set-desc">留空则默认（英语）</div></div>
-                <input type="text" id="ps_input_language" class="ps-modern-input" style="width: 180px;" placeholder="e.g. Arabic, French…" value="${localProfile.userLanguage || ''}" />
+                <input type="text" id="ps_input_language" class="ps-modern-input" style="width: 180px;" placeholder="例如：中文、法语…" value="${(localProfile.userLanguage === 'Chinese' ? '中文' : (localProfile.userLanguage || ''))}" />
             </div>
             <div class="mtab-setting-row">
                 <div class="set-info"><div class="set-label">用户性别</div><div class="set-desc">确保 AI 正确称呼你</div></div>
@@ -142,6 +142,7 @@ export function renderGlobalAndBlocks(c) {
     $("#ps_v9_lean_max").on("input", function () { localProfile.v9Limits.leanMax = parseInt($(this).val()) || 400; saveProfileDebounced(); });
     $("#ps_v9_full_min").on("input", function () { localProfile.v9Limits.fullMin = parseInt($(this).val()) || 700; saveProfileDebounced(); });
     $("#ps_v9_full_max").on("input", function () { localProfile.v9Limits.fullMax = parseInt($(this).val()) || 1200; saveProfileDebounced(); });
+    if (localProfile.userLanguage === "Chinese") { localProfile.userLanguage = "中文"; }
     $("#ps_input_language").on("input", function () { localProfile.userLanguage = $(this).val(); saveProfileDebounced(); });
     $("#ps_select_pronouns").on("change", function () { localProfile.userPronouns = $(this).val(); saveProfileToMemory(); });
 
@@ -152,9 +153,7 @@ export function renderGlobalAndBlocks(c) {
     c.append(`
         <div class="mtab-callout gold" style="margin-bottom: 16px;">
             <i class="fa-solid fa-triangle-exclamation"></i>
-            <span>Pick the three or four you actually want, not all of them. Every add-on is another
-            system the model has to hold in mind while it writes, and past a handful the prose
-            thins out as the attention goes into bookkeeping. Fewer, chosen on purpose, reads better.</span>
+            <span>只挑你真正想要的三四个，不必全开。每个扩展都是模型写作时要兼顾的另一套系统；开太多后注意力会落到簿记上，文笔会变薄。少而精，读起来更好。</span>
         </div>
     `);
     const addonGrid = $(`<div class="mtab-card-grid" style="margin-bottom: 24px;"></div>`);
@@ -162,7 +161,7 @@ export function renderGlobalAndBlocks(c) {
     hardcodedLogic.addons.forEach(a => {
         const isSel = localProfile.addons.includes(a.id);
         let badges = '';
-        if (a.recommended) badges += `<span class="ecard-badge rec"><i class="fa-solid fa-star"></i> Recommended</span>`;
+        if (a.recommended) badges += `<span class="ecard-badge rec"><i class="fa-solid fa-star"></i> 推荐</span>`;
         badges += customBadge(a);
 
         let extraClass = '';

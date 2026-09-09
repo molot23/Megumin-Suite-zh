@@ -30,7 +30,7 @@ export function renderPersonality(c) {
                 </div>
             </div>
             <div class="mtab-header-badge" style="background: rgba(236,72,153,0.12); color: #ec4899; border: 1px solid rgba(236,72,153,0.25);">
-                <i class="fa-solid fa-user" style="font-size:0.6rem;"></i> ${isLockedPersona ? 'Locked' : localProfile.personality}
+                <i class="fa-solid fa-user" style="font-size:0.6rem;"></i> ${isLockedPersona ? '已锁定' : localProfile.personality}
             </div>
         </div>
     `);
@@ -46,8 +46,8 @@ export function renderPersonality(c) {
         c.append(`
             <div class="mtab-locked-state">
                 <i class="fa-solid fa-user-lock" style="color: #f59e0b;"></i>
-                <h3>Persona Locked</h3>
-                <p>${lockedEngineName} manages its own internal persona and strictly enforces narrative toggles natively. Standard injections are completely disabled.</p>
+                <h3>人格已锁定</h3>
+                <p>${lockedEngineName} 自行管理内部人格，并以原生方式严格执行叙事开关。标准注入已完全禁用。</p>
             </div>
         `);
         return;
@@ -55,16 +55,16 @@ export function renderPersonality(c) {
         c.append(`
             <div class="mtab-locked-state">
                 <i class="fa-solid fa-user-lock" style="color: #a855f7;"></i>
-                <h3>Persona Selection Locked</h3>
-                <p>The V6 Dream Team engine utilizes an intrinsic 6-specialist framework. Standard persona injections are disabled to prevent logic conflicts.</p>
+                <h3>人格选择已锁定</h3>
+                <p>V6 Dream Team 引擎采用内置的六专家框架。标准人格注入已禁用，以避免逻辑冲突。</p>
             </div>
         `);
     } else if (isV7) {
         c.append(`
             <div class="mtab-locked-state">
                 <i class="fa-solid fa-user-lock" style="color: #3b82f6;"></i>
-                <h3>Persona Selection Locked</h3>
-                <p>The V7 engine utilizes a pure narrative framework. Standard persona injections are disabled to prevent logic conflicts.</p>
+                <h3>人格选择已锁定</h3>
+                <p>V7 引擎采用纯叙事框架。标准人格注入已禁用，以避免逻辑冲突。</p>
             </div>
         `);
     } else {
