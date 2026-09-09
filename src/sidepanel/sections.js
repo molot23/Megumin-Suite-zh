@@ -164,7 +164,7 @@ function renderInnerChatter(ctx) {
 // name, age, sex and orientation all in one field, so everything after the first
 // `|` is dropped — one fact reads better than four fragments. Long values are
 // cut so the header stays one line at any panel width.
-const DOSSIER_PREVIEW_KEYS = ["角色", "职业", "年龄", "性别", "可寻之处"];
+const DOSSIER_PREVIEW_KEYS = ["角色", "Role", "职业", "Occupation", "年龄", "Age", "性别", "Sex", "可寻之处", "Where to Find Them"];
 const DOSSIER_PREVIEW_MAX = 64;
 
 export function dossierPreview(fields) {

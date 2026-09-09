@@ -198,10 +198,11 @@ function buildPanelSkeleton() {
 // NPC 手册 bridge — opens the existing Megumin Suite modal on the NPC 库 tab
 // -----------------------------------------------------------------------------
 function clickNpcBankDot() {
-    // Title-based lookup so upstream tab reorders don't break us
+    // English data-tab-title so zh() dock tooltips cannot break this bridge.
     const dock = document.querySelectorAll("#ps_dynamic_dots .dock-icon");
     for (let i = 0; i < dock.length; i++) {
-        if ((dock[i].getAttribute("title") || "").trim() === "NPC 库") {
+        const key = (dock[i].getAttribute("data-tab-title") || dock[i].getAttribute("title") || "").trim();
+        if (key === "NPCs Bank" || key === "NPC 库") {
             const dot = document.getElementById("dot_" + i);
             if (dot) { dot.click(); return true; }
         }
@@ -587,10 +588,12 @@ function buildPresentCast() {
 // The label is the anchor, not the emoji — an AI that dropped the 📌 still
 // wrote a 世界状态 block. Case-insensitive, since the summary is free text.
 // `name` is the same label in the words the panel puts in front of the reader.
+// `re` must match AI/legacy English summary text (prompts stay English).
+// `name` is display-only for notices.
 const INLINE_BLOCK_LABELS = [
-    { type: "worldState", re: /世界状态/i, name: "世界状态" },
-    { type: "innerChatter", re: /NPC 内心独白/i, name: "NPC 内心独白" },
-    { type: "newNpc", re: /新 NPC:/i, name: "新 NPC" },
+    { type: "worldState", re: /World State|世界状态/i, name: "世界状态" },
+    { type: "innerChatter", re: /NPC Inner Chatter|NPC 内心独白/i, name: "NPC 内心独白" },
+    { type: "newNpc", re: /New NPC:|新 NPC:/i, name: "新 NPC" },
 ];
 
 // Summary text -> block type. Pure. "unknown" covers everything we can't name,

@@ -45,6 +45,18 @@ export function cleanLegacySettings() {
 const RENAMED_TABS = [
     ["Story Config", "Writing Style"],
     ["Global Toggles & Blocks", "Global Toggles & Add Ons"],
+    // Brief zh-CN window put Chinese strings into tabsUI.title / globalSyncTabs.
+    ["预设与思维链", "PRESETS & COT"],
+    ["人格", "Persona"],
+    ["文风", "Writing Style"],
+    ["全局开关与扩展", "Global Toggles & Add Ons"],
+    ["剧情导演", "Story Director"],
+    ["动态禁用词", "Dynamic Ban List"],
+    ["图像生成", "Image Generation"],
+    ["NPC 库", "NPCs Bank"],
+    ["记忆核心", "Memory Core"],
+    ["侧边栏", "Side Panel"],
+    ["全局设置", "Global Settings"],
 ];
 
 export function migrateRenamedTabs() {

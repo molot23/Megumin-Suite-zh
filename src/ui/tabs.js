@@ -71,7 +71,8 @@ export function switchTab(index) {
         for (let i = 0; i < tabsUI.length - 1; i++) {
             const tabDef = tabsUI[i];
             const label = zh(tabDef.title);
-            dotsContainer.append(`<div class="dock-icon sidebar-step" id="dot_${i}" title="${label}">
+            // title= display (zh); data-tab-title= English id for code lookups (sync, NPC Book bridge).
+            dotsContainer.append(`<div class="dock-icon sidebar-step" id="dot_${i}" title="${label}" data-tab-title="${tabDef.title}">
                 <i class="fa-solid ${tabDef.icon}"></i> <span>${label}</span>
             </div>`);
         }
@@ -81,7 +82,7 @@ export function switchTab(index) {
         const lastIdx = tabsUI.length - 1;
         const lastTab = tabsUI[lastIdx];
         const lastLabel = zh(lastTab.title);
-        dotsContainer.append(`<div class="dock-icon sidebar-step" id="dot_${lastIdx}" title="${lastLabel}" style="margin-bottom: 15px; color: #a1a1aa; transition: 0.2s;">
+        dotsContainer.append(`<div class="dock-icon sidebar-step" id="dot_${lastIdx}" title="${lastLabel}" data-tab-title="${lastTab.title}" style="margin-bottom: 15px; color: #a1a1aa; transition: 0.2s;">
             <i class="fa-solid ${lastTab.icon}"></i> <span>${lastLabel}</span>
         </div>`);
     }
