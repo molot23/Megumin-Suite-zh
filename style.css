@@ -1509,7 +1509,11 @@
     margin-bottom: 16px;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 8px;
+    min-width: 0;
+    word-break: keep-all;
+    overflow-wrap: break-word;
 }
 
 .mtab-panel-title i {
@@ -1539,8 +1543,9 @@
 /* — Setting Row (label + input) — */
 .mtab-setting-row {
     display: flex;
-    align-items: center;
-    gap: 16px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px 16px;
     padding: 14px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
@@ -1555,19 +1560,34 @@
 }
 
 .mtab-setting-row .set-info {
-    flex: 1;
+    flex: 1 1 180px;
+    min-width: min(180px, 100%);
 }
 
 .mtab-setting-row .set-label {
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--text-main);
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    line-height: 1.35;
 }
 
 .mtab-setting-row .set-desc {
     font-size: 0.73rem;
     color: var(--text-muted);
     margin-top: 2px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    line-height: 1.45;
+}
+
+/* Controls beside labels: never starve the CJK label column to ~1em */
+.mtab-setting-row > .ps-modern-input,
+.mtab-setting-row > select.ps-modern-input,
+.mtab-setting-row > div {
+    flex: 0 1 auto;
+    max-width: 100%;
 }
 
 /* — Param Slider — */
@@ -1576,15 +1596,20 @@
     align-items: center;
     gap: 10px;
     padding: 8px 0;
+    flex-wrap: wrap;
 }
 
 .mtab-param-row .param-label {
-    min-width: 55px;
+    min-width: 7em;
+    flex: 0 0 auto;
     font-size: 0.75rem;
     font-weight: 700;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
 .mtab-param-row input[type="range"] {
@@ -2106,7 +2131,7 @@
     .main-content {
         /* 92px of foot: 62 for the dock, 12 above it, 12 below, and a little
            air so the last row does not sit flush against it. */
-        padding: 10px 14px 92px 14px !important;
+        padding: 10px 14px 110px 14px !important;
         margin-top: -30px !important; /* Perfect overlap for mobile screens */
     }
 
@@ -2156,6 +2181,43 @@
     .main-content div[style*="display: flex"][style*="align-items: center"][style*="gap: 15px"] .ps-modern-input[style*="width: 200px"],
     .main-content div[style*="display: flex"][style*="align-items: center"][style*="gap: 15px"] select[style*="width: 200px"] {
         width: 100% !important;
+    }
+
+    /* Memory / settings rows: stack label + control so CJK never wraps 1 char/line */
+    .mtab-setting-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+    }
+    .mtab-setting-row .set-info {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        width: 100% !important;
+    }
+    .mtab-setting-row > .ps-modern-input,
+    .mtab-setting-row > select.ps-modern-input,
+    .mtab-setting-row select.ps-modern-input,
+    .mtab-setting-row .ps-modern-input {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    .mtab-param-row .param-label {
+        min-width: 6.5em !important;
+        width: auto !important;
+        max-width: 40% !important;
+    }
+    /* Dashboard header: title + savings chip wrap instead of squeezing CJK */
+    .mtab-panel > div[style*="justify-content:space-between"] {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+    .mtab-panel-title {
+        flex: 1 1 12rem !important;
+        min-width: 0 !important;
+    }
+    /* Extra clearance above floating dock for long Memory Core forms */
+    #mem_main_content {
+        padding-bottom: 24px;
     }
 
     /* Image gen parameter sliders */
@@ -2259,7 +2321,7 @@
 
     /* Keeps the dock clearance. The old 16px let it cover the last row. */
     .main-content {
-        padding: 8px 10px 90px 10px !important;
+        padding: 8px 10px 110px 10px !important;
     }
 }
 
