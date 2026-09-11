@@ -37,6 +37,42 @@ import {
 // -------------------------------------------------------------
 // STAGE 9: MEMORY CORE (3-Tier Context)
 // -------------------------------------------------------------
+
+// One archive run at a time. Without this, Apply + auto-trigger (or a double
+// tap on Apply) can overlap: both snapshot the same unarchived ranges, both
+// push chunks with the same ids, and the singleton summarization request
+// text is overwritten mid-flight. The old code also disabled #mem_btn_generate,
+// a button that does not exist — so Apply stayed clickable the whole time.
+let _memProcessInFlight = false;
+export function memIsProcessing() { return _memProcessInFlight; }
+
+function memSetProcessingUi(on, progressText) {
+    if (on) {
+        $("#mem_processing_spinner").show();
+        if (progressText) $("#mem_processing_progress").show().text(progressText);
+        else $("#mem_processing_progress").show();
+        $("#mem_btn_apply_limits").prop("disabled", true).css("opacity", "0.5");
+    } else {
+        $("#mem_processing_spinner").hide();
+        $("#mem_processing_progress").hide().text("");
+        $("#mem_btn_apply_limits").prop("disabled", false).css("opacity", "1");
+    }
+}
+
+// Slider input fires dozens of times per drag; each call walked the chat and
+// touched four bar widths. Debounce so the label still feels live but the
+// dashboard work settles after the finger/mouse pauses.
+let _memDashTimer = null;
+function memRenderDashboardDebounced(delay = 80) {
+    if (_memDashTimer) clearTimeout(_memDashTimer);
+    _memDashTimer = setTimeout(() => {
+        _memDashTimer = null;
+        memRenderDashboard();
+    }, delay);
+}
+
+let _memVaultSearchTimer = null;
+
 export function renderMemoryCore(c) {
     c.empty();
     const mem = localProfile.memoryCore;
@@ -242,8 +278,8 @@ export function renderMemoryCore(c) {
                     <span><i class="fa-solid fa-database"></i> 长期保险库（向量存储）</span>
                     <span id="mem_vault_count" style="font-size:0.7rem; color:var(--text-muted);">0 条</span>
                 </div>
-                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                    <input type="text" id="mem_vault_search" class="ps-modern-input" placeholder="搜索已归档记忆..." style="flex: 1; border-color: rgba(59,130,246,0.3);">
+                <div class="mem-vault-toolbar" style="display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap;">
+                    <input type="text" id="mem_vault_search" class="ps-modern-input" placeholder="搜索已归档记忆..." style="flex: 1; min-width: 140px; border-color: rgba(59,130,246,0.3);">
                     <button id="mem_btn_test_vector" class="ps-modern-btn secondary" style="color: #3b82f6; border-color: rgba(59,130,246,0.3);" title="查看 AI 当前正在检索的记忆"><i class="fa-solid fa-radar"></i> 测试扫描器</button>
                     <button id="mem_btn_clear_vault" class="ps-modern-btn secondary" style="color: #ef4444; border-color: rgba(239, 68, 68, 0.3);" title="删除全部保险库归档"><i class="fa-solid fa-trash-can"></i> 全部清除</button>
                 </div>
@@ -438,7 +474,7 @@ export function renderMemoryCore(c) {
 
         // Short-term is now independent, no forced minimums based on working limit
         saveProfileDebounced();
-        memRenderDashboard();
+        memRenderDashboardDebounced();
     });
 
     $("#mem_scanner_engine").on("change", async function () {
@@ -467,17 +503,26 @@ export function renderMemoryCore(c) {
         saveProfileToMemory();
     });
 
-    // Trigger migration ONLY on 'change' (when they let go of the mouse click) to avoid spamming calculations
-    $("#mem_work_slider").on("change", function () { memRunVaultMigration(); });
+    // Heavy vault migration runs on Apply (memSyncLimits). On slider release we only
+    // scrub overlaps + refresh fade so raising workingLimit does not leave grayed
+    // messages until the next extract — without rebuilding vault textareas mid-drag.
+    function memOnLimitRelease() {
+        if (memScrubOverlappingArchives()) {
+            saveProfileDebounced();
+            updateMemoryVisuals();
+        }
+        memRenderDashboard();
+    }
+    $("#mem_work_slider").on("change", memOnLimitRelease);
 
     $("#mem_short_slider").on("input", function () {
         let val = parseInt($(this).val());
         mem.shortTermLimit = val;
         $("#mem_short_val").text(val);
         saveProfileDebounced();
-        memRenderDashboard();
+        memRenderDashboardDebounced();
     });
-    $("#mem_short_slider").on("change", function () { memRunVaultMigration(); });
+    $("#mem_short_slider").on("change", memOnLimitRelease);
 
     $("#mem_chunk_slider").on("input", function () {
         let val = parseInt($(this).val());
@@ -503,9 +548,9 @@ export function renderMemoryCore(c) {
         $("#mem_short_val").text(shortVal);
 
         saveProfileDebounced();
-        memRenderDashboard();
+        memRenderDashboardDebounced();
     });
-    $("#mem_chunk_slider").on("change", function () { memRunVaultMigration(); });
+    $("#mem_chunk_slider").on("change", memOnLimitRelease);
 
     $("#mem_trigger").on("change", function () {
         mem.triggerMode = $(this).val();
@@ -524,6 +569,10 @@ export function renderMemoryCore(c) {
 
     // Apply Limits & Auto-Extract Button
     $("#mem_btn_apply_limits").off("click").on("click", async function () {
+        if (_memProcessInFlight) {
+            toastr.info("归档提取仍在进行中…");
+            return;
+        }
         memSyncLimits(); // Scrub overlaps first
 
         // Check if there is actually anything pending to extract
@@ -879,9 +928,15 @@ export function memRenderVault(searchFilter = "") {
     renderVaultBatch();
 }
 
-// Live Search Listener
+// Live Search Listener — debounced; each keystroke used to re-filter the whole
+// vault and rebuild the first page of textareas, which feels sticky on mobile.
 $("body").off("input", "#mem_vault_search").on("input", "#mem_vault_search", function () {
-    memRenderVault($(this).val());
+    const q = $(this).val();
+    if (_memVaultSearchTimer) clearTimeout(_memVaultSearchTimer);
+    _memVaultSearchTimer = setTimeout(() => {
+        _memVaultSearchTimer = null;
+        memRenderVault(q);
+    }, 150);
 });
 
 // --- MEMORY GENERATION LOGIC ---
@@ -889,6 +944,13 @@ $("body").off("input", "#mem_vault_search").on("input", "#mem_vault_search", fun
 export async function memProcessPendingChunks(isAuto = false) {
     const context = typeof getContext === "function" ? getContext() : null;
     if (!context || !context.chat || !localProfile.memoryCore.enabled) return;
+
+    if (_memProcessInFlight) {
+        console.debug("[Megumin-Suite] memProcessPendingChunks skipped: an archive run is already in flight.");
+        if (!isAuto) toastr.info("归档提取仍在进行中…");
+        return;
+    }
+    _memProcessInFlight = true;
 
     const chat = context.chat;
     const mem = localProfile.memoryCore;
@@ -912,6 +974,7 @@ export async function memProcessPendingChunks(isAuto = false) {
     }
 
     if (realMessages.length <= workingLimit) {
+        _memProcessInFlight = false;
         if (!isAuto) toastr.info("超出工作区限制的消息不足，无法归档。");
         return;
     }
@@ -950,15 +1013,14 @@ export async function memProcessPendingChunks(isAuto = false) {
     }
 
     if (chunksToProcess.length === 0) {
+        _memProcessInFlight = false;
         memRunVaultMigration();
         if (!isAuto) toastr.info("所有归档均已是最新。");
         return;
     }
 
     // 4. Process the missing chunks — BATCHED with UI yields
-    $("#mem_processing_spinner").show();
-    $("#mem_processing_progress").show().text(`Preparing...`);
-    $("#mem_btn_generate").prop("disabled", true).css("opacity", "0.5");
+    memSetProcessingUi(true, "准备中…");
 
     let changesMade = false;
     const newlyAddedBypassedVaultChunks = [];
@@ -973,6 +1035,7 @@ export async function memProcessPendingChunks(isAuto = false) {
         for (let idx = 0; idx < totalChunks; idx++) {
             if (runIdentityLost()) {
                 console.debug(`[Megumin-Suite] memProcessPendingChunks stopped at chunk ${idx + 1}/${totalChunks}: the profile this run started on ("${runIdentity}") is no longer the active one ("${meguminActiveDataIdentity()}"). Nothing was saved; run the archive again on the chat you want.`);
+                toastr.warning("聊天已切换，本次归档已中止且未写入。请在目标聊天中重新提取。", "Megumin Suite");
                 return;
             }
 
@@ -980,7 +1043,7 @@ export async function memProcessPendingChunks(isAuto = false) {
 
             // Update progress text
             const percent = Math.round((idx / totalChunks) * 100);
-            $("#mem_processing_progress").text(`Processing ${idx + 1}/${totalChunks} (${percent}%)`);
+            $("#mem_processing_progress").text(`处理中 ${idx + 1}/${totalChunks}（${percent}%）`);
 
             // --- DIRECT-TO-VAULT BYPASS ---
             // If this chunk is older than the Short-Term limit, skip the AI entirely!
@@ -1102,9 +1165,8 @@ export async function memProcessPendingChunks(isAuto = false) {
         toastr.error("生成记忆摘要失败。");
     } finally {
         setActiveMemorySummarizationRequest(null);
-        $("#mem_processing_spinner").hide();
-        $("#mem_processing_progress").hide().text("");
-        $("#mem_btn_generate").prop("disabled", false).css("opacity", "1");
+        memSetProcessingUi(false);
+        _memProcessInFlight = false;
     }
 }
 

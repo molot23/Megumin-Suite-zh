@@ -1616,6 +1616,21 @@
     flex: 1;
     accent-color: var(--gold);
     cursor: pointer;
+    touch-action: none; /* stop page scroll stealing vertical slider drags on mobile */
+}
+
+.mem-vault-toolbar {
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .mem-vault-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .mem-vault-toolbar .ps-modern-btn {
+        width: 100%;
+    }
 }
 
 .mtab-param-row input[type="number"] {

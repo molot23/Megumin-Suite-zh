@@ -108,6 +108,7 @@ import { renderBanList } from "./src/features/banlist/ui.js";
 import {
     renderMemoryCore,
     memProcessPendingChunks,
+    memIsProcessing,
     isMessageArchived,
     memGetRelevantVaultEntries,
     updateMemoryVisuals,
@@ -570,11 +571,16 @@ jQuery(async () => {
                         }
 
                         if (hasWork) {
-                            toastr.info("已触发后台记忆扫描...", "Megumin Suite");
-                            // We run it after a small delay so ST finishes saving the chat first
-                            setTimeout(async () => {
-                                await memProcessPendingChunks(true);
-                            }, 3000);
+                            if (typeof memIsProcessing === "function" && memIsProcessing()) {
+                                console.debug("[Megumin-Suite] Background memory scan skipped: an archive run is already in flight.");
+                            } else {
+                                toastr.info("已触发后台记忆扫描...", "Megumin Suite");
+                                // We run it after a small delay so ST finishes saving the chat first
+                                setTimeout(async () => {
+                                    if (typeof memIsProcessing === "function" && memIsProcessing()) return;
+                                    await memProcessPendingChunks(true);
+                                }, 3000);
+                            }
                         }
                     }
                 }
