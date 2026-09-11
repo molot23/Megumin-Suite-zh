@@ -238,10 +238,25 @@ jQuery(async () => {
         cleanLegacySettings();
         migrateRenamedTabs();
         migrateUtilityPrefillFlag();
-        initSidePanel({ profileGetter: () => localProfile });
-        const h = await $.get(`${extensionFolderPath}/example.html`);
+        // Inject launcher HTML first so a side-panel failure can't kill the floating button.
+        // Folder name is resolved at runtime (Megumin-Suite vs Megumin-Suite-zh).
+        const htmlUrl = `${extensionFolderPath}/example.html`;
+        console.log(`[${extensionName}] Loading UI from ${htmlUrl}`);
+        let h;
+        try {
+            h = await $.get(htmlUrl);
+        } catch (fetchErr) {
+            console.error(`[${extensionName}] Failed to fetch ${htmlUrl}. If you installed the zh fork, the folder must match this path.`, fetchErr);
+            throw fetchErr;
+        }
+        $("#prompt-slot-fixed-btn, #prompt-slot-modal-overlay").remove();
         $("body").append(h);
         initDraggableButton();
+        try {
+            initSidePanel({ profileGetter: () => localProfile });
+        } catch (spErr) {
+            console.error(`[${extensionName}] Side panel init failed (floating launcher still available):`, spErr);
+        }
         $("body").append('<div id="ps-global-tooltip"></div>');
         // Profile level badge styles
         $("head").append(`<style>

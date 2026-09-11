@@ -64,28 +64,44 @@ export function initDraggableButton() {
     // Apply saved position or defaults
     function applyPosition(pos) {
         // Reset positioning styles
-        $btn.css({ left: '', right: '', top: '', bottom: '' });
+        $btn.css({ left: '', right: '', top: '', bottom: '', display: 'flex', visibility: 'visible', opacity: '1', zIndex: 9999 });
 
-        if (pos) {
-            const topPx = Math.max(10, Math.min($(window).height() - $btn.outerHeight() - 10, (pos.topPercent / 100) * $(window).height()));
+        const winH = $(window).height() || window.innerHeight || 800;
+        const winW = $(window).width() || window.innerWidth || 1280;
+        const btnH = $btn.outerHeight() || 48;
+
+        if (pos && Number.isFinite(pos.topPercent) && (pos.side === 'left' || pos.side === 'right')) {
+            const topPx = Math.max(10, Math.min(winH - btnH - 10, (pos.topPercent / 100) * winH));
             $btn.css('top', `${topPx}px`);
 
-            const gutter = $(window).width() <= 768 ? 12 : 20;
+            const gutter = winW <= 768 ? 12 : 20;
             if (pos.side === 'left') {
                 $btn.css('left', `${gutter}px`);
             } else {
                 $btn.css('right', `${gutter}px`);
             }
         } else {
-            // Default position
+            // Default / recovered position
+            savedPos = null;
             $btn.css({
                 top: '60px',
-                right: $(window).width() <= 768 ? '12px' : '20px'
+                right: winW <= 768 ? '12px' : '20px'
             });
         }
     }
 
     applyPosition(savedPos);
+
+    // Console helper: MeguminResetLauncher() — clears saved pos and snaps the ball back on-screen
+    try {
+        window.MeguminResetLauncher = function () {
+            localStorage.removeItem('megumin_btn_position');
+            savedPos = null;
+            applyPosition(null);
+            console.log('[Megumin Suite] Floating launcher reset to default (top-right).');
+            return true;
+        };
+    } catch (_) { /* ignore */ }
 
     // Dynamic resize handler
     $(window).off('resize.megumin_btn').on('resize.megumin_btn', function () {

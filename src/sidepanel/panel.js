@@ -1512,7 +1512,11 @@ function updateHeaderImage() {
     const ctx = getContext();
     let imgUrl = "";
     if (ctx.groupId !== undefined && ctx.groupId !== null) {
-        imgUrl = `/scripts/extensions/third-party/Megumin-Suite/img/group.png`;
+        try {
+            imgUrl = new URL("../../img/group.png", import.meta.url).pathname;
+        } catch (_) {
+            imgUrl = `/scripts/extensions/third-party/Megumin-Suite/img/group.png`;
+        }
     } else if (ctx.characterId !== undefined && ctx.characterId !== null && ctx.characters && ctx.characters[ctx.characterId]) {
         imgUrl = `/characters/${ctx.characters[ctx.characterId].avatar}`;
     }
