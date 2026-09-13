@@ -246,10 +246,14 @@ export function initProfile() {
         extension_settings[extensionName].globalSettings = {
             promptPreview: false,
             enableUtilityPrefill: false,
-            saveMode: "character"
+            saveMode: "character",
+            hideLauncherBall: false,
         };
     } else if (!extension_settings[extensionName].globalSettings.saveMode) {
         extension_settings[extensionName].globalSettings.saveMode = "character";
+    }
+    if (typeof extension_settings[extensionName].globalSettings.hideLauncherBall !== "boolean") {
+        extension_settings[extensionName].globalSettings.hideLauncherBall = false;
     }
 
     if (!extension_settings[extensionName].profiles["default"]) {
