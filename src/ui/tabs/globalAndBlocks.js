@@ -35,15 +35,15 @@ export function renderGlobalAndBlocks(c) {
     c.empty();
 
     const addonDescriptions = {
-        "death": "Enables permanent consequences. Characters — including yours — can die for real. No safety net, no plot armor.",
-        "combat": "Activates a grounded, tactical combat layer. Actions have real weight, positioning matters, and you can lose badly.",
-        "direct": "Forces AI to say words like D and P. No dancing around the subject, no polite deflection. you know what i mean. <b>Not needed on V10</b> — that engine already writes this way, so switching it on just repeats the instruction.",
-        "color": "Each character's dialogue is color-coded for easy visual parsing.",
-        "npc_events": "Requires all new story events to grow naturally from prior context or environmental cues — no random drama out of nowhere. V6 only.",
-        "dn": "Forces dialogue and narration to be wrapped in their respective XML tags. Useful for specific Models for better narration style adherence. <b>Not recommended on V10</b> — the tags fight that engine's own prose rules.",
-        "html": "When a character reads something — a phone screen, a letter, a sign — the AI draws the thing itself as HTML instead of describing it. Rare by design: one per reply at most, and most replies have none.",
-        "dice_all": "Same d20 system, but everyone rolls — NPCs included. Any character who tries something that can fail gets a roll, all of them listed before the reply. Use this OR Dice, not both.",
-        "dice": "A d20 decides whether risky attempts land. The AI rolls before it writes the scene, so the story follows the die rather than the die following the story. The roll gets its own tab on the block card."
+        "death": "开启永久后果。角色——包括你——可以真正死亡。没有安全网，也没有主角光环。",
+        "combat": "启用更扎实的战术战斗层。动作有份量，站位很重要，也可能惨败。",
+        "direct": "要求 AI 直说身体部位相关用语，不绕弯、不客套。<b>V10 一般不需要</b>——该引擎本身已偏直白，再开会变成重复指令。",
+        "color": "为每个角色的对话分配颜色，方便一眼区分是谁在说话。",
+        "npc_events": "要求新剧情元素从既有上下文或环境线索自然长出，禁止凭空塞戏剧冲突。仅 V6。",
+        "dn": "强制把对话与叙述分别包进对应 XML 标签，便于部分模型遵守文风。<b>V10 不推荐</b>——标签会和该引擎自身的叙述规则打架。",
+        "html": "当角色在读东西——手机屏、信件、告示——AI 用 HTML 直接「画出」物件本身，而不是干巴巴描述。刻意少用：每条回复最多一处，多数回复没有。",
+        "dice_all": "同样是 d20，但所有人都会掷——含 NPC。任何可能失败的尝试都会掷骰，并在回复前列出。与「骰子」二选一，不要同时开。",
+        "dice": "用一颗 d20 决定冒险行动是否成功。AI 先掷骰再写场面，所以剧情跟着骰子走，而不是反过来。掷骰结果会出现在数据块卡片的独立页签里。"
     };
 
     // Only MVU is left in this tab's 输出格式 section, so only MVU needs a line
@@ -51,7 +51,7 @@ export function renderGlobalAndBlocks(c) {
     // when they moved to the BLOCKS tab -- they were sitting here unreachable, because
     // the section below filters to mvu and nothing else ever reached this map.
     const blockDescriptions = {
-        "mvu": "Add MVU Compatibility still in test read more here: <a href='https://github.com/KritBlade/MVU_Game_Maker' target='_blank' style='color: var(--gold); text-decoration: underline;'>https://github.com/KritBlade/MVU_Game_Maker</a>"
+        "mvu": "加入 MVU 兼容（仍在测试）。详见：<a href='https://github.com/KritBlade/MVU_Game_Maker' target='_blank' style='color: var(--gold); text-decoration: underline;'>https://github.com/KritBlade/MVU_Game_Maker</a>"
     };
 
     const activeMode = [...hardcodedLogic.modes, ...(extension_settings[extensionName].customModes || [])].find(m => m.id === localProfile.mode);
