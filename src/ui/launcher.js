@@ -64,15 +64,7 @@ export function initDraggableButton() {
     // Apply saved position or defaults
     function applyPosition(pos) {
         // Reset positioning styles
-        const hideBall = !!extension_settings?.[extensionName]?.globalSettings?.hideLauncherBall;
-        $btn.css({
-            left: '', right: '', top: '', bottom: '',
-            display: hideBall ? 'none' : 'flex',
-            visibility: hideBall ? 'hidden' : 'visible',
-            opacity: hideBall ? '0' : '1',
-            pointerEvents: hideBall ? 'none' : '',
-            zIndex: 9999,
-        });
+        $btn.css({ left: '', right: '', top: '', bottom: '', display: 'flex', visibility: 'visible', opacity: '1', zIndex: 9999 });
 
         const winH = $(window).height() || window.innerHeight || 800;
         const winW = $(window).width() || window.innerWidth || 1280;

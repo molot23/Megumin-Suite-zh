@@ -305,9 +305,3 @@ Megumin Suite is free and always will be. If it saved you hours of prompt engine
 ⭐ *Not in a position to donate? Starring the repo and sharing it helps just as much.*
 
 </div>
-
-## 扩展设置（汉化版）
-
-- 扩展设置一级菜单 **Megumin Suite 汉化版**：可打开预设面板
-- **隐藏启动悬浮球**：聊天页不显示头像球，仍可通过扩展设置打开预设
-

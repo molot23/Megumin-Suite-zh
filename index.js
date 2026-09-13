@@ -132,7 +132,6 @@ import { buildBaseDict } from "./src/engine/buildBaseDict.js";
 import { handlePromptInjection } from "./src/engine/injection.js";
 import { updateLiveTokenCount } from "./src/core/tokens.js";
 import { initDraggableButton, updateCharacterDisplay, discoverDefaultImages } from "./src/ui/launcher.js";
-import { startExtSettingsInjector, applyLauncherVisibility, openMeguminPresetModal } from "./src/ui/extSettings.js";
 import { tabsUI, switchTab, updateGlobalSyncButton, toggleTabGlobalSync } from "./src/ui/tabs.js";
 import { renderDevMode } from "./src/ui/devmode.js";
 
@@ -254,7 +253,6 @@ jQuery(async () => {
         $("#prompt-slot-fixed-btn, #prompt-slot-modal-overlay").remove();
         $("body").append(h);
         initDraggableButton();
-        applyLauncherVisibility();
         try {
             initSidePanel({ profileGetter: () => localProfile });
         } catch (spErr) {
@@ -788,21 +786,7 @@ jQuery(async () => {
             }
         }
 
-        function meguminOpenPresetFromUi() {
-            openMeguminPresetModal({
-                initProfile,
-                updateCharacterDisplay,
-                switchTab,
-                initMobileDrawer,
-            });
-        }
-        $("body").on("click", "#prompt-slot-fixed-btn", function () { meguminOpenPresetFromUi(); });
-        startExtSettingsInjector({
-            initProfile,
-            updateCharacterDisplay,
-            switchTab,
-            initMobileDrawer,
-        });
+        $("body").on("click", "#prompt-slot-fixed-btn", function () { initProfile(); updateCharacterDisplay(); switchTab(0); $("#prompt-slot-modal-overlay").fadeIn(250).css("display", "flex"); });
         $("body").off("click", "#close-prompt-slot-modal, #prompt-slot-modal-overlay").on("click", "#close-prompt-slot-modal, #prompt-slot-modal-overlay", function (e) {
             if (e.target === this) {
                 if (isDevEngineDirty) {
